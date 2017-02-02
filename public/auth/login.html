@@ -1,0 +1,23 @@
+login boy
+
+
+
+
+
+
+  <md-button ng-click="authCtrl.loginWithGoogle()">
+    Google
+  </md-button>
+
+
+
+
+  <form ng-submit="authCtrl.login()">
+    <div class="input-group">
+      <input type="email" class="form-control" placeholder="Email" ng-model="authCtrl.user.email">
+    </div>
+    <div class="input-group">
+      <input type="password" class="form-control" placeholder="Password" ng-model="authCtrl.user.password">
+    </div>
+    <input type="submit" class="btn btn-default" value="Log In">
+  </form>

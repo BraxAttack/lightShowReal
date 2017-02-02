@@ -1,0 +1,46 @@
+<section layout="row" flex style="height: 100vh; width: 100vw"  style="min-width: 1100px;">
+  <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
+   <md-toolbar class="md-tall md-hue-2" style="background-color:#424242; color:#EEEEEE;">
+     <span flex></span>
+     <div layout="column" class="md-toolbar-tools-bottom inset">
+       <user-avatar></user-avatar>
+       <span></span>
+       <div>{{homepageCtrl.user.firstname}} {{homepageCtrl.user.lastname}}</div>
+       <div>{{homepageCtrl.user.email}}</div>
+     </div>
+   </md-toolbar>
+   <md-list>
+   <md-item ng-repeat="item in homepageCtrl.menu">
+     <md-button ui-sref="homepage.{{item.link}} "md-ink-ripple layout="row" layout-align="start center" style="width: 100%; padding: 0px; margin: 0;">
+       <div class="inset" style="line-height: 0px;">
+         <i class="material-icons" >{{item.icon}}</i>
+       </div>
+       <div class="inset">{{item.title}}
+       </div>
+     </md-button>
+   </md-item>
+   <md-divider></md-divider>
+
+   <button ng-click="homepageCtrl.logout()">log out</button>
+<!--   <md-subheader>Management</md-subheader>
+   <md-item ng-repeat="item in admin">
+     <a>
+       <md-item-content md-ink-ripple layout="row" layout-align="start center">
+         <div class="inset">
+           <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+         </div>
+         <div class="inset">{{item.title}}
+         </div>
+       </md-item-content>
+     </a>
+   </md-item>-->
+  </md-list>
+  </md-sidenav>
+
+  <div class="homepageTopBar">
+
+  </div>
+
+  <ui-view class="homepageUIView"></ui-view>
+
+</section>

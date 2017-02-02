@@ -1,0 +1,99 @@
+body {
+
+}
+
+.homepageTopBar {
+  width: calc(100vw - 320px);
+  height: 60px;
+  background-color: #212121;
+  position: absolute;
+  left: 320px;
+}
+
+.homepageUIView {
+  position: absolute;
+  top: 60px;
+  left: 320px;
+  width: calc(100vw - 340px);
+  padding: 10px;
+  height: calc(100vh - 80px);
+  overflow: auto;
+  background-color: #EEEEEE;
+}
+
+.homepageProjectsColorDiv {
+  width: 100%;
+  height: 5px;
+  background-color: #4CAF50;
+  float: left;
+}
+
+.homepageProjectsDiv {
+  width: 495px;
+  float: left;
+}
+
+.homepageProjectsTitle {
+
+position: absolute;
+
+top: -68px;
+
+z-index: 28;
+}
+
+.homepageProjectsInfoDiv {
+  width: 384px;
+  height: 320px;
+  float: left;
+  background-color: #212121;
+}
+
+.homepageProjectsInfoDiv:hover{
+  background-color: #424242;
+}
+
+.homepageProjectsProjectName {
+  float: left;
+  width: 280px;
+  background-color: #66BB6A;
+  padding: 10px;
+  margin-top: 34px;
+  color: white;
+  font-size: 27px;
+}
+
+.homepageProjectsSongTitle {
+  float: left;
+  max-width: 280px;
+  padding: 10px;
+  margin-top: 122px;
+  margin-bottom: 0;
+  color: white;
+}
+
+.homepageProjectsLastEdit {
+  float: left;
+  max-width: 280px;
+  background-color: white;
+  padding: 10px;
+  margin: 0 0;
+  margin-right: 150px;
+  font-size: 16px;
+}
+
+.hompageProjectsDivEditBtn {
+  width: 115px;
+  height: 160px;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.hompageProjectsDivPlay {
+  width: 115px;
+  height: 160px;
+  float: left;
+  margin: 0;
+  padding: 0;
+}

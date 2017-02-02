@@ -1,0 +1,23 @@
+
+<md-card class="homepageProjectsDiv" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch layout="column" ng-repeat="project in projectsCtrl.projects">
+    <div class="homepageProjectsColorDiv">
+
+    </div>
+    <div layout="row">
+      <div class="homepageProjectsInfoDiv">
+        <h1 class="homepageProjectsProjectName">{{project.title}}</h1>
+        <h3 class="homepageProjectsLastEdit">Last edit: {{project.lastModified}}</h3>
+        <h2 class="homepageProjectsSongTitle">{{project.songTitle}}</h2>
+
+      </div>
+
+      <div layout="column">
+        <md-button class="hompageProjectsDivEditBtn"><i class="material-icons">edit</i> Edit</md-button>
+        <md-divider></md-divider>
+        <md-button class="hompageProjectsDivPlay"><i class="material-icons">remove_red_eye</i> View</md-button>
+
+      </div>
+    </div>
+
+
+ </md-card>
