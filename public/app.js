@@ -56,9 +56,17 @@ angular
               $state.go('login');
             });
           },
-          profile: function(Users, Auth){
+          profile: function ($state, Auth, Users){
             return Auth.$requireSignIn().then(function(auth){
-              return Users.getProfile(auth.uid).$loaded();
+              return Users.getProfile(auth.uid).$loaded().then(function (profile){
+                if(profile.displayName){
+                  return profile;
+                } else {
+                  $state.go('profile');
+                }
+              });
+            }, function(error){
+              $state.go('login');
             });
           }
         }
