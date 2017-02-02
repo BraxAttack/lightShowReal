@@ -2,6 +2,12 @@ body {
 
 }
 
+.loginTopLogo {
+  height: 26px;
+  margin: 17px;
+  float: left;
+}
+
 .homepageTopBar {
   width: calc(100vw - 320px);
   height: 59px;
@@ -37,12 +43,9 @@ body {
 }
 
 .homepageProjectsTitle {
-
-position: absolute;
-
-top: -68px;
-
-z-index: 28;
+  position: absolute;
+  top: -68px;
+  z-index: 28;
 }
 
 .homepageProjectsInfoDiv {
