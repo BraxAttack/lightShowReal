@@ -22,7 +22,29 @@ angular
         url: '/',
         controller: 'AuthCtrl as authCtrl',
         templateUrl: 'auth/login.html',
-
+        resolve: {
+          requireNoAuth: function($state, Auth){
+            return Auth.$requireSignIn().then(function(auth){
+              $state.go('homepage.projects');
+            }, function(error){
+              return;
+            });
+          }
+        }
+      })
+      .state('register', {
+        url: '/register',
+        controller: 'AuthCtrl as authCtrl',
+        templateUrl: 'auth/register.html',
+        resolve: {
+          requireNoAuth: function($state, Auth){
+            return Auth.$requireSignIn().then(function(auth){
+              $state.go('homepage.projects');
+            }, function(error){
+              return;
+            });
+          }
+        }
       })
       .state('homepage', {
         url: '/homepage',
