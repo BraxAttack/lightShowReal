@@ -89,6 +89,23 @@ angular
           }
         }
       })
+      .state('homepage.newproject', {
+        url: '/newproject',
+        templateUrl: 'homepage/newProject.html',
+        controller: 'ProjectsCtrl as projectsCtrl',
+        resolve: {
+          auth: function($state, Users, Auth){
+            return Auth.$requireSignIn().catch(function(){
+              $state.go('login');
+            });
+          },
+          profile: function(Users, Auth){
+            return Auth.$requireSignIn().then(function(auth){
+              return Users.getProfile(auth.uid).$loaded();
+            });
+          }
+        }
+      })
       .state('homepage.templates', {
         url: '/templates',
         templateUrl: 'homepage/templates.html',
@@ -106,10 +123,27 @@ angular
           }
         }
       })
-      .state('homepage.showplans', {
-        url: '/showplans',
-        templateUrl: 'homepage/showplans.html',
-        controller: '',
+      .state('homepage.newtemplate', {
+        url: '/newtemplate',
+        templateUrl: 'homepage/newTemplate.html',
+        controller: 'TemplatesCtrl as templatesCtrl',
+        resolve: {
+          auth: function($state, Users, Auth){
+            return Auth.$requireSignIn().catch(function(){
+              $state.go('login');
+            });
+          },
+          profile: function(Users, Auth){
+            return Auth.$requireSignIn().then(function(auth){
+              return Users.getProfile(auth.uid).$loaded();
+            });
+          }
+        }
+      })
+      .state('homepage.playlists', {
+        url: '/playlists',
+        templateUrl: 'homepage/playlists.html',
+        controller: 'PlaylistsCtrl as playlistCrtl',
         resolve: {
           auth: function($state, Users, Auth){
             return Auth.$requireSignIn().catch(function(){

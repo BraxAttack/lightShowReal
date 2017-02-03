@@ -1,6 +1,11 @@
 angular.module('lightShowApp')
-  .controller('HomepageCtrl', function($state, $mdDialog, Auth, Users, profile){
+  .controller('HomepageCtrl', function($state, $mdDialog, Auth, Users, profile, currentPage){
     var homepageCtrl = this;
+
+
+    homepageCtrl.currentPage = currentPage;
+
+    homepageCtrl.currentPage.add("Homepage");
 
     homepageCtrl.profile = profile;
 
@@ -25,7 +30,7 @@ angular.module('lightShowApp')
         icon: 'invert_colors'
       },
       {
-        link : 'showplans',
+        link : 'playlists',
         title: 'Playlists',
         icon: 'list'
       }
@@ -45,7 +50,7 @@ angular.module('lightShowApp')
                       $state.go('login');
                     });
                  }, function() {
-                    $scope.status = 'You decided to keep your record.';
+                    return
               });
     };
 

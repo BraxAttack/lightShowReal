@@ -6,7 +6,7 @@
        <div >
          <img class="homepageProfilePic" src="{{ homepageCtrl.userProfile.photoURL }}" ng-if="homepageCtrl.userProfile.photoURL"/>
          <div class="homepageProfilePicNoPic" ng-if="!homepageCtrl.userProfile.photoURL">
-            <i class="material-icons" style="width: 95px; height: 95px; text-align: center; line-height: 95px; font-size: 35px;">sync</i>
+            <i class="material-icons" style="width: 89px; height: 89px; text-align: center; line-height: 95px; font-size: 35px;">sync</i>
          </div>
        </div>
        <span></span>
@@ -32,9 +32,21 @@
    <md-subheader>Management</md-subheader>
    <md-item>
      <a>
-       <md-button md-ink-ripple layout="row" md-ink-ripple layout="row" layout-align="start center" style="width: 100%; padding: 0px; margin: 0;" ng-click="homepageCtrl.logout()">
+       <md-button md-ink-ripple layout="row" md-ink-ripple layout="row" layout-align="start center" style="width: 100%; padding: 0px; margin: 0;" ui-sref="profile">
+         <div class="inset" style="line-height: 0px;">
+           <i class="material-icons" >settings</i>
+         </div>
          <div class="inset">
-
+           Settings
+         </div>
+       </md-button>
+     </a>
+   </md-item>
+   <md-item>
+     <a>
+       <md-button md-ink-ripple layout="row" md-ink-ripple layout="row" layout-align="start center" style="width: 100%; padding: 0px; margin: 0;" ng-click="homepageCtrl.logout()">
+         <div class="inset" style="line-height: 0px;">
+          <i class="material-icons">lock_outline</i>
          </div>
          <div class="inset">
            LOGOUT
@@ -42,14 +54,33 @@
        </md-button>
      </a>
    </md-item>
+
   </md-list>
   </md-sidenav>
   <button ng-click="homepageCtrl.logout($event)">log out</button>
 
   <div class="homepageTopBar">
+    <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'Projects'">dashboard</i>
+    <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'Templates'">invert_colors</i>
+    <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'Playlists'">menu</i>
+    <h1 class="homepageCurrentPage">{{homepageCtrl.currentPage.pageVar}}</h1>
     <img class="homepgeTopbarLogo" src="images/lightShow.png"/>
   </div>
 
+  <md-button id="homepageProjectsAddFab" ui-sref="homepage.newproject" class="md-fab md-primary md-hue-2" aria-label="Profile" ng-if="homepageCtrl.currentPage.pageVar == 'Projects'">
+    <i class="homepageProjectsAddFabPlus material-icons">add</i>
+  </md-button>
+
+  <md-button id="homepageProjectsAddFab" ui-sref="homepage.newtemplate" class="md-fab md-primary md-hue-2" aria-label="Profile" ng-if="homepageCtrl.currentPage.pageVar == 'Templates'">
+    <i class="homepageProjectsAddFabPlus material-icons">add</i>
+  </md-button>
+
+  <md-button id="homepageProjectsAddFab" class="md-fab md-primary md-hue-2" aria-label="Profile" ng-if="homepageCtrl.currentPage.pageVar == 'Playlists'">
+    <i class="homepageProjectsAddFabPlus material-icons">add</i>
+  </md-button>
+
   <ui-view class="homepageUIView"></ui-view>
+
+
 
 </section>

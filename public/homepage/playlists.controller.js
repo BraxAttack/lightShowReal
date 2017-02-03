@@ -1,12 +1,12 @@
 angular.module('lightShowApp')
-  .controller('TemplatesCtrl', function(currentPage){
-    var templatesCtrl = this;
+  .controller('PlaylistsCtrl', function(currentPage){
+    var playlistsCtrl = this;
 
-    templatesCtrl.currentPage = currentPage;
+    playlistsCtrl.currentPage = currentPage;
 
-    templatesCtrl.currentPage.add("Templates");
+    playlistsCtrl.currentPage.add("Playlists");
 
-    templatesCtrl.templates = [
+    playlistsCtrl.templates = [
       {
         title: 'templateA',
         creator: 'BaxAttack',

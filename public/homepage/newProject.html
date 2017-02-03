@@ -1,0 +1,69 @@
+
+
+<md-content layout-padding>
+  <h1>New Project</h1>
+
+      <form ng-submit="projectsCtrl.createProject()">
+
+        <md-input-container class="md-block" style="width: 712px;">
+          <label class="md-headline">Project Name</label>
+          <input required md-maxlength="40" md-no-asterisk name="Name0" ng-model="projectsCtrl.newProject.projectName">
+        </md-input-container>
+
+        <md-input-container class="md-block" style="width: 712px;">
+          <label class="md-headline">Song Title</label>
+          <input required md-maxlength="40" md-no-asterisk name="Name0" ng-model="projectsCtrl.newProject.songTitle">
+        </md-input-container>
+
+    <!--Upload Song-->
+
+
+        <md-button class="fileUpload btn btn-primary">
+            <span>Upload .mp3</span>
+            <input required class="upload" type="file" id="file" accept=".mp3"/>
+        </md-button>
+
+    <!--select Color For Tab-->
+        <h3 style="float: left; margin-top: 25px;">Tab Color:</h3>
+          <div style="height: 25px; width: 25px; float: left; border-radius: 3px; margin-top: 19px; margin-left: 7px; background-color: {{ projectsCtrl.selectedColor }}; margin-right: calc(100% - 118px);     margin-bottom: 15px;">
+          </div>
+        <div class="projectNewColorPickerDiv">
+          <md-button class="projectNewColor" aria-label="Select" ng-repeat="color in projectsCtrl.colorList" style="background-color: {{ color }}" ng-click="projectsCtrl.selectColor(color)">
+
+          </md-button>
+        </div>
+
+
+
+
+      <!--
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Project Name" ng-model="projectsCtrl.newProject.name">
+        </div>
+        <input type="submit" class="btn btn-default" value="Create project" style="float: left;">
+    -->
+
+
+      <!--    <md-input-container class="md-block">
+            <label style="font-size: 30px;">Song Title</label>
+            <input md-maxlength="40" required md-no-asterisk name="Name0" ng-model="projectsCtrl.newProject.songTitle">
+            <div ng-messages="projectForm.description.$error">
+              <div ng-message="required">This is required.</div>
+              <div ng-message="md-maxlength">The Song Title must be less than 40 characters long.</div>
+            </div>
+          </md-input-container>
+-->
+          <!--<button type="btn btn-primary" required style="float:left;" ng-click="projectsCtrl.uploadFile()">Upload</button>
+-->
+          {{ projectsCtrl.percentage }}
+          {{ projectsCtrl.newProject.songurl }}
+
+          <md-button  type="submit" class="md-raised" style="height: 60px; background-color: #00acff; font-size:30px; color:white; margin-top: 30px; margin-bottom: 30px; float: left; width: 100%">
+            Create Project
+          </md-button>
+          </form>
+
+
+
+
+</md-content>
