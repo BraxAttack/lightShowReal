@@ -106,6 +106,16 @@ angular
           }
         }
       })
+      .state('homepage.projectindiv', {
+          url: '/{projectId}/edit',
+          templateUrl: 'projectIndiv/projectIndiv.html',
+          controller: 'ProjectIndivCtrl as projectIndivCtrl',
+        /*  resolve: {
+            projectIndivData: function($stateParams, Projects){
+              return Projects.forProjectIndiv($stateParams.projectId).$loaded();
+            }
+          }*/
+        })
       .state('homepage.templates', {
         url: '/templates',
         templateUrl: 'homepage/templates.html',

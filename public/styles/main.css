@@ -16,13 +16,14 @@ body {
 }
 
 .loginSyncLogo {
-  width: 50px;
+  width: 100%;
   height: 50px;
   line-height: 50px;
   font-size: 70px;
   color: white;
   margin-top: 15px;
   text-indent: -18px;
+  text-align: center;
 }
 
 .LoginExternalAuthSignInDiv {
@@ -42,6 +43,8 @@ body {
   margin-top: calc(50vh - 225px);
   color: white;
   font-size: 42px;
+  width: 100%;
+  text-align: center;
 }
 
 

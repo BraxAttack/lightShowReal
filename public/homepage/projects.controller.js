@@ -25,6 +25,16 @@ angular.module('lightShowApp')
       user: projectsCtrl.profile.$id
     };
 
+    projectsCtrl.newProjectData = {
+      name: 'test for var',
+      songData: [
+        ['things', 'stuff', 'such'],
+        ['things', 'stuff', 'such'],
+        ['things', 'stuff', 'such'],
+        ['things', 'stuff', 'such']
+      ]
+    }
+
     projectsCtrl.colorList = [
       '#d32f2f',
       '#C2185B',
@@ -90,6 +100,7 @@ angular.module('lightShowApp')
 
         //alert(downloadURL);
         projectsCtrl.newProject.songurl = downloadURL;
+        console.log(songKey);
 
       });
 
@@ -108,11 +119,13 @@ angular.module('lightShowApp')
         //console.log(projectsCtrl.newProject.songurl);
           var projectKey = firebase.database().ref('Projects/' + projectsCtrl.profile.$id).push().key;
           var projectUpdates = {};
+          var projectDataUpdates = {};
 
           projectUpdates['/Projects/' + projectsCtrl.profile.$id + '/' + projectKey] = projectsCtrl.newProject;
           firebase.database().ref().update(projectUpdates)
           .then(function(ref){
-
+            projectDataUpdates['/ProjectsData/' + projectsCtrl.profile.$id + '/' + projectKey] = projectsCtrl.newProjectData;
+            firebase.database().ref().update(projectDataUpdates)
           $state.go('homepage.projects');
           //$state.go('channels.messages', {projectId: ref.key});
           return;
