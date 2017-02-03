@@ -9,7 +9,6 @@ angular.module('lightShowApp')
     projectsCtrl.projects = projects;
 
 
-
     projectsCtrl.getDisplayName = Users.getDisplayName;
     projectsCtrl.getGravatar = Users.getGravatar;
 
@@ -22,6 +21,7 @@ angular.module('lightShowApp')
       songTitle: '',
       songurl: '',
       lastEdit: '',
+      color: '',
       user: projectsCtrl.profile.$id
     };
 
@@ -48,9 +48,11 @@ angular.module('lightShowApp')
     ]
 
     projectsCtrl.selectedColor = "#d32f2f";
+    projectsCtrl.newProject.color = projectsCtrl.selectedColor;
 
     projectsCtrl.selectColor = function(color) {
-      projectsCtrl.selectedColor = color
+      projectsCtrl.selectedColor = color;
+      projectsCtrl.newProject.color = projectsCtrl.selectedColor;
     };
 
     $("#file").on("change", function(event) {

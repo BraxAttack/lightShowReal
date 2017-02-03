@@ -1,11 +1,11 @@
 
 <md-card class="homepageProjectsDiv" md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch layout="column" ng-repeat="project in projectsCtrl.projects">
-    <div class="homepageProjectsColorDiv">
+    <div class="homepageProjectsColorDiv" style="background-color:{{project.color}};">
 
     </div>
     <div layout="row">
       <div class="homepageProjectsInfoDiv">
-        <h1 class="homepageProjectsProjectName">{{project.projectName}}</h1>
+        <h1 class="homepageProjectsProjectName" style="background-color:{{project.color}};">{{project.projectName}}</h1>
         <h3 class="homepageProjectsLastEdit">Last edit: {{project.lastEdit}}</h3>
         <h2 class="homepageProjectsSongTitle">{{project.songTitle}}</h2>
 

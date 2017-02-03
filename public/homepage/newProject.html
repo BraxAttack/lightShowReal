@@ -16,11 +16,11 @@
         </md-input-container>
 
     <!--Upload Song-->
+        <md-progress-linear md-mode="determinate" value="{{projectsCtrl.percentage}}" style="width: 712px; float: left; padding-bottom: 10px;"></md-progress-linear>
 
-
-        <md-button class="fileUpload btn btn-primary">
-            <span>Upload .mp3</span>
-            <input required class="upload" type="file" id="file" accept=".mp3"/>
+        <md-button class="fileUpload btn btn-primary" id="file">
+            <span >Upload .mp3</span>
+            <input required class="upload" type="file"  accept=".mp3" style="width: 100%; height: 36px;"/>
         </md-button>
 
     <!--select Color For Tab-->
@@ -55,14 +55,14 @@
 -->
           <!--<button type="btn btn-primary" required style="float:left;" ng-click="projectsCtrl.uploadFile()">Upload</button>
 -->
-          {{ projectsCtrl.percentage }}
-          {{ projectsCtrl.newProject.songurl }}
 
-          <md-button  type="submit" class="md-raised" style="height: 60px; background-color: #00acff; font-size:30px; color:white; margin-top: 30px; margin-bottom: 30px; float: left; width: 100%">
+
+          <md-button  type="submit" class="md-raised" style="height: 70px; background-color: #00acff; font-size:30px; color:white; margin-top: 30px; margin-bottom: 30px; float: left; width: 712px">
             Create Project
           </md-button>
           </form>
 
+          {{projectsCtrl.newProject}}
 
 
 
