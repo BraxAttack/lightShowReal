@@ -1,3 +1,5 @@
+<div style="height: 100vh; width: 100vw; background-color: #424242;">
+<!--
 <div class="page-wrapper">
 
   <div class="page-header">
@@ -21,4 +23,34 @@
   <md-button ui-sref="login">
     login
   </md-button>
+</div>
+
+-->
+
+
+
+  <img class="loginTopLogo" src="images/lightShow.png"/>
+  <md-button ui-sref="login" class="loginTopRegisterLink">
+    Login
+  </md-button>
+
+  <md-content md-theme="docs-dark" layout-gt-sm="column" layout-align="center center" layout-padding flex="100" style="background-color: #424242;">
+
+    <form ng-submit="authCtrl.register()"  layout-gt-sm="column" layout-align="center center" layout-padding flex="100" style="background-color: #424242;">
+       <md-input-container style="width: 400px;">
+         <label style="color: #EEEEEE;">Email</label>
+         <input type="email" style="border-bottom-color: #EEEEEE; color: white;" ng-model="authCtrl.user.email">
+       </md-input-container>
+
+       <md-input-container style="width: 400px;">
+         <label style="color: #EEEEEE;">Password</label>
+         <input type="password" style="border-bottom-color: #EEEEEE; color: white;" ng-model="authCtrl.user.password">
+       </md-input-container>
+
+       <md-button type="submit" style="width:400px; background-color: #1b96fe; color: white;">
+         register
+       </md-button>
+     </form>
+   </md-content>
+
 </div>

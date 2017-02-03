@@ -1,6 +1,6 @@
 <div style="height: 100vh; width: 100vw; background-color: #424242;">
 
-
+<!--
   <md-button ng-click="authCtrl.loginWithGoogle()">
     Google
   </md-button>
@@ -21,26 +21,43 @@
   <md-button ui-sref="register">
     register
   </md-button>
-
+-->
 
   <img class="loginTopLogo" src="images/lightShow.png"/>
+  <md-button ui-sref="register" class="loginTopRegisterLink">
+    register
+  </md-button>
 
   <md-content md-theme="docs-dark" layout-gt-sm="column" layout-align="center center" layout-padding flex="100" style="background-color: #424242;">
+    <i class="loginSyncLogo material-icons">sync</i>
 
-
-       <md-input-container style="width: 400px;">
+    <h1 class="loginHeader">Sign In</h1>
+    <div class="LoginExternalAuthSignInDiv">
+      <md-button class="loginExternalAuthButton" ng-click="authCtrl.loginWithFacebook()" style="background-color: #3b5ca2;">
+        <i style="font-size:24px" class="fa">&#xf09a;</i>
+      </md-button>
+      <md-button class="loginExternalAuthButton" ng-click="authCtrl.loginWithGoogle()" style="background-color: #da4c22;">
+        <i style="font-size:24px" class="fa">&#xf1a0;</i>
+      </md-button>
+      <md-button class="loginExternalAuthButton" ng-click="authCtrl.loginWithTwitter()" style="background-color: #00b4f5;">
+        <i style="font-size:24px" class="fa">&#xf099;</i>
+      </md-button>
+    </div>
+    <form ng-submit="authCtrl.login()"  layout-gt-sm="column" layout-align="center center" layout-padding flex="100" style="background-color: #424242;">
+       <md-input-container style="width: 500px;">
          <label style="color: #EEEEEE;">Email</label>
-         <input type="email" style="border-bottom-color: #EEEEEE; color: white;">
+         <input type="email" style="border-bottom-color: #EEEEEE; color: white;" ng-model="authCtrl.user.email">
        </md-input-container>
 
-       <md-input-container style="width: 400px;">
+       <md-input-container style="width: 500px;">
          <label style="color: #EEEEEE;">Password</label>
-         <input type="password" style="border-bottom-color: #EEEEEE; color: white;">
+         <input type="password" style="border-bottom-color: #EEEEEE; color: white;" ng-model="authCtrl.user.password">
        </md-input-container>
 
-       <md-button style="width:400px; background-color: #1b96fe; color: white;">
-         register
+       <md-button type="submit" style="width:500px; height: 55px; background-color: #1b96fe; color: white;">
+         Login
        </md-button>
+      </form>
    </md-content>
 
 </div>
