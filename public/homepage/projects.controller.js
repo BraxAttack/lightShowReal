@@ -20,33 +20,13 @@ angular.module('lightShowApp')
     projectsCtrl.newProject = {
       projectName: '',
       songTitle: '',
-      songurl: '',
       lastEdit: '',
       color: '',
       user: projectsCtrl.profile.$id
     };
 
     projectsCtrl.newProjectData = {
-      songData:[
-        [
-          [0, 0, 0],
-          [0, 0, 0],
-          [0, 0, 0],
-          [0, 0, 0]
-        ],
-        [
-          [4, 5, 6],
-          [7, 8, 9],
-          [10, 11, 12],
-          [1, 2, 3]
-        ],
-        [
-          [4, 5, 6],
-          [7, 8, 9],
-          [10, 11, 12],
-          [1, 2, 3]
-        ]
-      ]
+      songData: []
     }
 
     projectsCtrl.colorList = [
@@ -135,35 +115,141 @@ angular.module('lightShowApp')
     };
 
 
+    projectsCtrl.checkDurrationLoop = function(vid, projectKey) {
+      console.log(vid);
+
+
+      if(isNaN(vid.duration)) {
+          console.log("wee");
+            $timeout(function() {
+              projectsCtrl.checkDurrationLoop(vid, projectKey);
+            }, 1000);
+        }else{
+
+          var projectDataUpdates = {};
+          //alert("trueness");
+
+          console.log(vid.duration);
+          console.log(projectsCtrl.newProjectData.songData);
+
+          //10 frames for each second of the song plus 4 just in case
+          var numberOfFrames = (vid.duration * 10) + 4;
+
+          //creates blank frames for number of frames in song
+          for (f = 0; f < numberOfFrames; f++) {
+            for (y = 0; y < 50; y++) {
+              projectsCtrl.newProjectData.songData.push([]);
+              for (x = 0; x < 50; x++) {
+                projectsCtrl.newProjectData.songData[y].push([]);
+                projectsCtrl.newProjectData.songData[y][x] = 0;
+              }
+            }
+          }
+
+          console.log(projectsCtrl.newProjectData.songData);
+
+          //adds song data
+          projectDataUpdates['/ProjectsData/' + projectsCtrl.profile.$id + '/' + projectKey] = projectsCtrl.newProjectData;
+          firebase.database().ref().update(projectDataUpdates);
+
+
+
+
+        };
+
+    }
+
 //start new project creation;
     projectsCtrl.songurlLoop = function() {
-      if(projectsCtrl.newProject.songurl == 'null') {
+/*    if(projectsCtrl.newProject.songurl == 'null') {
           //console.log(projectsCtrl.newProject.songurl);
           //projectsCtrl.songurlLoop();
           $timeout(function() {
             projectsCtrl.songurlLoop();
           }, 1000);
-      }else{
+      }else{ */
         //console.log(projectsCtrl.newProject.songurl);
           var projectKey = firebase.database().ref('Projects/' + projectsCtrl.profile.$id).push().key;
           var projectUpdates = {};
           var projectDataUpdates = {};
 
+
           projectUpdates['/Projects/' + projectsCtrl.profile.$id + '/' + projectKey] = projectsCtrl.newProject;
           firebase.database().ref().update(projectUpdates)
           .then(function(ref){
-            projectDataUpdates['/ProjectsData/' + projectsCtrl.profile.$id + '/' + projectKey] = projectsCtrl.newProjectData;
-            firebase.database().ref().update(projectDataUpdates)
+
+
+            //var filename = selectedFile.name;
+            var storageRef = firebase.storage().ref('/projectSongs/' + projectKey);
+            var uploadTask = storageRef.put(selectedFile);
+
+            uploadTask.on('state_changed', function(snapshot){
+
+              var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              projectsCtrl.percentage = percentage;
+
+            }, function(error) {
+              alert(error);
+
+            }, function() {
+
+
+              var downloadURL = uploadTask.snapshot.downloadURL;
+              var updates = {};
+              var songData = {
+                url: downloadURL,
+                user: projectsCtrl.profile.$id
+              };
+
+              //projectsCtrl.newProject.songurl = downloadURL;
+
+
+              //alert(downloadURL)
+
+
+
+
+              const storageRef = firebase.storage().ref().child('projectSongs/' + projectKey);
+              storageRef.getDownloadURL().then(function(url){
+
+                //alert(url);
+                url => this.image = url
+
+                var x = document.createElement("AUDIO");
+
+                if (x.canPlayType("audio/mpeg")) {
+                    x.setAttribute("src", url);
+                    x.setAttribute("id", "songID");
+                }
+
+                x.setAttribute("controls", "controls");
+                document.body.appendChild(x);
+
+                var vid = document.getElementById("songID");
+
+                //calls function that loops until durration is found
+                projectsCtrl.checkDurrationLoop(vid, projectKey);
+
+              });
+
+
+
+
+            });
+            //alert("something")
+
+
+
         //  $state.go('homepage.projects');
           //$state.go('channels.messages', {projectId: ref.key});
           return;
         });
-      }
-    };
+      };
+  //  };
 
     projectsCtrl.createProject = function(){
 
-      projectsCtrl.uploadFile();
+      //projectsCtrl.uploadFile();
 
       projectsCtrl.songurlLoop();
 
@@ -178,4 +264,42 @@ angular.module('lightShowApp')
         });
       });
     };
+
+
+
+
+
+
+
+
+
+
+     projectsCtrl.initGeolocation = function() {
+       alert("wee");
+ if (navigator && navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(projectsCtrl.successCallback, projectsCtrl.errorCallback);
+        } else {
+            console.log('Geolocation is not supported');
+        }
+}
+
+ projectsCtrl.errorCallback = function() {}
+
+ projectsCtrl.successCallback = function(position) {
+      var mapUrl = "http://maps.google.com/maps/api/staticmap?center=";
+      mapUrl = mapUrl + position.coords.latitude + ',' + position.coords.longitude;
+      mapUrl = mapUrl + '&zoom=15&size=512x512&maptype=roadmap&sensor=false';
+      var imgElement = document.getElementById("static-map");
+      imgElement.src = mapUrl;
+      alert(position.coords.latitude + "/" + position.coords.longitude);
+    }
+
+
+
+
+
+
+
+
+
   });
