@@ -20,7 +20,7 @@
 
         <md-button class="fileUpload btn btn-primary" id="file">
             <span >Upload .mp3</span>
-            <input  class="upload" type="file"  accept=".mp3" style="width: 100%; height: 36px;"/>
+            <input required class="upload" type="file"  accept=".mp3" style="width: 100%; height: 36px;"/>
         </md-button>
 
     <!--select Color For Tab-->
@@ -32,7 +32,6 @@
 
           </md-button>
         </div>
-
 
 
 
@@ -62,8 +61,11 @@
           </md-button>
           </form>
 
-          {{projectsCtrl.newProject}}
+          <!--{{projectsCtrl.newProject}}-->
 
+        
+          {{projectsCtrl.downloadURLforAudio}}
+          <button ng-click="projectsCtrl.myFunction()" type="button">Get video length</button><br>
 
 
 </md-content>

@@ -110,11 +110,11 @@ angular
           url: '/{projectId}/edit',
           templateUrl: 'projectIndiv/projectIndiv.html',
           controller: 'ProjectIndivCtrl as projectIndivCtrl',
-        /*  resolve: {
-            projectIndivData: function($stateParams, Projects){
-              return Projects.forProjectIndiv($stateParams.projectId).$loaded();
+        resolve: {
+            projectIndivData: function($stateParams){
+              return $stateParams.projectId;
             }
-          }*/
+          }
         })
       .state('homepage.templates', {
         url: '/templates',

@@ -8,6 +8,7 @@ angular.module('lightShowApp')
     projectsCtrl.profile = profile;
     projectsCtrl.projects = projects;
 
+    projectsCtrl.downloadURLforAudio = "dasdf";
 
     projectsCtrl.getDisplayName = Users.getDisplayName;
     projectsCtrl.getGravatar = Users.getGravatar;
@@ -26,12 +27,25 @@ angular.module('lightShowApp')
     };
 
     projectsCtrl.newProjectData = {
-      name: 'test for var',
-      songData: [
-        ['things', 'stuff', 'such'],
-        ['things', 'stuff', 'such'],
-        ['things', 'stuff', 'such'],
-        ['things', 'stuff', 'such']
+      songData:[
+        [
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0]
+        ],
+        [
+          [4, 5, 6],
+          [7, 8, 9],
+          [10, 11, 12],
+          [1, 2, 3]
+        ],
+        [
+          [4, 5, 6],
+          [7, 8, 9],
+          [10, 11, 12],
+          [1, 2, 3]
+        ]
       ]
     }
 
@@ -73,7 +87,18 @@ angular.module('lightShowApp')
     projectsCtrl.percentage = 0;
     projectsCtrl.newProject.songurl = 'null';
 
+
+
+    projectsCtrl.myFunction = function() {
+        alert(document.getElementById("actualUpload").duration);
+
+    }
+
+
     projectsCtrl.uploadFile = function(event) {
+
+
+
 
       var filename = selectedFile.name;
       var storageRef = firebase.storage().ref('/projectSongs/' + filename);
@@ -102,6 +127,9 @@ angular.module('lightShowApp')
         projectsCtrl.newProject.songurl = downloadURL;
         console.log(songKey);
 
+        alert(downloadURL)
+
+
       });
 
     };
@@ -126,7 +154,7 @@ angular.module('lightShowApp')
           .then(function(ref){
             projectDataUpdates['/ProjectsData/' + projectsCtrl.profile.$id + '/' + projectKey] = projectsCtrl.newProjectData;
             firebase.database().ref().update(projectDataUpdates)
-          $state.go('homepage.projects');
+        //  $state.go('homepage.projects');
           //$state.go('channels.messages', {projectId: ref.key});
           return;
         });
@@ -151,65 +179,3 @@ angular.module('lightShowApp')
       });
     };
   });
-
-
-
-
-/*angular.module('lightShowApp')
-  .controller('ProjectsCtrl', function(currentPage){
-    var projectsCtrl = this;
-
-    projectsCtrl.currentPage = currentPage;
-
-    projectsCtrl.currentPage.add("Projects");
-
-    projectsCtrl.projects = [
-      {
-        title: 'OneB',
-        creator: 'BaxAttack',
-        lastModified: '1/23/17',
-        songTitle: 'WildestDreams.mp3'
-      },
-      {
-        title: 'OneB',
-        creator: 'BaxAttack',
-        lastModified: '1/23/17',
-        songTitle: 'WildestDreams.mp3'
-      },
-      {
-        title: 'OneB',
-        creator: 'BaxAttack',
-        lastModified: '1/23/17',
-        songTitle: 'WildestDreams.mp3'
-      },
-      {
-        title: 'OneB',
-        creator: 'BaxAttack',
-        lastModified: '1/23/17',
-        songTitle: 'WildestDreams.mp3'
-      },
-      {
-        title: 'OneB',
-        creator: 'BaxAttack',
-        lastModified: '1/23/17',
-        songTitle: 'WildestDreams.mp3'
-      },
-      {
-        title: 'OneB',
-        creator: 'BaxAttack',
-        lastModified: '1/23/17',
-        songTitle: 'WildestDreams.mp3'
-      },
-      {
-        title: 'OneB',
-        creator: 'BaxAttack',
-        lastModified: '1/23/17',
-        songTitle: 'WildestDreams.mp3'
-      },
-
-
-    ];
-
-
-  });
-*/
