@@ -68,12 +68,12 @@ angular.module('lightShowApp')
     projectsCtrl.newProject.songurl = 'null';
 
 
-
+/*
     projectsCtrl.myFunction = function() {
         alert(document.getElementById("actualUpload").duration);
 
     }
-
+*/
 
     projectsCtrl.uploadFile = function(event) {
 
@@ -83,6 +83,8 @@ angular.module('lightShowApp')
       var filename = selectedFile.name;
       var storageRef = firebase.storage().ref('/projectSongs/' + filename);
       var uploadTask = storageRef.put(selectedFile);
+
+
 
       uploadTask.on('state_changed', function(snapshot){
 
@@ -120,7 +122,7 @@ angular.module('lightShowApp')
 
 
       if(isNaN(vid.duration)) {
-          console.log("wee");
+          console.log("wee1");
             $timeout(function() {
               projectsCtrl.checkDurrationLoop(vid, projectKey);
             }, 1000);
@@ -130,27 +132,68 @@ angular.module('lightShowApp')
           //alert("trueness");
 
           console.log(vid.duration);
-          console.log(projectsCtrl.newProjectData.songData);
+          //console.log(projectsCtrl.newProjectData.songData);
 
           //10 frames for each second of the song plus 4 just in case
           var numberOfFrames = (vid.duration * 10) + 4;
 
           //creates blank frames for number of frames in song
           for (f = 0; f < numberOfFrames; f++) {
+            projectsCtrl.newProjectData.songData.push([]);
             for (y = 0; y < 50; y++) {
-              projectsCtrl.newProjectData.songData.push([]);
+              projectsCtrl.newProjectData.songData[f].push([]);
               for (x = 0; x < 50; x++) {
-                projectsCtrl.newProjectData.songData[y].push([]);
-                projectsCtrl.newProjectData.songData[y][x] = 0;
+                projectsCtrl.newProjectData.songData[f][y].push([]);
+                projectsCtrl.newProjectData.songData[f][y][x] = 0;
               }
             }
           }
 
-          console.log(projectsCtrl.newProjectData.songData);
+          //console.log(projectsCtrl.newProjectData.songData);
 
           //adds song data
+//commented out cause firebase dont like it cause it's too big
+/*
           projectDataUpdates['/ProjectsData/' + projectsCtrl.profile.$id + '/' + projectKey] = projectsCtrl.newProjectData;
           firebase.database().ref().update(projectDataUpdates);
+*/
+        if (typeof projectsCtrl.newProjectData.songData === 'object') {
+          //console.log(projectsCtrl.newProjectData.songData);
+          //var JSONdata = JSON.stringify(projectsCtrl.newProjectData.songDat);
+
+          var arr = [projectsCtrl.newProjectData.songData];
+          var JSONdata = JSON.stringify(arr);
+
+          var text = JSONdata;
+          var filename = projectKey;
+          var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+          saveAs(blob, filename+".txt");
+
+          var storageRefData = firebase.storage().ref('/projectSongs/' + filename + '.txt');
+          var uploadTaskData = storageRefData.put(blob);
+
+          var file = uploadTaskData;
+          console.log("test");
+          $timeout(function() {
+            $state.go('homepage.projects');
+          }, 1000);
+
+
+          storageRefData.put(file).then(function(snapshot) {
+            console.log('Uploaded a blob or file!');
+
+          });
+
+        }
+
+
+      //  var blob = new Blob([JSONdata], {type: "text/javascript"});
+      //  saveAs(blob, filename+".txt");
+
+
+
+
+
 
 
 
@@ -222,7 +265,7 @@ angular.module('lightShowApp')
                     x.setAttribute("id", "songID");
                 }
 
-                x.setAttribute("controls", "controls");
+                //x.setAttribute("controls", "controls");
                 document.body.appendChild(x);
 
                 var vid = document.getElementById("songID");
@@ -274,14 +317,14 @@ angular.module('lightShowApp')
 
 
 
-     projectsCtrl.initGeolocation = function() {
-       alert("wee");
- if (navigator && navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(projectsCtrl.successCallback, projectsCtrl.errorCallback);
-        } else {
-            console.log('Geolocation is not supported');
-        }
-}
+   projectsCtrl.initGeolocation = function() {
+     alert("wee2");
+   if (navigator && navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(projectsCtrl.successCallback, projectsCtrl.errorCallback);
+          } else {
+              console.log('Geolocation is not supported');
+          }
+  }
 
  projectsCtrl.errorCallback = function() {}
 
@@ -295,6 +338,25 @@ angular.module('lightShowApp')
     }
 
 
+
+
+    projectsCtrl.filedownload = function() {
+      alert("wee3");
+      var text = "lots of text and stuff that's not too important";
+      var filename = "myFile"
+      var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, filename+".txt");
+
+
+      var storageRefData = firebase.storage().ref('/projectSongs/mytextthingy');
+      var uploadTaskData = storageRefData.put(blob);
+
+      var file = uploadTaskData;
+      ref.put(file).then(function(snapshot) {
+        console.log('Uploaded a blob or file!');
+      });
+
+    };
 
 
 
