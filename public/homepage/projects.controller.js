@@ -174,6 +174,9 @@ angular.module('lightShowApp')
 
           var file = uploadTaskData;
           console.log("test");
+
+
+
           $timeout(function() {
             $state.go('homepage.projects');
           }, 1000);
@@ -318,12 +321,33 @@ angular.module('lightShowApp')
 
 
    projectsCtrl.initGeolocation = function() {
-     alert("wee2");
+     //alert("wee2");
+     var debug = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],];
+     var blob = new Blob([JSON.stringify(debug, null, 2)], {type : 'application/json'});
+     var file =  blob;// use the Blob or File API
+     firebase.storage().ref('/Blobs/1234556').put(file).then(function(snapshot) {
+        console.log('Uploaded a blob or file!');
+     });
+
+
    if (navigator && navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(projectsCtrl.successCallback, projectsCtrl.errorCallback);
           } else {
               console.log('Geolocation is not supported');
           }
+
+   firebase.storage().ref('/Blobs/1234556').getDownloadURL().then(function(url) {
+      var xhr = new XMLHttpRequest();
+        xhr.responseType = 'blob';
+        xhr.onload = function(event) {
+          var blobin = xhr.response;
+          console.log(blobin);
+        };
+        xhr.open('GET', url);
+        xhr.send();
+  });
+
+
   }
 
  projectsCtrl.errorCallback = function() {}
