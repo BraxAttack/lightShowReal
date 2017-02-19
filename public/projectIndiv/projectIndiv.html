@@ -1,5 +1,7 @@
+{{projectIndivCtrl.currentFrame}}
 individual project
 {{projectIndivCtrl.projectID}}</br>
+
 <div ng-if="!projectIndivCtrl.projectData">
   Data is not Loaded
 
@@ -20,6 +22,16 @@ individual project
 
     </div>
   </div>
+
+
+  <div class="indivProjectEditChooseFrameDiv">
+
+    <!-- repeats selectors for each frame in the project-->
+    <a ng-click="projectIndivCtrl.setFrameNumber($index)" class="indivProjectEditChooseFrameDivEachFrame" ng-repeat="frame in projectIndivCtrl.projectDataParsed[0] track by $index">
+      {{$index}}
+    </a>
+  </div>
+
 
   <button ng-click="projectIndivCtrl.setFrame(0)" style="position: absolute; top: calc(70vh);">Set Frame 0</button>
   <button ng-click="projectIndivCtrl.displayArray()" style="position: absolute; top: calc(70vh); left: 125px;">Show array</button>

@@ -8,8 +8,9 @@ angular.module('lightShowApp')
     console.log("profile " + profileID);
     console.log("profile " + projectID);
 
+    projectIndivCtrl.currentFrame = 0;
 //uncomment this to load data
-
+    projectIndivCtrl.projectDataParsed = [];
 
     var ref = firebase.database().ref('/ProjectData/').child(profileID).child(projectID);
     var projectsIndiv = $firebaseArray(ref).$loaded()
@@ -23,12 +24,13 @@ angular.module('lightShowApp')
             projectIndivCtrl.projectDataParsed.push(arraypush);
 
         }
-        console.log(projectIndivCtrl.projectDataParsed);
+        console.log(projectIndivCtrl.projectDataParsed[0].length);
+
 
         //saves ram (i think...)
         projectIndivCtrl.projectData = "none";
         $timeout(function () {
-          projectIndivCtrl.setFrame(0);
+          projectIndivCtrl.setFrame();
         }, 100);
 
       });
@@ -45,11 +47,16 @@ angular.module('lightShowApp')
 
     }
 
-    projectIndivCtrl.setFrame = function(frame) {
+    projectIndivCtrl.ColorPalate = [
+      '',
+      '#1976D2'
+    ];
+
+    projectIndivCtrl.setFrame = function() {
 
       for (i = 0; i < 400; i++) {
         //console.log('Display'+i);
-        if(projectIndivCtrl.projectDataParsed[i][0] == 1){
+        if(projectIndivCtrl.projectDataParsed[i][projectIndivCtrl.currentFrame] == 1){
             document.getElementById('Display'+i).style.backgroundColor = "red";
         }
 
@@ -68,6 +75,11 @@ angular.module('lightShowApp')
 
     }
 
+
+    projectIndivCtrl.setFrameNumber = function(frame) {
+      projectIndivCtrl.currentFrame = frame;
+      projectIndivCtrl.setFrame()
+    }
 
 
     projectIndivCtrl.SaveProject = function() {

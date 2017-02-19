@@ -138,13 +138,14 @@ angular.module('lightShowApp')
 
           //10 frames for each second of the song plus 4 just in case
           var numberOfFrames = (vid.duration * 10) + 4;
+          projectsCtrl.numberOfFramesScoped = numberOfFrames;
 
           //creates blank frames for number of frames in song 50/50
           for (s = 0; s < 400; s++) {
             projectsCtrl.newProjectData.songData.push([]);
-            for (x = 0; x < numberOfFrames; x++) {
+            for (x = 0; x < projectsCtrl.numberOfFramesScoped; x++) {
                 projectsCtrl.newProjectData.songData[s].push([]);
-                projectsCtrl.newProjectData.songData[s][x] = 255;
+                projectsCtrl.newProjectData.songData[s][x] = 0;
               }
           }
 
@@ -191,7 +192,7 @@ angular.module('lightShowApp')
                   $timeout(function() {
                     projectsCtrl.uploadCountIsComplete = 'null';
                     $state.go('homepage.projects');
-
+                    location.reload();
                   }, 1000);
 
 

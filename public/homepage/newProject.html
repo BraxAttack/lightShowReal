@@ -5,13 +5,14 @@
   <p id="loadPercent">
     0
   </p>
+  {{projectsCtrl.numberOfFramesScoped}}
 </div>
 
 <md-content layout-padding>
 
 
     <h1>New Project</h1>
-
+        {{projectsCtrl.numberOfFramesScoped}}
         <form ng-submit="projectsCtrl.createProject()">
 
           <md-input-container class="md-block" style="width: 712px;">
