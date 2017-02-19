@@ -1,9 +1,28 @@
 individual project
 {{projectIndivCtrl.projectID}}</br>
-{{projectIndivCtrl.projectData}}
+<div ng-if="!projectIndivCtrl.projectData">
+  Data is not Loaded
 
-<!--
-<div ng-repeat="line in projectIndivCtrl.projectData track by $index"">
-  <div ng-repeat="square in line track by $index"" style="background-color: red; float: left;">{{square}}</div> </br>
 </div>
--->
+
+
+
+<div ng-if="projectIndivCtrl.projectData">
+
+  <div class="indivProjectEditSquareEdit">
+    <a ng-click="projectIndivCtrl.setNode($index)" id="Edit{{ $index }}" class="indivProjectEditSquareEditIndivNode"  ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
+
+    </a>
+  </div>
+
+  <div class="indivProjectEditSquareDisplay">
+    <div id="Display{{ $index }}" class="indivProjectEditSquareDisplayIndivNode" ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
+
+    </div>
+  </div>
+
+  <button ng-click="projectIndivCtrl.setFrame(0)" style="position: absolute; top: calc(70vh);">Set Frame 0</button>
+  <button ng-click="projectIndivCtrl.displayArray()" style="position: absolute; top: calc(70vh); left: 125px;">Show array</button>
+  <button ng-click="projectIndivCtrl.SaveProject()" style="position: absolute; top: calc(70vh); left: 240px;">Save</button>
+
+</div>

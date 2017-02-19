@@ -29,6 +29,8 @@ angular.module('lightShowApp')
       songData: []
     }
 
+    projectsCtrl.uploadCountIsComplete = 'null';
+
     projectsCtrl.colorList = [
       '#d32f2f',
       '#C2185B',
@@ -137,30 +139,70 @@ angular.module('lightShowApp')
           //10 frames for each second of the song plus 4 just in case
           var numberOfFrames = (vid.duration * 10) + 4;
 
-          //creates blank frames for number of frames in song
-          for (f = 0; f < numberOfFrames; f++) {
+          //creates blank frames for number of frames in song 50/50
+          for (s = 0; s < 400; s++) {
             projectsCtrl.newProjectData.songData.push([]);
-            for (y = 0; y < 50; y++) {
-              projectsCtrl.newProjectData.songData[f].push([]);
-              for (x = 0; x < 50; x++) {
-                projectsCtrl.newProjectData.songData[f][y].push([]);
-                projectsCtrl.newProjectData.songData[f][y][x] = 0;
+            for (x = 0; x < numberOfFrames; x++) {
+                projectsCtrl.newProjectData.songData[s].push([]);
+                projectsCtrl.newProjectData.songData[s][x] = 255;
               }
-            }
           }
+
+          var JSONdata = JSON.stringify(projectsCtrl.newProjectData.songData)
 
           //console.log(projectsCtrl.newProjectData.songData);
 
           //adds song data
-//commented out cause firebase dont like it cause it's too big
+          //commented out cause firebase dont like it cause it's too big
+          //alert(JSONdata);
 /*
-          projectDataUpdates['/ProjectsData/' + projectsCtrl.profile.$id + '/' + projectKey] = projectsCtrl.newProjectData;
+          projectDataUpdates['/ProjectsData/' + projectsCtrl.profile.$id + '/' + projectKey] = JSONdata;
           firebase.database().ref().update(projectDataUpdates);
 */
+
+
+
+
+
         if (typeof projectsCtrl.newProjectData.songData === 'object') {
           //console.log(projectsCtrl.newProjectData.songData);
           //var JSONdata = JSON.stringify(projectsCtrl.newProjectData.songDat);
+          //alert(typeof projectsCtrl.newProjectData.songData);
+          //alert(numberOfFrames);
 
+
+          projectsCtrl.uploadCount = 0;
+
+
+          for (i = 0; i < 400; i++) {
+              var projectDataUpload = {};
+              console.log(projectsCtrl.newProjectData.songData[i]);
+              console.log(JSON.stringify(projectsCtrl.newProjectData.songData[i]));
+              projectDataUpload['/ProjectData/'+ projectsCtrl.profile.$id + '/' + projectKey + '/' + i] = JSON.stringify(projectsCtrl.newProjectData.songData[i]);
+              firebase.database().ref().update(projectDataUpload)
+              .then(function(ref){
+                projectsCtrl.uploadCount += 1;
+                //console.log(projectsCtrl.uploadCount);
+                var percent = projectsCtrl.uploadCount/400;
+
+                document.getElementById("loadPercent").innerHTML = percent;
+
+                if(projectsCtrl.uploadCount == 400) {
+                  $timeout(function() {
+                    projectsCtrl.uploadCountIsComplete = 'null';
+                    $state.go('homepage.projects');
+
+                  }, 1000);
+
+
+                }
+
+              })
+
+          }
+
+
+/*
           var arr = [projectsCtrl.newProjectData.songData];
           var JSONdata = JSON.stringify(arr);
 
@@ -175,18 +217,11 @@ angular.module('lightShowApp')
           var file = uploadTaskData;
           console.log("test");
 
-
-
-          $timeout(function() {
-            $state.go('homepage.projects');
-          }, 1000);
-
-
           storageRefData.put(file).then(function(snapshot) {
             console.log('Uploaded a blob or file!');
 
           });
-
+*/
         }
 
 
@@ -296,7 +331,7 @@ angular.module('lightShowApp')
     projectsCtrl.createProject = function(){
 
       //projectsCtrl.uploadFile();
-
+      projectsCtrl.uploadCountIsComplete = 'false';
       projectsCtrl.songurlLoop();
 
     };
@@ -380,12 +415,14 @@ angular.module('lightShowApp')
         console.log('Uploaded a blob or file!');
       });
 
+
+
     };
 
 
 
-
-
-
+    projectsCtrl.clearProjectsData = function() {
+      firebase.database().ref('/ProjectsData/').remove();
+    }
 
   });

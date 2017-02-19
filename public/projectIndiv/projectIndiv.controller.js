@@ -1,61 +1,96 @@
 angular.module('lightShowApp')
-.controller("ProjectIndivCtrl", function($firebaseArray, $http, Auth, projectIndivData, profile) {
+.controller("ProjectIndivCtrl", function($firebaseArray, $http, $timeout, Auth, projectIndivData, profile) {
     var projectIndivCtrl = this;
 
     var projectID = projectIndivData;
     var profileID = profile.$id;
 
+    console.log("profile " + profileID);
+    console.log("profile " + projectID);
 
-    var ref = firebase.database().ref('/ProjectsData/').child(profileID).child(projectID).child('songData');
-    var projectsIndiv = $firebaseArray(ref);
-
-
-    projectIndivCtrl.projectID = projectID;
-    projectIndivCtrl.projectData = projectsIndiv;
+//uncomment this to load data
 
 
-    // Create a reference to the file we want to download
-    var dataRef = firebase.storage().ref().child('projectSongs/' + projectIndivCtrl.projectID +'.txt');
+    var ref = firebase.database().ref('/ProjectData/').child(profileID).child(projectID);
+    var projectsIndiv = $firebaseArray(ref).$loaded()
+    .then(function (projectData){
+        //console.log(projectData);
+        projectIndivCtrl.projectData = projectData;
+        projectIndivCtrl.projectDataParsed = [];
 
-    // Get the download URL
-    dataRef.getDownloadURL().then(function(url) {
-      // Insert url into an <img> tag to "download"
-      alert(url);
+        for (d = 0; d < 400; d++) {
+            var arraypush = JSON.parse(projectIndivCtrl.projectData[d]['$value']);
+            projectIndivCtrl.projectDataParsed.push(arraypush);
 
-      $http.get(url).then(function(response) {
-          var raw_html = response.data;
-          alert(raw_html);
+        }
+        console.log(projectIndivCtrl.projectDataParsed);
+
+        //saves ram (i think...)
+        projectIndivCtrl.projectData = "none";
+        $timeout(function () {
+          projectIndivCtrl.setFrame(0);
+        }, 100);
+
       });
 
-    }).catch(function(error) {
-      switch (error.code) {
-        case 'storage/object_not_found':
-          // File doesn't exist
-          break;
+//comment this out to restore
+//projectIndivCtrl.projectData = "none"
 
-        case 'storage/unauthorized':
-          // User doesn't have permission to access the object
-          break;
+    projectIndivCtrl.projectID = projectID;
 
-        case 'storage/canceled':
-          // User canceled the upload
-          break;
 
-        case 'storage/unknown':
-          // Unknown error occurred, inspect the server response
-          break;
+
+    projectIndivCtrl.displayArray = function() {
+      console.log(projectIndivCtrl.projectDataParsed[0]);
+
+    }
+
+    projectIndivCtrl.setFrame = function(frame) {
+
+      for (i = 0; i < 400; i++) {
+        //console.log('Display'+i);
+        if(projectIndivCtrl.projectDataParsed[i][0] == 1){
+            document.getElementById('Display'+i).style.backgroundColor = "red";
+        }
+
+
       }
-    });
+    }
 
-//will be for creating array to interface with
-/*
-    projectIndivCtrl.editSquareArray = {}
 
-    for (y = 0; y < 50; y++) {
-      for (x = 0; x < 50; x++) {
-            //console.log(x + "/" + y);
+    projectIndivCtrl.setNode = function(id) {
+      //alert("fire");
+      //console.log(projectIndivCtrl.projectData[0]);
+      //console.log(projectIndivCtrl.projectData[0][id]);
+      projectIndivCtrl.projectDataParsed[id][0] = 1;
+      console.log(projectIndivCtrl.projectDataParsed[id][0]);
+      projectIndivCtrl.setFrame()
+
+    }
+
+
+
+    projectIndivCtrl.SaveProject = function() {
+
+      projectIndivCtrl.uploadCount = 0;
+
+      for (i = 0; i < 400; i++) {
+          var projectDataUpload = {};
+          //console.log(projectsCtrl.newProjectData.songData[i])
+          projectDataUpload['/ProjectData/'+ profileID + '/' + projectIndivCtrl.projectID + '/' + i] = JSON.stringify(projectIndivCtrl.projectDataParsed[i]);
+          firebase.database().ref().update(projectDataUpload)
+          .then(function(ref){
+              projectIndivCtrl.uploadCount += 1;
+
+              if(projectIndivCtrl.uploadCount == 400) {
+                alert("done");
+              }
+
+          })
+
       }
 
     }
-*/
+
+
 })

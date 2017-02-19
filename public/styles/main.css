@@ -348,3 +348,62 @@ body {
     opacity: 0;
     filter: alpha(opacity=0);
 }
+
+.newProjectLoadingDiv {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 25;
+  background-color: #EEEEEE;
+  top: 0;
+  left: 0px;
+}
+
+.newProjectLoadingDivCircle {
+  position: absolute;
+  left: calc(50% - 25px);
+  top: calc(50% - 90px);
+}
+
+.indivProjectEditSquareDisplay {
+  background-color: lightgray;
+  width: calc(80vh - 200px);
+  height: calc(80vh - 200px);
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  z-index: 5;
+}
+
+.indivProjectEditSquareEdit {
+  width: calc(80vh - 200px);
+  height: calc(80vh - 200px);
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  z-index: 10;
+}
+
+.indivProjectEditSquareEditIndivNode {
+  height: calc((80vh - 240px)/20);
+  width: calc((80vh - 240px)/20);
+  float: left;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.indivProjectEditSquareEditIndivNode:hover {
+  background-color: white;
+
+}
+
+.indivProjectEditSquareDisplayIndivNode {
+  background-color: gray;
+  height: calc((80vh - 240px)/20);
+  width: calc((80vh - 240px)/20);
+  float: left;
+  text-align: center;
+  line-height: calc((80vh - 200px)/20);
+  border-style: solid;
+  border-width: 1px;
+}
