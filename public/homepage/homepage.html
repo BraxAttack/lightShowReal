@@ -1,5 +1,5 @@
 <section layout="row" flex style="height: 100vh; width: 100vw"  style="min-width: 1100px;">
-  <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
+  <md-sidenav id="sidenavDivID" layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
    <md-toolbar class="md-hue-2" style="background-color:#424242; color:#EEEEEE; height: 200px;">
      <span flex></span>
      <div layout="column" class="md-toolbar-tools-bottom inset">
@@ -55,11 +55,27 @@
      </a>
    </md-item>
 
+   <md-divider></md-divider>
+
+   <md-item>
+     <a>
+       <md-button md-ink-ripple layout="row" md-ink-ripple layout="row" layout-align="start center" style="width: 100%; padding: 0px; margin: 0;" ng-click="homepageCtrl.closeSidenav()">
+         <div class="inset" style="line-height: 0px;">
+          <i class="material-icons">arrow_back</i>
+         </div>
+         <div class="inset">
+           Minimize SideNav
+         </div>
+       </md-button>
+     </a>
+   </md-item>
+
   </md-list>
   </md-sidenav>
   <button ng-click="homepageCtrl.logout($event)">log out</button>
 
-  <div class="homepageTopBar">
+  <div class="homepageTopBar" id="homepageTopBarDiv">
+    <i class="material-icons" ng-click="homepageCtrl.openSideNav()" ng-if="homepageCtrl.sideNavState == 'closed'" id="menubuttonicon">menu</i>
     <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'Projects'">dashboard</i>
     <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'Templates'">invert_colors</i>
     <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'Playlists'">menu</i>
@@ -79,7 +95,7 @@
     <i class="homepageProjectsAddFabPlus material-icons">add</i>
   </md-button>
 
-  <ui-view class="homepageUIView"></ui-view>
+  <ui-view class="homepageUIView" id="homepageUIViewDiv"></ui-view>
 
 
 

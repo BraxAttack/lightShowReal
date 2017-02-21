@@ -1,6 +1,3 @@
-{{projectIndivCtrl.currentFrame}}
-individual project
-{{projectIndivCtrl.projectID}}</br>
 
 <div ng-if="!projectIndivCtrl.projectData">
   Data is not Loaded
@@ -11,30 +8,76 @@ individual project
 
 <div ng-if="projectIndivCtrl.projectData">
 
+  <div class="indivProjectPresetSelect">
+    <button ng-click="projectIndivCtrl.SaveProject()">Save</button>
+    {{projectIndivCtrl.currentFrame}}
+  </div>
+
+  <!--Project EDIT DIVS -->
   <div class="indivProjectEditSquareEdit">
-    <a ng-click="projectIndivCtrl.setNode($index)" id="Edit{{ $index }}" class="indivProjectEditSquareEditIndivNode"  ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
+    <a ng-mousedown="projectIndivCtrl.setNodeIN($index)" ng-mouseup="projectIndivCtrl.setNodeOUT($index)" id="Edit{{ $index }}" class="indivProjectEditSquareEditIndivNode"  ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
 
     </a>
   </div>
 
+<!--
+  <div class="indivProjecthighlightDiv">
+
+  </div>
+-->
   <div class="indivProjectEditSquareDisplay">
     <div id="Display{{ $index }}" class="indivProjectEditSquareDisplayIndivNode" ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
 
     </div>
   </div>
 
+  <!-- End Project EDIT DIVS-->
 
   <div class="indivProjectEditChooseFrameDiv">
+    <md-button class="indivProjectEditChooseFrameDivCurrentFrame">
+      {{projectIndivCtrl.currentFrame}}
+    </md-button>
 
     <!-- repeats selectors for each frame in the project-->
-    <a ng-click="projectIndivCtrl.setFrameNumber($index)" class="indivProjectEditChooseFrameDivEachFrame" ng-repeat="frame in projectIndivCtrl.projectDataParsed[0] track by $index">
-      {{$index}}
-    </a>
+    <div class="indivProjectEditChooseFrameDivSelectFrameDiv">
+      <a id="currentFrame{{$index}}" ng-click="projectIndivCtrl.setFrameNumber($index)" class="indivProjectEditChooseFrameDivEachFrame" ng-repeat="frame in projectIndivCtrl.projectDataParsed[0] track by $index">
+        {{$index}}
+      </a>
+    </div>
+
+  </div>
+
+  <div class="indivProjectPlayPauseDiv">
+    <md-button class="indivProjectPlayPause" ng-click="projectIndivCtrl.playShow()" ng-if="projectIndivCtrl.isplaying != 'true'">play</md-button>
+    <md-button class="indivProjectPlayPause" ng-click="projectIndivCtrl.pauseShow()" ng-if="projectIndivCtrl.isplaying == 'true'">pause</md-button>
+    <md-button class="indivProjectPlayFromBegin" ng-click="projectIndivCtrl.PlayFromBegin()" >Play from start</md-button>
+
+
+    <audio id="songHolder" controls style="display: none;">
+      <source src="error.ogg" type="audio/ogg">
+      <source src="error.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="indivProjectEditChooseColorDiv">
+    <md-button class="indivProjectEditChooseColorSelectedColor" style="background-color: {{projectIndivCtrl.SelectedColor.colorHex}}">
+      {{ projectIndivCtrl.SelectedColor.colorHex }}
+    </md-button>
+    <div class="indivProjectEditChooseColorDivScroll">
+      <md-button ng-click="projectIndivCtrl.setColor($index)" class="indivProjectEditChooseColorSelectAColor" ng-repeat="color in projectIndivCtrl.ColorPalate track by $index" style="background-color: {{color}}" >
+
+      </md-button>
+    </div>
+
+  </div>
+
+  <div class="indivProjectTools">
+
   </div>
 
 
-  <button ng-click="projectIndivCtrl.setFrame(0)" style="position: absolute; top: calc(70vh);">Set Frame 0</button>
-  <button ng-click="projectIndivCtrl.displayArray()" style="position: absolute; top: calc(70vh); left: 125px;">Show array</button>
-  <button ng-click="projectIndivCtrl.SaveProject()" style="position: absolute; top: calc(70vh); left: 240px;">Save</button>
+
+
 
 </div>

@@ -17,6 +17,7 @@ angular.module('lightShowApp')
       email: '@'
     };
 
+      homepageCtrl.sideNavState = 'open';
 
     homepageCtrl.menu = [
       {
@@ -36,6 +37,24 @@ angular.module('lightShowApp')
       }
     ];
 
+    homepageCtrl.closeSidenav = function() {
+      document.getElementById('sidenavDivID').style.display = "none";
+      document.getElementById('homepageTopBarDiv').style.left = 0;
+      document.getElementById('homepageTopBarDiv').style.width = "100vw";
+      document.getElementById('homepageUIViewDiv').style.left = 0;
+      document.getElementById('homepageUIViewDiv').style.width = "100vw";
+      homepageCtrl.sideNavState = 'closed';
+
+    }
+
+    homepageCtrl.openSideNav = function() {
+      document.getElementById('sidenavDivID').style.display = "block";
+      document.getElementById('homepageTopBarDiv').style.left = "320px";
+      document.getElementById('homepageTopBarDiv').style.width = "calc(100vw - 320px)";
+      document.getElementById('homepageUIViewDiv').style.left = "320px";
+      document.getElementById('homepageUIViewDiv').style.width = "calc(100vw - 320px)";
+      homepageCtrl.sideNavState = 'open';
+    }
 
     homepageCtrl.logout = function(){
         var confirm = $mdDialog.confirm()
