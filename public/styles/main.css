@@ -466,6 +466,7 @@ font-size: 35px;
   background-color: gray;
   margin: 2px;
   border-radius: 1px;
+  overflow: hidden;
 }
 
 .indivProjectPlayPauseDiv {
@@ -478,6 +479,7 @@ font-size: 35px;
   top: calc(80vh - 65px);
   padding: 5px;
   border-radius: 2px;
+  overflow: hidden;
 }
 
 .indivProjectTools {
@@ -490,6 +492,7 @@ font-size: 35px;
   top: calc(80vh - 65px);
   padding: 5px;
   border-radius: 2px;
+  overflow: hidden;
 }
 
 .indivProjectEditChooseColorDiv {
@@ -508,7 +511,8 @@ font-size: 35px;
 .indivProjectEditChooseColorSelectedColor {
   width: calc(100% - 5px);
   height: 75px;
-  background-color: white;
+  background-color: black;
+  color: white;
   text-align: center;
   line-height: 75px;
   padding: 0px;
@@ -548,9 +552,30 @@ font-size: 35px;
   float: left;
   width: 40%;
   height: 40%;
-  background-color: #FF9800;
+  background-color: #f44336;
   border-radius: 2px;
   color: white;
   margin: 0px;
   margin-top: 2.5%;
+  min-width: 0px;
+}
+
+.indivProjectSave {
+  float: right;
+  background-color: #03A9F4;
+  height: calc(100% - 12px);
+  width: 100px;
+}
+
+.indivProjectAudioDiv {
+  float: left;
+  border-radius: 3px;
+  margin-top: 2.5%;
+  margin-left: 5px;
+  width: 200px;
+}
+
+.indivProjectToolsDiv {
+  float: left;
+  width: 200px;
 }

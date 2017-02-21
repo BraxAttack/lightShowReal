@@ -9,13 +9,15 @@
 <div ng-if="projectIndivCtrl.projectData">
 
   <div class="indivProjectPresetSelect">
-    <button ng-click="projectIndivCtrl.SaveProject()">Save</button>
-    {{projectIndivCtrl.currentFrame}}
+    <md-button class="indivProjectSave" ng-click="projectIndivCtrl.SaveProject()">Save</md-button>
+    {{projectIndivCtrl.selectedTool}}
+    <br />
+    {{projectIndivCtrl.drawingArray}}
   </div>
 
   <!--Project EDIT DIVS -->
   <div class="indivProjectEditSquareEdit">
-    <a ng-mousedown="projectIndivCtrl.setNodeIN($index)" ng-mouseup="projectIndivCtrl.setNodeOUT($index)" id="Edit{{ $index }}" class="indivProjectEditSquareEditIndivNode"  ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
+    <a ng-mousedown="projectIndivCtrl.setNodeIN($index)" ng-mouseover="projectIndivCtrl.setNodeMouseOver($index)" ng-mouseup="projectIndivCtrl.setNodeOUT($index)" id="Edit{{ $index }}" class="indivProjectEditSquareEditIndivNode"  ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
 
     </a>
   </div>
@@ -48,9 +50,24 @@
   </div>
 
   <div class="indivProjectPlayPauseDiv">
-    <md-button class="indivProjectPlayPause" ng-click="projectIndivCtrl.playShow()" ng-if="projectIndivCtrl.isplaying != 'true'">play</md-button>
-    <md-button class="indivProjectPlayPause" ng-click="projectIndivCtrl.pauseShow()" ng-if="projectIndivCtrl.isplaying == 'true'">pause</md-button>
-    <md-button class="indivProjectPlayFromBegin" ng-click="projectIndivCtrl.PlayFromBegin()" >Play from start</md-button>
+    <md-button class="indivProjectPlayPause" ng-click="projectIndivCtrl.playShow()" ng-if="projectIndivCtrl.isplaying != 'true'" style="background-color:#4CAF50;">play</md-button>
+    <md-button class="indivProjectPlayPause" ng-click="projectIndivCtrl.pauseShow()" ng-if="projectIndivCtrl.isplaying == 'true'" style="background-color:#FF9800;">pause</md-button>
+    <md-button class="indivProjectPlayFromBegin" ng-click="projectIndivCtrl.PlayFromBegin()" style="background-color:#f44336;">Play from start</md-button>
+    <div style="float: left; width: 1px; height: 150%;">
+
+    </div>
+    <div class="indivProjectAudioDiv">
+      <md-button ng-click="projectIndivCtrl.volumeUp()" class="md-fab" aria-label="Eat cake" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">volume_up</i>
+      </md-button>
+      <md-button ng-click="projectIndivCtrl.volumeDown()" class="md-fab" aria-label="Eat cake" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">volume_down</i>
+      </md-button>
+      <md-button ng-click="projectIndivCtrl.volumeMute()" class="md-fab" aria-label="Eat cake" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">volume_off</i>
+      </md-button>
+
+    </div>
 
 
     <audio id="songHolder" controls style="display: none;">
@@ -73,6 +90,21 @@
   </div>
 
   <div class="indivProjectTools">
+    <div style="width: 1px; height: 120%; float: left;">
+
+    </div>
+    <div class="indivProjectToolsDiv">
+      <md-button ng-click="projectIndivCtrl.selectedTool = 'square';" class="md-fab" aria-label="Rectangle" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">crop_square</i>
+      </md-button>
+      <md-button ng-click="projectIndivCtrl.selectedTool = 'draw';" class="md-fab" aria-label="Draw" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">create</i>
+      </md-button>
+      <md-button ng-click="projectIndivCtrl.selectedTool = 'preset';" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">extension</i>
+      </md-button>
+
+    </div>
 
   </div>
 

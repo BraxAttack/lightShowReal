@@ -14,6 +14,7 @@ angular.module('lightShowApp')
     projectIndivCtrl.projectDataParsed = [];
 
     projectIndivCtrl.isplaying = "false";
+    projectIndivCtrl.selectedTool = "square";
 
     var ref = firebase.database().ref('/ProjectData/').child(profileID).child(projectID);
     var projectsIndiv = $firebaseArray(ref).$loaded()
@@ -51,10 +52,6 @@ angular.module('lightShowApp')
 
 
       });
-
-
-
-
 
 
 //comment this out to restore
@@ -104,6 +101,7 @@ angular.module('lightShowApp')
 
     projectIndivCtrl.setFrame = function() {
 
+
       document.getElementById('currentFrame'+projectIndivCtrl.currentFrame).style.backgroundColor = "#4CAF50";
       document.getElementById('currentFrame'+projectIndivCtrl.lastFrame).style.backgroundColor = "gray";
 
@@ -130,7 +128,19 @@ angular.module('lightShowApp')
 
     projectIndivCtrl.setNodeIN = function(id) {
       projectIndivCtrl.setNodeINVar = id;
+      projectIndivCtrl.drawingArray = [];
+      projectIndivCtrl.isClickedDown = "true";
     }
+
+
+
+    projectIndivCtrl.setNodeMouseOver = function(id){
+      if(projectIndivCtrl.isClickedDown == "true"){
+          projectIndivCtrl.drawingArray.push(id);
+      }
+
+    }
+
 
     projectIndivCtrl.setNodeOUT = function(id) {
       projectIndivCtrl.setNodeOUTVar = id;
@@ -191,6 +201,8 @@ angular.module('lightShowApp')
       projectIndivCtrl.setFrame()
     }
 
+    projectIndivCtrl.drawingArray = [];
+    projectIndivCtrl.isClickedDown = "false";
 
     }
 
@@ -242,7 +254,24 @@ angular.module('lightShowApp')
 
     }
 
+    projectIndivCtrl.volumeDown = function() {
+      var volume = document.getElementById('songHolder').volume;
+      var voldown = volume - .1;
+      document.getElementById('songHolder').volume = voldown;
 
+    }
+
+    projectIndivCtrl.volumeUp = function() {
+      var volume = document.getElementById('songHolder').volume;
+      var volup = volume + .1;
+      document.getElementById('songHolder').volume = volup;
+
+    }
+
+    projectIndivCtrl.volumeMute = function() {
+      document.getElementById('songHolder').volume = 0;
+
+    }
 
 
     projectIndivCtrl.SaveProject = function() {
