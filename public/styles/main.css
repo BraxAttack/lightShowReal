@@ -386,13 +386,30 @@ font-size: 35px;
 }
 
 .indivProjectEditSquareDisplay {
-  background-color: lightgray;
   width: calc(100vh - 160px);
   height: calc(100vh - 160px);
   position: absolute;
   top: 90px;
   left: calc((100% - (100vh - 160px))/2);
-  z-index: 5;
+  z-index: 6;
+}
+
+.indivProjecthighlightDiv {
+  width: calc(100vh - 160px);
+  height: calc(100vh - 160px);
+  position: absolute;
+  top: 90px;
+  left: calc((100% - (100vh - 160px))/2);
+  z-index: 8;
+}
+
+.indivProjecthighlightDivNode {
+  height: calc((100vh - 200px)/20);
+  width: calc((100vh - 200px)/20);
+  float: left;
+  border-style: solid;
+  border-width: 1px;
+
 }
 
 .indivProjectEditSquareEdit {
@@ -404,6 +421,17 @@ font-size: 35px;
   z-index: 10;
 }
 
+.indivProjectEditVeryBottomDisplay {
+  width: calc(100vh - 160px);
+  height: calc(100vh - 160px);
+  position: absolute;
+  top: 90px;
+  left: calc((100% - (100vh - 160px))/2);
+  z-index: 1;
+  background-color: gray;
+}
+
+
 .indivProjectEditSquareEditIndivNode {
   height: calc((100vh - 200px)/20);
   width: calc((100vh - 200px)/20);
@@ -412,13 +440,14 @@ font-size: 35px;
   border-width: 1px;
 }
 
+/*
 .indivProjectEditSquareEditIndivNode:hover {
   background-color: white;
 
 }
+*/
 
 .indivProjectEditSquareDisplayIndivNode {
-  background-color: gray;
   height: calc((100vh - 200px)/20);
   width: calc((100vh - 200px)/20);
   float: left;
@@ -426,7 +455,9 @@ font-size: 35px;
   line-height: calc((80vh - 200px)/20);
   border-style: solid;
   border-width: 1px;
+  opacity: 1;
 }
+
 
 .indivProjectEditChooseFrameDiv {
   background-color: lightgray;

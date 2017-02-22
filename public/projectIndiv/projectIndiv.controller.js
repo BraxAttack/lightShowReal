@@ -16,6 +16,41 @@ angular.module('lightShowApp')
     projectIndivCtrl.isplaying = "false";
     projectIndivCtrl.selectedTool = "square";
 
+
+    projectIndivCtrl.presetExamp = [
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1],
+      [-20, 0, 20],
+      [-1, 0, 1]
+    ]
+
+
+
+
     var ref = firebase.database().ref('/ProjectData/').child(profileID).child(projectID);
     var projectsIndiv = $firebaseArray(ref).$loaded()
     .then(function (projectData){
@@ -60,11 +95,22 @@ angular.module('lightShowApp')
     projectIndivCtrl.projectID = projectID;
 
 
-
     projectIndivCtrl.displayArray = function() {
       console.log(projectIndivCtrl.projectDataParsed[0]);
 
     }
+
+    projectIndivCtrl.selectedToolSet = function(tool) {
+      projectIndivCtrl.selectedTool = tool;
+      projectIndivCtrl.setNodeINVar = 'nope';
+
+      document.getElementById('square').style.backgroundColor = 'gray';
+      document.getElementById('draw').style.backgroundColor = 'gray';
+      document.getElementById('preset').style.backgroundColor = 'gray';
+
+      document.getElementById(tool).style.backgroundColor = '#4CAF50';
+    }
+
 
     projectIndivCtrl.SelectedColor = {
         'colorHex': '#1976D2',
@@ -115,6 +161,75 @@ angular.module('lightShowApp')
 
     }
 
+    projectIndivCtrl.setHighlightFrameSquare = function(id) {
+        for (i = 0; i < 400; i++) {
+
+          document.getElementById('High'+i).style.backgroundColor = '';
+
+        }
+
+        //console.log(id);
+        var inxVar = Number(projectIndivCtrl.setNodeINVar) % 20;
+        var inyVar = Math.floor(Number(projectIndivCtrl.setNodeINVar) / 20);
+
+        var outxVar = Number(id) % 20;
+        var outyVar = Math.floor(Number(id) / 20)
+
+
+        if(inxVar <= outxVar && inyVar < outyVar) {
+          var columnsadd = outyVar - inyVar + 1;
+          var rowsadd =  outxVar - inxVar + 1;
+
+          for (c = 0; c < columnsadd; c++) {
+              for (r = 0; r < rowsadd; r++) {
+                var calcid = ((inyVar + c) * 20)+inxVar+r;
+                document.getElementById('High'+calcid).style.backgroundColor = 'white';
+              }
+          }
+
+
+        }else if (inxVar > outxVar && inyVar <= outyVar) {
+          var columnsadd = outyVar - inyVar + 1;
+          var rowsadd =  inxVar - outxVar + 1;
+
+          for (c = 0; c < columnsadd; c++) {
+              for (r = 0; r < rowsadd; r++) {
+                var calcid = ((inyVar + c) * 20)+outxVar+r;
+                document.getElementById('High'+calcid).style.backgroundColor = 'white';
+              }
+          }
+
+        }else if (inxVar > outxVar && inyVar > outyVar) {
+          var columnsadd = inyVar - outyVar + 1;
+          var rowsadd =  inxVar - outxVar + 1;
+
+          for (c = 0; c < columnsadd; c++) {
+              for (r = 0; r < rowsadd; r++) {
+                var calcid = ((outyVar + c) * 20)+outxVar+r;
+                document.getElementById('High'+calcid).style.backgroundColor = 'white';
+              }
+          }
+
+        }else{
+          var columnsadd = inyVar - outyVar + 1;
+          var rowsadd =  outxVar - inxVar + 1;
+
+          for (c = 0; c < columnsadd; c++) {
+              for (r = 0; r < rowsadd; r++) {
+                var calcid = ((outyVar + c) * 20)+inxVar+r;
+                document.getElementById('High'+calcid).style.backgroundColor = 'white';
+              }
+          }
+      }
+    }
+
+    projectIndivCtrl.setHighlightFrameDraw = function() {
+      projectIndivCtrl.drawingArray.forEach(function(i) {
+        document.getElementById('High'+i).style.backgroundColor = 'white';
+
+      });
+
+    }
 
     projectIndivCtrl.setNode = function(id) {
       //alert("fire");
@@ -126,83 +241,148 @@ angular.module('lightShowApp')
 
     }
 
+
+
     projectIndivCtrl.setNodeIN = function(id) {
       projectIndivCtrl.setNodeINVar = id;
       projectIndivCtrl.drawingArray = [];
       projectIndivCtrl.isClickedDown = "true";
+
     }
 
 
 
     projectIndivCtrl.setNodeMouseOver = function(id){
+      for (i = 0; i < 400; i++) {
+        document.getElementById('High'+i).style.backgroundColor = '';
+
+      }
+      document.getElementById('High'+id).style.backgroundColor = 'white';
+
+
       if(projectIndivCtrl.isClickedDown == "true"){
           projectIndivCtrl.drawingArray.push(id);
+
+          if (projectIndivCtrl.selectedTool == "square") {
+              projectIndivCtrl.setHighlightFrameSquare(id);
+
+          }else if (projectIndivCtrl.selectedTool == "draw") {
+              projectIndivCtrl.setHighlightFrameDraw();
+
+          }else{
+            console.log('preset');
+
+
+
+
+          }
+
+
+
+
       }
 
     }
 
 
     projectIndivCtrl.setNodeOUT = function(id) {
+
       projectIndivCtrl.setNodeOUTVar = id;
 
-      var inxVar = Number(projectIndivCtrl.setNodeINVar) % 20;
-      var inyVar = Math.floor(Number(projectIndivCtrl.setNodeINVar) / 20);
+      if(projectIndivCtrl.setNodeINVar == 'nope'){
 
-      var outxVar = Number(projectIndivCtrl.setNodeOUTVar) % 20;
-      var outyVar = Math.floor(Number(projectIndivCtrl.setNodeOUTVar) / 20);
-      //alert(inxVar + ' : ' + inyVar);
-      //alert(outxVar + ' : ' + outyVar);
+      }else{
+          if(projectIndivCtrl.selectedTool == "square"){
+
+                  var inxVar = Number(projectIndivCtrl.setNodeINVar) % 20;
+                  var inyVar = Math.floor(Number(projectIndivCtrl.setNodeINVar) / 20);
+
+                  var outxVar = Number(projectIndivCtrl.setNodeOUTVar) % 20;
+                  var outyVar = Math.floor(Number(projectIndivCtrl.setNodeOUTVar) / 20);
+                  //alert(inxVar + ' : ' + inyVar);
+                  //alert(outxVar + ' : ' + outyVar);
 
 
-    if(inxVar <= outxVar && inyVar < outyVar) {
-      var columnsadd = outyVar - inyVar + 1;
-      var rowsadd =  outxVar - inxVar + 1;
+                if(inxVar <= outxVar && inyVar < outyVar) {
+                  var columnsadd = outyVar - inyVar + 1;
+                  var rowsadd =  outxVar - inxVar + 1;
 
-      for (c = 0; c < columnsadd; c++) {
-          for (r = 0; r < rowsadd; r++) {
-            var calcid = ((inyVar + c) * 20)+inxVar+r;
-            projectIndivCtrl.projectDataParsed[calcid][projectIndivCtrl.currentFrame] = projectIndivCtrl.SelectedColor.index;
+                  for (c = 0; c < columnsadd; c++) {
+                      for (r = 0; r < rowsadd; r++) {
+                        var calcid = ((inyVar + c) * 20)+inxVar+r;
+                        projectIndivCtrl.projectDataParsed[calcid][projectIndivCtrl.currentFrame] = projectIndivCtrl.SelectedColor.index;
+                      }
+                  }
+                  projectIndivCtrl.setFrame()
+
+                }else if (inxVar > outxVar && inyVar <= outyVar) {
+                  var columnsadd = outyVar - inyVar + 1;
+                  var rowsadd =  inxVar - outxVar + 1;
+
+                  for (c = 0; c < columnsadd; c++) {
+                      for (r = 0; r < rowsadd; r++) {
+                        var calcid = ((inyVar + c) * 20)+outxVar+r;
+                        projectIndivCtrl.projectDataParsed[calcid][projectIndivCtrl.currentFrame] = projectIndivCtrl.SelectedColor.index;
+                      }
+                  }
+                  projectIndivCtrl.setFrame()
+                }else if (inxVar > outxVar && inyVar > outyVar) {
+                  var columnsadd = inyVar - outyVar + 1;
+                  var rowsadd =  inxVar - outxVar + 1;
+
+                  for (c = 0; c < columnsadd; c++) {
+                      for (r = 0; r < rowsadd; r++) {
+                        var calcid = ((outyVar + c) * 20)+outxVar+r;
+                        projectIndivCtrl.projectDataParsed[calcid][projectIndivCtrl.currentFrame] = projectIndivCtrl.SelectedColor.index;
+                      }
+                  }
+                  projectIndivCtrl.setFrame()
+                }else{
+                  var columnsadd = inyVar - outyVar + 1;
+                  var rowsadd =  outxVar - inxVar + 1;
+
+                  for (c = 0; c < columnsadd; c++) {
+                      for (r = 0; r < rowsadd; r++) {
+                        var calcid = ((outyVar + c) * 20)+inxVar+r;
+                        projectIndivCtrl.projectDataParsed[calcid][projectIndivCtrl.currentFrame] = projectIndivCtrl.SelectedColor.index;
+                      }
+                  }
+                  projectIndivCtrl.setFrame()
+                }
+
+          }else if (projectIndivCtrl.selectedTool == "draw") {
+              projectIndivCtrl.drawingArray.forEach(function(element) {
+                  projectIndivCtrl.projectDataParsed[element][projectIndivCtrl.currentFrame] = projectIndivCtrl.SelectedColor.index;
+              });
+
+              projectIndivCtrl.setFrame()
+              projectIndivCtrl.drawingArray = [];
+
+          }else {
+              console.log('preset');
+
+              projectIndivCtrl.presetExamp.forEach(function(frame, index) {
+                  console.log(index);
+                  frame.forEach(function(element) {
+                      projectIndivCtrl.projectDataParsed[id + element][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;
+
+                  })
+              });
+              projectIndivCtrl.setFrame()
           }
-      }
-      projectIndivCtrl.setFrame()
 
-    }else if (inxVar > outxVar && inyVar <= outyVar) {
-      var columnsadd = outyVar - inyVar + 1;
-      var rowsadd =  inxVar - outxVar + 1;
-
-      for (c = 0; c < columnsadd; c++) {
-          for (r = 0; r < rowsadd; r++) {
-            var calcid = ((inyVar + c) * 20)+outxVar+r;
-            projectIndivCtrl.projectDataParsed[calcid][projectIndivCtrl.currentFrame] = projectIndivCtrl.SelectedColor.index;
-          }
       }
-      projectIndivCtrl.setFrame()
-    }else if (inxVar > outxVar && inyVar > outyVar) {
-      var columnsadd = inyVar - outyVar + 1;
-      var rowsadd =  inxVar - outxVar + 1;
 
-      for (c = 0; c < columnsadd; c++) {
-          for (r = 0; r < rowsadd; r++) {
-            var calcid = ((outyVar + c) * 20)+outxVar+r;
-            projectIndivCtrl.projectDataParsed[calcid][projectIndivCtrl.currentFrame] = projectIndivCtrl.SelectedColor.index;
-          }
-      }
-      projectIndivCtrl.setFrame()
-    }else{
-      var columnsadd = inyVar - outyVar + 1;
-      var rowsadd =  outxVar - inxVar + 1;
 
-      for (c = 0; c < columnsadd; c++) {
-          for (r = 0; r < rowsadd; r++) {
-            var calcid = ((outyVar + c) * 20)+inxVar+r;
-            projectIndivCtrl.projectDataParsed[calcid][projectIndivCtrl.currentFrame] = projectIndivCtrl.SelectedColor.index;
-          }
-      }
-      projectIndivCtrl.setFrame()
+    /* clears highlight */
+    for (i = 0; i < 400; i++) {
+
+      document.getElementById('High'+i).style.backgroundColor = '';
+
     }
 
-    projectIndivCtrl.drawingArray = [];
     projectIndivCtrl.isClickedDown = "false";
+
 
     }
 
@@ -222,7 +402,7 @@ angular.module('lightShowApp')
           console.log(projectIndivCtrl.currentFrame);
           document.getElementById('songHolder').play();
           //$scope.$apply();
-          if(projectIndivCtrl.currentFrame % 30 == 0){
+          if(projectIndivCtrl.currentFrame % 300 == 0){
             document.getElementById('songHolder').currentTime = projectIndivCtrl.currentFrame * .1;
             document.getElementById('songHolder').play();
           }

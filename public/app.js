@@ -137,18 +137,7 @@ angular
         url: '/newtemplate',
         templateUrl: 'homepage/newTemplate.html',
         controller: 'TemplatesCtrl as templatesCtrl',
-        resolve: {
-          auth: function($state, Users, Auth){
-            return Auth.$requireSignIn().catch(function(){
-              $state.go('login');
-            });
-          },
-          profile: function(Users, Auth){
-            return Auth.$requireSignIn().then(function(auth){
-              return Users.getProfile(auth.uid).$loaded();
-            });
-          }
-        }
+        
       })
       .state('homepage.playlists', {
         url: '/playlists',

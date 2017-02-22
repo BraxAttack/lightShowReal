@@ -1,1 +1,118 @@
-<h1>New Template</h1>
+
+<div ng-if="!templatesCtrl.projectData">
+  Data is not Loaded
+
+</div>
+
+
+
+<div ng-if="templatesCtrl.projectData">
+
+  <div class="indivProjectPresetSelect">
+    <md-button class="indivProjectSave" ng-click="templatesCtrl.SaveTemplate()">Save Template</md-button>
+    {{templatesCtrl.presetExamp}}
+  </div>
+
+  <!--Project EDIT DIVS -->
+  <div class="indivProjectEditSquareEdit">
+    <a ng-mousedown="templatesCtrl.setNodeIN($index)" ng-mouseover="templatesCtrl.setNodeMouseOver($index)" ng-mouseup="templatesCtrl.setNodeOUT($index)" id="Edit{{ $index }}" class="indivProjectEditSquareEditIndivNode"  ng-repeat="node in templatesCtrl.projectDataParsed track by $index">
+
+    </a>
+  </div>
+
+  <div class="indivProjecthighlightDiv">
+    <div id="High{{ $index }}" class="indivProjectEditSquareDisplayIndivNode" ng-repeat="node in templatesCtrl.projectDataParsed track by $index">
+
+    </div>
+  </div>
+
+  <div class="indivProjectEditSquareDisplay">
+    <div id="Display{{ $index }}" class="indivProjectEditSquareDisplayIndivNode" ng-repeat="node in templatesCtrl.projectDataParsed track by $index">
+
+    </div>
+  </div>
+
+  <div class="indivProjectEditVeryBottomDisplay">
+
+  </div>
+
+  <!-- End Project EDIT DIVS-->
+
+  <div class="indivProjectEditChooseFrameDiv">
+    <md-button class="indivProjectEditChooseFrameDivCurrentFrame">
+      {{templatesCtrl.currentFrame}}
+    </md-button>
+
+    <!-- repeats selectors for each frame in the project-->
+    <div class="indivProjectEditChooseFrameDivSelectFrameDiv">
+      <a id="currentFrame{{$index}}" ng-click="templatesCtrl.setFrameNumber($index)" class="indivProjectEditChooseFrameDivEachFrame" ng-repeat="frame in templatesCtrl.projectDataParsed[0] track by $index">
+        {{$index}}
+      </a>
+    </div>
+
+  </div>
+
+  <div class="indivProjectPlayPauseDiv">
+    <md-button class="indivProjectPlayPause" ng-click="templatesCtrl.playShow()" ng-if="templatesCtrl.isplaying != 'true'" style="background-color:#4CAF50;">play</md-button>
+    <md-button class="indivProjectPlayPause" ng-click="templatesCtrl.pauseShow()" ng-if="templatesCtrl.isplaying == 'true'" style="background-color:#f44336;">pause</md-button>
+    <md-button class="indivProjectPlayFromBegin" ng-click="templatesCtrl.PlayFromBegin()" style="background-color:#FF9800;">Play from start</md-button>
+    <div style="float: left; width: 1px; height: 150%;">
+
+    </div>
+    <div class="indivProjectAudioDiv">
+      <md-button ng-click="templatesCtrl.volumeUp()" class="md-fab" aria-label="Eat cake" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">volume_up</i>
+      </md-button>
+      <md-button ng-click="templatesCtrl.volumeDown()" class="md-fab" aria-label="Eat cake" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">volume_down</i>
+      </md-button>
+      <md-button ng-click="templatesCtrl.volumeMute()" class="md-fab" aria-label="Eat cake" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">volume_off</i>
+      </md-button>
+
+    </div>
+
+
+    <audio id="songHolder" controls style="display: none;">
+      <source src="error.ogg" type="audio/ogg">
+      <source src="error.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="indivProjectEditChooseColorDiv">
+    <md-button class="indivProjectEditChooseColorSelectedColor" style="background-color: {{templatesCtrl.SelectedColor.colorHex}}">
+      {{ templatesCtrl.SelectedColor.colorHex }}
+    </md-button>
+    <div class="indivProjectEditChooseColorDivScroll">
+      <md-button ng-click="templatesCtrl.setColor($index)" class="indivProjectEditChooseColorSelectAColor" ng-repeat="color in templatesCtrl.ColorPalate track by $index" style="background-color: {{color}}" >
+
+      </md-button>
+    </div>
+
+  </div>
+
+  <div class="indivProjectTools">
+    <div style="width: 1px; height: 120%; float: left;">
+
+    </div>
+    <div class="indivProjectToolsDiv">
+      <md-button id="square" ng-click="templatesCtrl.selectedToolSet('square');" class="md-fab" aria-label="Rectangle" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: #4CAF50;" >
+          <i class="material-icons" style="line-height: 50px;">crop_square</i>
+      </md-button>
+      <md-button id="draw" ng-click="templatesCtrl.selectedToolSet('draw');" class="md-fab" aria-label="Draw" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">create</i>
+      </md-button>
+      <md-button id="preset" ng-click="templatesCtrl.selectedToolSet('preset');" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">extension</i>
+      </md-button>
+
+    </div>
+
+  </div>
+
+
+
+
+
+</div>

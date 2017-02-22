@@ -7,12 +7,12 @@
 
 
 <div ng-if="projectIndivCtrl.projectData">
-
+  
   <div class="indivProjectPresetSelect">
     <md-button class="indivProjectSave" ng-click="projectIndivCtrl.SaveProject()">Save</md-button>
     {{projectIndivCtrl.selectedTool}}
     <br />
-    {{projectIndivCtrl.drawingArray}}
+    {{ projectIndivCtrl.setNodeINVar }}
   </div>
 
   <!--Project EDIT DIVS -->
@@ -22,15 +22,20 @@
     </a>
   </div>
 
-<!--
   <div class="indivProjecthighlightDiv">
+    <div id="High{{ $index }}" class="indivProjectEditSquareDisplayIndivNode" ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
 
+    </div>
   </div>
--->
+
   <div class="indivProjectEditSquareDisplay">
     <div id="Display{{ $index }}" class="indivProjectEditSquareDisplayIndivNode" ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
 
     </div>
+  </div>
+
+  <div class="indivProjectEditVeryBottomDisplay">
+
   </div>
 
   <!-- End Project EDIT DIVS-->
@@ -51,8 +56,8 @@
 
   <div class="indivProjectPlayPauseDiv">
     <md-button class="indivProjectPlayPause" ng-click="projectIndivCtrl.playShow()" ng-if="projectIndivCtrl.isplaying != 'true'" style="background-color:#4CAF50;">play</md-button>
-    <md-button class="indivProjectPlayPause" ng-click="projectIndivCtrl.pauseShow()" ng-if="projectIndivCtrl.isplaying == 'true'" style="background-color:#FF9800;">pause</md-button>
-    <md-button class="indivProjectPlayFromBegin" ng-click="projectIndivCtrl.PlayFromBegin()" style="background-color:#f44336;">Play from start</md-button>
+    <md-button class="indivProjectPlayPause" ng-click="projectIndivCtrl.pauseShow()" ng-if="projectIndivCtrl.isplaying == 'true'" style="background-color:#f44336;">pause</md-button>
+    <md-button class="indivProjectPlayFromBegin" ng-click="projectIndivCtrl.PlayFromBegin()" style="background-color:#FF9800;">Play from start</md-button>
     <div style="float: left; width: 1px; height: 150%;">
 
     </div>
@@ -94,13 +99,13 @@
 
     </div>
     <div class="indivProjectToolsDiv">
-      <md-button ng-click="projectIndivCtrl.selectedTool = 'square';" class="md-fab" aria-label="Rectangle" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+      <md-button id="square" ng-click="projectIndivCtrl.selectedToolSet('square');" class="md-fab" aria-label="Rectangle" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: #4CAF50;" >
           <i class="material-icons" style="line-height: 50px;">crop_square</i>
       </md-button>
-      <md-button ng-click="projectIndivCtrl.selectedTool = 'draw';" class="md-fab" aria-label="Draw" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+      <md-button id="draw" ng-click="projectIndivCtrl.selectedToolSet('draw');" class="md-fab" aria-label="Draw" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
           <i class="material-icons" style="line-height: 50px;">create</i>
       </md-button>
-      <md-button ng-click="projectIndivCtrl.selectedTool = 'preset';" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+      <md-button id="preset" ng-click="projectIndivCtrl.selectedToolSet('preset');" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
           <i class="material-icons" style="line-height: 50px;">extension</i>
       </md-button>
 
