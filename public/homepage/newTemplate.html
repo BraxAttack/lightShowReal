@@ -9,7 +9,7 @@
 <div ng-if="templatesCtrl.projectData">
 
   <div class="indivProjectPresetSelect">
-    <md-button class="indivProjectSave" ng-click="templatesCtrl.SaveTemplate()">Save Template</md-button>
+    <md-button class="indivProjectSave" ng-click="templatesCtrl.SaveTemplate($event)">Save Template</md-button>
     {{templatesCtrl.presetExamp}}
   </div>
 
@@ -18,6 +18,12 @@
     <a ng-mousedown="templatesCtrl.setNodeIN($index)" ng-mouseover="templatesCtrl.setNodeMouseOver($index)" ng-mouseup="templatesCtrl.setNodeOUT($index)" id="Edit{{ $index }}" class="indivProjectEditSquareEditIndivNode"  ng-repeat="node in templatesCtrl.projectDataParsed track by $index">
 
     </a>
+  </div>
+
+  <div id="centerDiv" class="indivProjectEditSquareDisplay" style="z-index: 7; opacity: .5;">
+    <div id="Center{{ $index }}" class="indivProjectEditSquareDisplayIndivNode" ng-repeat="node in templatesCtrl.projectDataParsed track by $index">
+
+    </div>
   </div>
 
   <div class="indivProjecthighlightDiv">
@@ -106,6 +112,11 @@
       <md-button id="preset" ng-click="templatesCtrl.selectedToolSet('preset');" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
           <i class="material-icons" style="line-height: 50px;">extension</i>
       </md-button>
+      <md-button id="preset" ng-click="templatesCtrl.setTemplateCenterDiv();" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+          <i class="material-icons" style="line-height: 50px;">filter_center_focus</i>
+      </md-button>
+
+
 
     </div>
 

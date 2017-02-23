@@ -1,5 +1,5 @@
 angular.module('lightShowApp')
-.controller("ProjectIndivCtrl", function($firebaseArray, $http, $timeout, $interval, $scope, Auth, projectIndivData, profile) {
+.controller("ProjectIndivCtrl", function($firebaseArray, $http, $timeout, $interval, $scope, Auth, projectIndivData, profile, templates) {
     var projectIndivCtrl = this;
 
     var projectID = projectIndivData;
@@ -17,37 +17,45 @@ angular.module('lightShowApp')
     projectIndivCtrl.selectedTool = "square";
 
 
-    projectIndivCtrl.presetExamp = [
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1],
-      [-20, 0, 20],
-      [-1, 0, 1]
-    ]
+    var stop = $interval(function () {
+      if(projectIndivCtrl.templates == null) {
+          projectIndivCtrl.templates = templates;
+          console.log(projectIndivCtrl.templates);
+          projectIndivCtrl.templates.forEach(function(i) {
+              projectIndivCtrl.presetExamp.push([])
+          })
 
+          $scope.$apply()
+
+
+      }else{
+        $interval.cancel(stop)
+
+      }
+      console.log("going");
+    }, 300);
+
+
+    projectIndivCtrl.setPreset = function(index, pID) {
+      projectIndivCtrl.selectedPreset = index;
+      if(projectIndivCtrl.presetExamp[projectIndivCtrl.selectedPreset] == '') {
+        alert("nulllness")
+        var ref = firebase.database().ref('/TemplateData/').child(pID);
+        var templateData = $firebaseArray(ref).$loaded()
+        .then(function (templateData){
+            console.log(JSON.parse(templateData[0]['$value']));
+            projectIndivCtrl.presetExamp[projectIndivCtrl.selectedPreset] = JSON.parse(templateData[0]['$value']);
+
+        })
+
+      }
+
+    }
+
+
+    projectIndivCtrl.selectedPreset = 0;
+
+    projectIndivCtrl.presetExamp = []
 
 
 
@@ -361,7 +369,7 @@ angular.module('lightShowApp')
           }else {
               console.log('preset');
 
-              projectIndivCtrl.presetExamp.forEach(function(frame, index) {
+              projectIndivCtrl.presetExamp[projectIndivCtrl.selectedPreset].forEach(function(frame, index) {
                   console.log(index);
                   frame.forEach(function(element) {
                       projectIndivCtrl.projectDataParsed[id + element][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;

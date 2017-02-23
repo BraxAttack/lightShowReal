@@ -7,12 +7,14 @@
 
 
 <div ng-if="projectIndivCtrl.projectData">
-  
+
   <div class="indivProjectPresetSelect">
     <md-button class="indivProjectSave" ng-click="projectIndivCtrl.SaveProject()">Save</md-button>
-    {{projectIndivCtrl.selectedTool}}
-    <br />
-    {{ projectIndivCtrl.setNodeINVar }}
+      <div ng-click="projectIndivCtrl.setPreset($index, template['$id'])" class="indivProjectPresetSelectEachPreset" ng-repeat="template in projectIndivCtrl.templates">
+        {{template['$value']}}
+
+      </div>
+      {{projectIndivCtrl.presetExamp}}
   </div>
 
   <!--Project EDIT DIVS -->

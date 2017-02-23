@@ -1,5 +1,5 @@
 angular.module('lightShowApp')
-  .controller('TemplatesCtrl', function($firebaseArray, $http, $timeout, $interval, $scope, Auth, profile, currentPage){
+  .controller('TemplatesCtrl', function($firebaseArray, $state, $mdDialog, $http, $timeout, $interval, $scope, Auth, profile, currentPage){
     var templatesCtrl = this;
 
     templatesCtrl.currentPage = currentPage;
@@ -363,16 +363,31 @@ angular.module('lightShowApp')
               templatesCtrl.drawingArray = [];
 
           }else {
-              console.log('preset');
+
+              var xid = id % 20;
 
               templatesCtrl.presetExamp.forEach(function(frame, index) {
-                  console.log(index);
                   frame.forEach(function(element) {
                     var elID = element + id;
-                    if( elID>= 0 && elID < 400 ){
-                      templatesCtrl.projectDataParsed[elID][templatesCtrl.currentFrame + index] = templatesCtrl.SelectedColor.index;
+                    if(elID>= 0 && elID < 400) {
+                        if(xid >= 10) {
+                          if((elID % 20) >= (xid - 10)){
+
+                            templatesCtrl.projectDataParsed[elID][templatesCtrl.currentFrame + index] = templatesCtrl.SelectedColor.index;
+
+                          }
+                        }else if (xid < 10) {
+                          console.log(elID )
+                          if((elID % 20) < (10 + xid)){
+                            console.log(elID % 20);
+                            templatesCtrl.projectDataParsed[elID][templatesCtrl.currentFrame + index] = templatesCtrl.SelectedColor.index;
+
+                          }
+                        }
 
                     }
+
+
 
                   })
               });
@@ -466,50 +481,124 @@ angular.module('lightShowApp')
     }
 
 
-    templatesCtrl.SaveTemplate = function() {
-      var presetArray = [];
-      templatesCtrl.frameisSet = "";
+    templatesCtrl.SaveTemplate = function(ev) {
 
-      for (bf = 0; bf < 100; bf++) {
-        for (bi = 0; bi < 400; bi++) {
-          if(templatesCtrl.projectDataParsed[bi][bf] == 0) {
+      var confirm = $mdDialog.prompt()
+         .title('What would you name your template?')
+         .textContent('Keep it short and simple')
+         .placeholder('Template name')
+         .ariaLabel('Template name')
+         .initialValue('MyTemplate')
+         .targetEvent(ev)
+         .ok('Okay!')
+         .cancel('Back to Edit');
 
-          }else {
+       $mdDialog.show(confirm).then(function(result) {
 
-            if(templatesCtrl.frameisSet == "") {
-                templatesCtrl.frameisSet = bf;
-            }else{
+         var frameisSet = "things";
 
+         for (bf = 0; bf < 100; bf++) {
+           for (bi = 0; bi < 400; bi++) {
+             if(templatesCtrl.projectDataParsed[bi][bf] == 0) {
+
+             }else {
+
+               if( frameisSet == "things") {
+                 frameisSet = bf;
+
+               }
+
+
+             }
+           }
+         }
+
+         var presetArray = [];
+         //console.log(presetArray);
+
+         //console.log(100 - frameisSet);
+         var numberofframes = 100 - Number(frameisSet);
+         //alert(frameisSet);
+
+         for (f = 0; f < Number(numberofframes); f++) {
+           presetArray.push([]);
+
+           var frameArray = [];
+           for (i = 0; i < 400; i++) {
+             if(templatesCtrl.projectDataParsed[i][f] == 0) {
+
+             }else {
+               //console.log(presetArray[f]);
+               var dataspot = i - 190;
+               presetArray[f].push(dataspot);
+
+              }
             }
-
-
-          }
-        }
-      }
-
-      console.log(100 - templatesCtrl.frameisSet);
-      var numberofframes = 100 - Number(templatesCtrl.frameisSet);
-
-      for (f = Number(templatesCtrl.frameisSet); f < 100; f++) {
-        presetArray.push([]);
-        var frameArray = [];
-        for (i = 0; i < 400; i++) {
-          if(templatesCtrl.projectDataParsed[i][f] == 0) {
-
-          }else {
-            console.log(presetArray[f]);
-            var dataspot = i - 190;
-            presetArray[f].push(dataspot);
-
           }
 
+           for(a = 0; a < frameisSet; a++){
+             console.log(a);
+             presetArray.splice(0, 1);
+           }
 
-        }
-      }
+
+           if(presetArray != ''){
+             var templateKey = firebase.database().ref('TemplateData/').push().key
+             var templateDataUpload = {};
+             var templateUpload = {};
+             var userTempUpload = {};
+
+             templateDataUpload['/TemplateData/'+templateKey] = {'data': JSON.stringify(presetArray)};
+             firebase.database().ref().update(templateDataUpload)
+             .then(function(ref){
+
+               templateUpload['/Templates/'+templateKey] = result;
+               firebase.database().ref().update(templateUpload)
+               .then(function(ref){
+
+                 templateUpload['/users/'+ profile.$id + '/templates/' + templateKey] = result;
+                 firebase.database().ref().update(templateUpload)
+                 .then(function(ref){
+
+                     alert(result + " upload complete.")
+                     console.log(ref);
+                      $state.go('homepage.projects')
+
+                  })
+
+                })
+
+             })
+
+           }else {
+             alert("no preset data");
+           }
 
 
-      templatesCtrl.presetExamp = presetArray;
+
+       }, function() {
+
+
+       });
+
+
+
+
+
     }
 
+    templatesCtrl.setTemplateCenterDiv = function() {
+      if(document.getElementById('Center190').style.backgroundColor == ''){
+          document.getElementById('Center190').style.backgroundColor = "green";
+      }else{
+        document.getElementById('Center190').style.backgroundColor = "";
+      }
+
+    }
+
+    $timeout(function () {
+      templatesCtrl.setTemplateCenterDiv();
+
+    }, 1000);
 
   })

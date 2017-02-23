@@ -17,6 +17,8 @@ angular.module('lightShowApp')
 
     Users.setOnline(projectsCtrl.profile.$id);
 
+
+
     projectsCtrl.newProject = {
       projectName: '',
       songTitle: '',
