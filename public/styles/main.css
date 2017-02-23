@@ -107,6 +107,7 @@ font-size: 35px;
   right: 6vw;
   height: 70px;
   width: 70px;
+  display: block;
 }
 
 .homepageProjectsAddFabPlus {
@@ -188,6 +189,7 @@ font-size: 35px;
   float: left;
   margin: 0;
   padding: 0;
+  line-height: 140px;
 }
 
 .hompageProjectsDivPlay {
@@ -277,12 +279,13 @@ font-size: 35px;
 
 .homepageTemplatesTemplateName {
   float: left;
-  width: 280px;
+  max-width: 280px;
   background-color: #FF5722;
   padding: 10px;
   margin-top: 34px;
   color: white;
   font-size: 27px;
+  min-width: 70px;
 }
 
 .homepageTemplatesSongTitle {
@@ -314,7 +317,7 @@ font-size: 35px;
 
 .hompageTemplatesDivPlay {
   width: 115px;
-  height: 160px;
+  height: 320px;
   float: left;
   margin: 0;
   padding: 0;
@@ -539,7 +542,6 @@ font-size: 35px;
   padding: 5px;
   border-radius: 2px;
   overflow: hidden;
-  width: inherit;
 }
 
 .indivProjectEditChooseColorDiv {
@@ -623,6 +625,4 @@ font-size: 35px;
 }
 
 .indivProjectToolsDiv {
-  float: left;
-  width: 200px;
 }

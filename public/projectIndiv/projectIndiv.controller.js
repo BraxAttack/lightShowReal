@@ -8,6 +8,19 @@ angular.module('lightShowApp')
     console.log("profile " + profileID);
     console.log("profile " + projectID);
 
+/*
+    var element = document.getElementById('homepageProjectsAddFab').style.display;
+    if (element === null) {
+      alert("nulls")
+
+    }
+*/
+if ( angular.element('homepageProjectsAddFab').length > 0) {
+  alert("go");
+  document.getElementById('homepageProjectsAddFab').style.display = "none";
+}
+
+
     projectIndivCtrl.currentFrame = 0;
     projectIndivCtrl.lastFrame = 0
 //uncomment this to load data
@@ -17,29 +30,38 @@ angular.module('lightShowApp')
     projectIndivCtrl.selectedTool = "square";
 
 
+    projectIndivCtrl.selectedPreset = 0;
+    projectIndivCtrl.lastselectedPreset = 0;
+    projectIndivCtrl.presetExamp = [];
+
     var stop = $interval(function () {
-      if(projectIndivCtrl.templates == null) {
-          projectIndivCtrl.templates = templates;
-          console.log(projectIndivCtrl.templates);
-          projectIndivCtrl.templates.forEach(function(i) {
-              projectIndivCtrl.presetExamp.push([])
-          })
+        if(projectIndivCtrl.templates == null) {
+            projectIndivCtrl.templates = templates;
+            console.log(projectIndivCtrl.templates);
+            projectIndivCtrl.templates.forEach(function(i) {
+                projectIndivCtrl.presetExamp.push([])
+            })
+            $scope.$apply()
 
-          $scope.$apply()
+        }else{
+          $interval.cancel(stop)
+          document.getElementById('template0').style.backgroundColor = '#4CAF50';
+        }
+        console.log("going");
+    }, 100);
 
 
-      }else{
-        $interval.cancel(stop)
-
-      }
-      console.log("going");
-    }, 300);
+    $(document).keydown(function(evt){
+      console.log(evt);
+    })
 
 
     projectIndivCtrl.setPreset = function(index, pID) {
       projectIndivCtrl.selectedPreset = index;
+      document.getElementById('template'+projectIndivCtrl.lastselectedPreset).style.backgroundColor = 'gray';
+      document.getElementById('template'+index).style.backgroundColor = '#4CAF50';
+
       if(projectIndivCtrl.presetExamp[projectIndivCtrl.selectedPreset] == '') {
-        alert("nulllness")
         var ref = firebase.database().ref('/TemplateData/').child(pID);
         var templateData = $firebaseArray(ref).$loaded()
         .then(function (templateData){
@@ -50,12 +72,11 @@ angular.module('lightShowApp')
 
       }
 
+      projectIndivCtrl.lastselectedPreset = projectIndivCtrl.selectedPreset;
     }
 
 
-    projectIndivCtrl.selectedPreset = 0;
 
-    projectIndivCtrl.presetExamp = []
 
 
 
@@ -153,19 +174,52 @@ angular.module('lightShowApp')
 
     }
 
+
+    projectIndivCtrl.displayLastFrame = "true";
+
+    projectIndivCtrl.ShowLastFrame = function(variable) {
+      projectIndivCtrl.displayLastFrame = variable;
+      if(variable == "false"){
+        document.getElementById('showLastFrameTrue').style.display = "none";
+        document.getElementById('ShowLastFrameFalse').style.display = "block";
+      }else if (variable == "true") {
+        document.getElementById('showLastFrameTrue').style.display = "block";
+        document.getElementById('ShowLastFrameFalse').style.display = "none";
+
+      }
+
+      projectIndivCtrl.setFrame();
+
+    }
+
+
     projectIndivCtrl.setFrame = function() {
 
-
-      document.getElementById('currentFrame'+projectIndivCtrl.currentFrame).style.backgroundColor = "#4CAF50";
-      document.getElementById('currentFrame'+projectIndivCtrl.lastFrame).style.backgroundColor = "gray";
-
       for (i = 0; i < 400; i++) {
-
         document.getElementById('Display'+i).style.backgroundColor = projectIndivCtrl.ColorPalate[projectIndivCtrl.projectDataParsed[i][projectIndivCtrl.currentFrame]];
 
       }
 
+      for (i = 0; i < 400; i++) {
+        document.getElementById('LastFrameDisplay'+i).style.backgroundColor = "";
+
+      }
+
+      if(projectIndivCtrl.displayLastFrame == "true"){
+        if((projectIndivCtrl.currentFrame - 1) >= 0){
+          var fminone = projectIndivCtrl.currentFrame - 1;
+          for (i = 0; i < 400; i++) {
+            document.getElementById('LastFrameDisplay'+i).style.backgroundColor = projectIndivCtrl.ColorPalate[projectIndivCtrl.projectDataParsed[i][fminone]];
+
+          }
+        }
+      }
+
+      document.getElementById('currentFrame'+projectIndivCtrl.lastFrame).style.backgroundColor = "gray";
       projectIndivCtrl.lastFrame = projectIndivCtrl.currentFrame;
+      document.getElementById('currentFrame'+projectIndivCtrl.currentFrame).style.backgroundColor = "#4CAF50";
+
+
 
     }
 
@@ -245,7 +299,7 @@ angular.module('lightShowApp')
       //console.log(projectIndivCtrl.projectData[0][id]);
       projectIndivCtrl.projectDataParsed[id][projectIndivCtrl.currentFrame] = projectIndivCtrl.SelectedColor.index;
       //console.log(projectIndivCtrl.projectDataParsed[id][projectIndivCtrl.currentFrame]);
-      projectIndivCtrl.setFrame()
+      projectIndivCtrl.setFrame();
 
     }
 
@@ -369,10 +423,30 @@ angular.module('lightShowApp')
           }else {
               console.log('preset');
 
+              var xid = id % 20;
+
               projectIndivCtrl.presetExamp[projectIndivCtrl.selectedPreset].forEach(function(frame, index) {
-                  console.log(index);
                   frame.forEach(function(element) {
-                      projectIndivCtrl.projectDataParsed[id + element][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;
+                    var elID = element + id;
+                    if(elID>= 0 && elID < 400) {
+                        if(xid >= 10) {
+                          if((elID % 20) >= (xid - 10)){
+
+                            projectIndivCtrl.projectDataParsed[elID][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;
+
+                          }
+                        }else if (xid < 10) {
+                          console.log(elID )
+                          if((elID % 20) < (10 + xid)){
+                            console.log(elID % 20);
+                            projectIndivCtrl.projectDataParsed[elID][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;
+
+                          }
+                        }
+
+                    }
+
+
 
                   })
               });
@@ -403,10 +477,12 @@ angular.module('lightShowApp')
 
 
     projectIndivCtrl.playShow = function() {
+      projectIndivCtrl.displayLastFrame = "false"
+
       if(projectIndivCtrl.isplaying == "false"){
         projectIndivCtrl.playShowInterval = $interval(function() {
-          projectIndivCtrl.setFrame();
           projectIndivCtrl.currentFrame +=1;
+          projectIndivCtrl.setFrame();
           console.log(projectIndivCtrl.currentFrame);
           document.getElementById('songHolder').play();
           //$scope.$apply();
@@ -425,6 +501,7 @@ angular.module('lightShowApp')
     }
 
     projectIndivCtrl.pauseShow = function() {
+      projectIndivCtrl.displayLastFrame = "true"
       projectIndivCtrl.isplaying = "false";
       $interval.cancel(projectIndivCtrl.playShowInterval);
       document.getElementById('songHolder').pause();
@@ -439,6 +516,7 @@ angular.module('lightShowApp')
         document.getElementById('songHolder').play();
         //$scope.$apply();
         projectIndivCtrl.isplaying = "true";
+        projectIndivCtrl.displayLastFrame = "false";
 
     }
 

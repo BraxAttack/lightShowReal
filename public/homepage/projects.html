@@ -12,12 +12,12 @@
       </div>
 
       <div layout="column">
-        <md-button class="hompageProjectsDivEditBtn" ui-sref="homepage.projectindiv({projectId: project.$id})"><i class="material-icons">edit</i> Edit</md-button>
+        <md-button class="hompageProjectsDivEditBtn" ng-click="projectsCtrl.gotoIndiv(project.projectName)" ui-sref="homepage.projectindiv({projectId: project.$id})"><i class="material-icons">edit</i> Edit</md-button>
         <md-divider></md-divider>
         <md-button class="hompageProjectsDivPlay"><i class="material-icons">remove_red_eye</i> View</md-button>
 
       </div>
     </div>
 
-    
+
  </md-card>

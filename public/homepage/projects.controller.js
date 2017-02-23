@@ -18,6 +18,9 @@ angular.module('lightShowApp')
     Users.setOnline(projectsCtrl.profile.$id);
 
 
+    projectsCtrl.gotoIndiv = function(name) {
+      projectsCtrl.currentPage.add(name);
+    }
 
     projectsCtrl.newProject = {
       projectName: '',

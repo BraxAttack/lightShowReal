@@ -1,49 +1,18 @@
 angular.module('lightShowApp')
-  .controller('TemplatesCtrl', function($firebaseArray, $state, $mdDialog, $http, $timeout, $interval, $scope, Auth, profile, currentPage){
+  .controller('TemplatesCtrl', function($firebaseArray, $state, $mdDialog, $http, $timeout, $interval, $scope, Auth, profile, currentPage, templates){
     var templatesCtrl = this;
 
     templatesCtrl.currentPage = currentPage;
 
     templatesCtrl.currentPage.add("Templates");
 
-    templatesCtrl.templates = [
-      {
-        title: 'templateA',
-        creator: 'BaxAttack',
-        lastModified: '1/23/17'
-      },
-      {
-        title: 'templateA',
-        creator: 'BaxAttack',
-        lastModified: '1/23/17'
-      },
-      {
-        title: 'templateA',
-        creator: 'BaxAttack',
-        lastModified: '1/23/17'
-      },
-      {
-        title: 'templateA',
-        creator: 'BaxAttack',
-        lastModified: '1/23/17'
-      }
-
-    ];
+    templatesCtrl.templates = templates;
 
 
-
-
-
-
-
-
-
-
-    var projectID = '-KdN_7xhXvwtCRy3FW8m';
+  
     var profileID = profile.$id;
 
-    console.log("profile " + profileID);
-    console.log("profile " + projectID);
+
 
     templatesCtrl.currentFrame = 0;
     templatesCtrl.lastFrame = 0
@@ -96,9 +65,6 @@ angular.module('lightShowApp')
 
   //comment this out to restore
   //templatesCtrl.projectData = "none"
-
-    templatesCtrl.projectID = projectID;
-
 
     templatesCtrl.displayArray = function() {
       console.log(templatesCtrl.projectDataParsed[0]);

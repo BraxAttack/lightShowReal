@@ -4,14 +4,12 @@
     </div>
     <div layout="row">
       <div class="homepageTemplatesInfoDiv">
-        <h1 class="homepageTemplatesTemplateName">{{template.title}}</h1>
-        <h3 class="homepageTemplatesLastEdit">Last edit: {{template.lastModified}}</h3>
+        <h1 class="homepageTemplatesTemplateName">{{template['$value']}}</h1>
 
       </div>
 
       <div layout="column">
-        <md-button class="hompageTemplatesDivEditBtn"><i class="material-icons">edit</i> Edit</md-button>
-        <md-divider></md-divider>
+
         <md-button class="hompageTemplatesDivPlay"><i class="material-icons">remove_red_eye</i> View</md-button>
 
       </div>

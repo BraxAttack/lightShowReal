@@ -7,14 +7,14 @@
 
 
 <div ng-if="projectIndivCtrl.projectData">
+  
 
   <div class="indivProjectPresetSelect">
     <md-button class="indivProjectSave" ng-click="projectIndivCtrl.SaveProject()">Save</md-button>
-      <div ng-click="projectIndivCtrl.setPreset($index, template['$id'])" class="indivProjectPresetSelectEachPreset" ng-repeat="template in projectIndivCtrl.templates">
+      <md-button id="template{{$index}}" ng-click="projectIndivCtrl.setPreset($index, template['$id']); projectIndivCtrl.selectedToolSet('preset');" class="indivProjectPresetSelectEachPreset" ng-repeat="template in projectIndivCtrl.templates">
         {{template['$value']}}
 
-      </div>
-      {{projectIndivCtrl.presetExamp}}
+      </md-button>
   </div>
 
   <!--Project EDIT DIVS -->
@@ -32,6 +32,12 @@
 
   <div class="indivProjectEditSquareDisplay">
     <div id="Display{{ $index }}" class="indivProjectEditSquareDisplayIndivNode" ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
+
+    </div>
+  </div>
+
+  <div class="indivProjectEditSquareDisplay" style="opacity: .5;">
+    <div id="LastFrameDisplay{{ $index }}" class="indivProjectEditSquareDisplayIndivNode" ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
 
     </div>
   </div>
@@ -109,6 +115,13 @@
       </md-button>
       <md-button id="preset" ng-click="projectIndivCtrl.selectedToolSet('preset');" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
           <i class="material-icons" style="line-height: 50px;">extension</i>
+      </md-button>
+
+      <md-button id="showLastFrameTrue" ng-click="projectIndivCtrl.ShowLastFrame('false');" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: #4CAF50;">
+          <i class="material-icons" style="line-height: 50px;">border_outer</i>
+      </md-button>
+      <md-button id="ShowLastFrameFalse" ng-click="projectIndivCtrl.ShowLastFrame('true');" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray; display: none;">
+          <i class="material-icons" style="line-height: 50px;">border_outer</i>
       </md-button>
 
     </div>

@@ -114,6 +114,7 @@ angular
             projectIndivData: function($stateParams){
               return $stateParams.projectId;
             }
+            
           }
         })
       .state('homepage.templates', {
@@ -137,7 +138,7 @@ angular
         url: '/newtemplate',
         templateUrl: 'homepage/newTemplate.html',
         controller: 'TemplatesCtrl as templatesCtrl',
-        
+
       })
       .state('homepage.playlists', {
         url: '/playlists',
