@@ -114,7 +114,7 @@ angular
             projectIndivData: function($stateParams){
               return $stateParams.projectId;
             }
-            
+
           }
         })
       .state('homepage.templates', {
@@ -143,7 +143,7 @@ angular
       .state('homepage.playlists', {
         url: '/playlists',
         templateUrl: 'homepage/playlists.html',
-        controller: 'PlaylistsCtrl as playlistCrtl',
+        controller: 'PlaylistsCtrl as playlistsCtrl',
         resolve: {
           auth: function($state, Users, Auth){
             return Auth.$requireSignIn().catch(function(){

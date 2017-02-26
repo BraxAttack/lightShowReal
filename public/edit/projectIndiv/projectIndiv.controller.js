@@ -118,8 +118,11 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
         projectIndivCtrl.projectData = projectData;
         projectIndivCtrl.projectDataParsed = [];
 
+
         for (d = 0; d < 400; d++) {
-            var arraypush = JSON.parse(projectIndivCtrl.projectData[d]['$value']);
+          //console.log(projectIndivCtrl.projectData[d]);
+          //console.log(projectIndivCtrl.projectData[d]['data'])
+            var arraypush = JSON.parse(projectIndivCtrl.projectData[d]['data']);
             projectIndivCtrl.projectDataParsed.push(arraypush);
 
         }
@@ -787,7 +790,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
       for (i = 0; i < 400; i++) {
           var projectDataUpload = {};
           //console.log(projectsCtrl.newProjectData.songData[i])
-          projectDataUpload['/ProjectData/'+ profileID + '/' + projectIndivCtrl.projectID + '/' + i] = JSON.stringify(projectIndivCtrl.projectDataParsed[i]);
+          projectDataUpload['/ProjectData/'+ profileID + '/' + projectIndivCtrl.projectID + '/' + i] = {'data': JSON.stringify(projectIndivCtrl.projectDataParsed[i])};
           firebase.database().ref().update(projectDataUpload)
           .then(function(ref){
               projectIndivCtrl.uploadCount += 1;

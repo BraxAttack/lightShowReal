@@ -184,7 +184,7 @@ angular.module('lightShowApp')
               var projectDataUpload = {};
               console.log(projectsCtrl.newProjectData.songData[i]);
               console.log(JSON.stringify(projectsCtrl.newProjectData.songData[i]));
-              projectDataUpload['/ProjectData/'+ projectsCtrl.profile.$id + '/' + projectKey + '/' + i] = JSON.stringify(projectsCtrl.newProjectData.songData[i]);
+              projectDataUpload['/ProjectData/'+ projectsCtrl.profile.$id + '/' + projectKey + '/' + i] = {'data': JSON.stringify(projectsCtrl.newProjectData.songData[i])};
               firebase.database().ref().update(projectDataUpload)
               .then(function(ref){
                 projectsCtrl.uploadCount += 1;

@@ -1,0 +1,8 @@
+<div class="playlistIndivDiv" ng-repeat="show in playlistsCtrl.shows">
+  <h1 class="playlistIndivDivTitle">{{show['name']}}</h1>
+
+  <md-button ng-click="playlistsCtrl.setShowTime(100000000, show['id'], show['uid'])" style="float: right; background-color: #4CAF50; width: 90px;">Pending...</md-button>
+  <md-button ng-click="playlistsCtrl.setShowTime(15000, show['id'], show['uid'])" style="float: right; background-color: #4CAF50; width: 90px;">15 sec</md-button>
+  <md-button ng-click="playlistsCtrl.setShowTime(30000, show['id'], show['uid'])" style="float: right; background-color: #4CAF50; width: 90px;">30 sec</md-button>
+
+</div>
