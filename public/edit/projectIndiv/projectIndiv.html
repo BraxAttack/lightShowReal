@@ -11,10 +11,14 @@
 
   <div class="indivProjectPresetSelect">
     <md-button class="indivProjectSave" ng-click="projectIndivCtrl.SaveProject()">Save</md-button>
+
+    <div class="inidivProjectPresetSelectDivHolder">
       <md-button id="template{{$index}}" ng-click="projectIndivCtrl.setPreset($index, template['$id']); projectIndivCtrl.selectedToolSet('preset');" class="indivProjectPresetSelectEachPreset" ng-repeat="template in projectIndivCtrl.templates">
         {{template['$value']}}
 
       </md-button>
+
+    </div>
 
   </div>
 
@@ -37,7 +41,7 @@
     </div>
   </div>
 
-  <div class="indivProjectEditSquareDisplay" style="opacity: .5;">
+  <div class="indivProjectEditSquareDisplay" style="opacity: .3; z-index: 5;">
     <div id="LastFrameDisplay{{ $index }}" class="indivProjectEditSquareDisplayIndivNode" ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
 
     </div>
@@ -134,6 +138,10 @@
         <md-button id="preset" ng-click="projectIndivCtrl.selectedToolSet('preset');" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
             <i class="material-icons" style="line-height: 50px;">extension</i>
         </md-button>
+        <md-button id="replaceColor" ng-click="projectIndivCtrl.selectedToolSet('replaceColor');" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
+            <i class="material-icons" style="line-height: 50px;">invert_colors</i>
+        </md-button>
+
 
         <md-button id="showLastFrameTrue" ng-click="projectIndivCtrl.ShowLastFrame('false');" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: #4CAF50;">
             <i class="material-icons" style="line-height: 50px;">border_outer</i>
@@ -145,6 +153,8 @@
         <md-button id="duplicate" ng-click="projectIndivCtrl.duplicateTool();" class="md-fab" aria-label="Preset" style="width: 50px; height: 50px; float: left; margin-top: 2.5%; background-color: gray;">
             <i class="material-icons" style="line-height: 50px;">content_copy</i>
         </md-button>
+
+        <input type="number" ng-model="projectIndivCtrl.breakpoint" min="0"/>
 
       </div>
 

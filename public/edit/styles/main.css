@@ -374,6 +374,19 @@ body {
   top: calc(50% - 90px);
 }
 
+.inidivProjectPresetSelectDivHolder {
+
+width: calc(100% - 120px);
+
+height: 75px;
+
+float: left;
+
+margin-top: 0px;
+
+overflow: auto;
+}
+
 .indivProjectPresetSelect {
   width: calc(100% - 10px);
   height: 80px;

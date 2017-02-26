@@ -1,0 +1,21 @@
+body {
+  background-color: #F5F5F5;
+}
+
+.showSelectDiv {
+  width: 200px;
+  height: 50px;
+  background-color: #BDBDBD;
+  text-align: center;
+  line-height: 50px;
+}
+
+.displayDiv {
+  width: 200px;
+  height: 200px;
+  float: left;
+  background-color: blue;
+  text-align: center;
+  line-height: 200px;
+  color: white;
+}

@@ -20,6 +20,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
   document.getElementById('homepageProjectsAddFab').style.display = "none";
 }
 
+    projectIndivCtrl.breakpoint = 0;
 
     projectIndivCtrl.currentFrame = 0;
     projectIndivCtrl.lastFrame = 0
@@ -65,7 +66,24 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
 
         }
 
+      }else if (evt.originalEvent["code"] == "KeyW") {
+        projectIndivCtrl.moveTool('up');
+
+      }else if (evt.originalEvent["code"] == "KeyD") {
+        projectIndivCtrl.moveTool('right');
+
+      }else if (evt.originalEvent["code"] == "KeyA") {
+        projectIndivCtrl.moveTool('left');
+
+      }else if (evt.originalEvent["code"] == "KeyS") {
+        projectIndivCtrl.moveTool('down');
+
+      }else if (evt.originalEvent["code"] == "KeyQ") {
+        projectIndivCtrl.duplicateTool();
+
       }
+
+
     })
 
 
@@ -149,6 +167,8 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
       document.getElementById('square').style.backgroundColor = 'gray';
       document.getElementById('draw').style.backgroundColor = 'gray';
       document.getElementById('preset').style.backgroundColor = 'gray';
+      document.getElementById('selectedToolSet').style.backgroundColor = 'gray';
+
 
       document.getElementById(tool).style.backgroundColor = '#4CAF50';
     }
@@ -166,6 +186,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
       }
 
     }
+
 
     projectIndivCtrl.moveTool = function(direction) {
       console.log(direction);
@@ -239,20 +260,118 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
 
     projectIndivCtrl.ColorPalate = [
       '',
-      '#1976D2',
-      '#d32f2f',
-      '#C2185B',
-      '#7B1FA2',
-      '#512DA8',
-      '#303F9F',
-      '#FBC02D',
-      '#0288D1',
-      '#388E3C',
+      '#f44336',
+      '#E91E63',
+      '#9C27B0',
+      '#673AB7',
+      '#3F51B5',
+      '#2196F3',
+      '#03A9F4',
+      '#00BCD4',
+      '#009688',
+      '#4CAF50',
+      '#8BC34A',
+      '#CDDC39',
+      '#FFEB3B',
+      '#FFC107',
+      '#FF9800',
+      '#FF5722',
       '#795548',
-      '#F57C00',
-      '#5D4037',
-      '#455A64',
+      '#9E9E9E',
+      '#607D8B',
+      '#b71c1c',
+      '#c62828',
+      '#d32f2f',
+      '#e53935',
+      '#f44336',
+      '#ef5350',
+      '#e57373',
+      '#ef9a9a',
+      '#ffcdd2',
+      '#ffebee',
+      '#880E4F',
+      '#AD1457',
+      '#C2185B',
+      '#D81B60',
+      '#E91E63',
+      '#EC407A',
+      '#F06292',
+      '#F48FB1',
+      '#F8BBD0',
+      '#FCE4EC',
+      '#4A148C',
+      '#6A1B9A',
+      '#7B1FA2',
+      '#8E24AA',
+      '#9C27B0',
+      '#AB47BC',
+      '#BA68C8',
+      '#CE93D8',
+      '#E1BEE7',
+      '#F3E5F5',
+      '#311B92',
+      '#4527A0',
+      '#512DA8',
+      '#5E35B1',
+      '#673AB7',
+      '#7E57C2',
+      '#9575CD',
+      '#B39DDB',
+      '#D1C4E9',
+      '#EDE7F6',
+      '#01579B',
+      '#0277BD',
+      '#0288D1',
+      '#039BE5',
+      '#03A9F4',
+      '#29B6F6',
+      '#4FC3F7',
+      '#81D4FA',
+      '#B3E5FC',
+      '#E1F5FE',
+      '#1B5E20',
+      '#2E7D32',
+      '#388E3C',
+      '#43A047',
+      '#4CAF50',
+      '#66BB6A',
+      '#81C784',
+      '#A5D6A7',
+      '#C8E6C9',
+      '#E8F5E9',
+      '#F57F17',
+      '#F9A825',
+      '#FBC02D',
+      '#FDD835',
+      '#FFEB3B',
+      '#FFEE58',
+      '#FFF176',
+      '#FFF59D',
+      '#FFF9C4',
+      '#BF360C',
+      '#D84315',
+      '#E64A19',
+      '#F4511E',
+      '#FF5722',
+      '#FF7043',
+      '#FF8A65',
+      '#FFAB91',
+      '#FFCCBC',
+      '#FBE9E7',
+      '#212121',
+      '#424242',
+      '#616161',
+      '#757575',
+      '#9E9E9E',
+      '#BDBDBD',
+      '#E0E0E0',
+      '#EEEEEE',
+      '#F5F5F5',
+      '#FAFAFA'
+
     ];
+
+
 
     $timeout(function () {
       document.getElementById('currentFrame0').style.backgroundColor = "#4CAF50";
@@ -511,6 +630,16 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
               projectIndivCtrl.setFrame()
               projectIndivCtrl.drawingArray = [];
 
+          }else if(projectIndivCtrl.selectedTool == "replaceColor") {
+            //alert(projectIndivCtrl.setNodeOUTVar);
+            var selectedColor = projectIndivCtrl.projectDataParsed[projectIndivCtrl.setNodeOUTVar][projectIndivCtrl.currentFrame]
+            for (i = 0; i < 400; i++) {
+                if(projectIndivCtrl.projectDataParsed[i][projectIndivCtrl.currentFrame] == selectedColor){
+                  projectIndivCtrl.projectDataParsed[i][projectIndivCtrl.currentFrame] = projectIndivCtrl.SelectedColor.index;
+                }
+            }
+            projectIndivCtrl.setFrame()
+
           }else {
               console.log('preset');
 
@@ -621,9 +750,9 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
 
     projectIndivCtrl.PlayFromBegin = function() {
         projectIndivCtrl.pauseShow();
-        projectIndivCtrl.currentFrame = 0;
+        projectIndivCtrl.currentFrame = projectIndivCtrl.breakpoint;
         projectIndivCtrl.playShow();
-        document.getElementById('songHolder').currentTime = 0;
+        document.getElementById('songHolder').currentTime = projectIndivCtrl.breakpoint * .1;
         document.getElementById('songHolder').play();
         //$scope.$apply();
         projectIndivCtrl.isplaying = "true";
