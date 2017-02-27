@@ -155,6 +155,9 @@ angular
             console.log(JSON.parse(songData[0]['$value']));
             displayctrl.songDataActual = JSON.parse(songData[0]['$value']);
             displayctrl.currentPage = "displayShow";
+
+
+
             $timeout(function () {
               document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
 
@@ -163,7 +166,6 @@ angular
               document.getElementById('showBeginsSoon').innerHTML = "The Show Will Begin Soon...";
 
             }, 100);
-
 
             $interval(function () {
               var offsetRef = firebase.database().ref(".info/serverTimeOffset");

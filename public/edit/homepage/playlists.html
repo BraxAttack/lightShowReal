@@ -1,8 +1,20 @@
 <div class="playlistIndivDiv" ng-repeat="show in playlistsCtrl.shows">
   <h1 class="playlistIndivDivTitle">{{show['name']}}</h1>
 
-  <md-button ng-click="playlistsCtrl.setShowTime(100000000, show['id'], show['uid'])" style="float: right; background-color: #4CAF50; width: 90px;">Pending...</md-button>
-  <md-button ng-click="playlistsCtrl.setShowTime(15000, show['id'], show['uid'])" style="float: right; background-color: #4CAF50; width: 90px;">15 sec</md-button>
-  <md-button ng-click="playlistsCtrl.setShowTime(30000, show['id'], show['uid'])" style="float: right; background-color: #4CAF50; width: 90px;">30 sec</md-button>
+  <md-button ng-click="playlistsCtrl.setShowTime(100000000, show['id'], show['uid'], $index)" style="float: right; background-color: #4CAF50; width: 90px;">Pending...</md-button>
+  <md-button ng-click="playlistsCtrl.setShowTime(12000, show['id'], show['uid'], $index)" style="float: right; background-color: #4CAF50; width: 90px;">12 sec</md-button>
+  <md-button ng-click="playlistsCtrl.setShowTime(45000, show['id'], show['uid'], $index)" style="float: right; background-color: #4CAF50; width: 90px;">45 sec</md-button>
 
 </div>
+
+<div id="displayDiv" class="displayDiv">
+  <h1 id="seatNum" style="margin: 0; position: absolute; width: 50vw;"></h1>
+  <h2 id="showBeginsSoon" style="position: absolute; line-height: calc(50vh - 220px); top: 220px; margin: 0; width: 50vw; font-size: 20px;"></h2>
+  <h1 id="countdown" style="position: absolute; width: 50vw; height: 50vh; margin: 0;"></h1>
+</div>
+
+<audio id="songHolder2" controls style="display: none;">
+  <source src="error.ogg" type="audio/ogg">
+  <source src="error.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
