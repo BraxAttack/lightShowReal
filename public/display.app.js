@@ -152,9 +152,12 @@ angular
         var Getref = firebase.database().ref('/ProjectData/'+ displayctrl.showUID + '/' + displayctrl.showID + '/' + seatNum );
         var songData = $firebaseArray(Getref).$loaded()
         .then(function (songData){
-            console.log(JSON.parse(songData[0]['$value']));
+            //console.log(JSON.parse(songData[0]['$value']));
             displayctrl.songDataActual = JSON.parse(songData[0]['$value']);
             displayctrl.currentPage = "displayShow";
+
+
+
             $timeout(function () {
               document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
 
@@ -163,7 +166,6 @@ angular
               document.getElementById('showBeginsSoon').innerHTML = "The Show Will Begin Soon...";
 
             }, 100);
-
 
             $interval(function () {
               var offsetRef = firebase.database().ref(".info/serverTimeOffset");
@@ -178,10 +180,10 @@ angular
               displayctrl.serverTime += 50;
               displayctrl.Tminus = Math.ceil((displayctrl.serverTime - displayctrl.shows[displayctrl.currentPlaylist]['startTime']) / 100) * 100;
               var dindex = displayctrl.Tminus / 100;
-              console.log(dindex);
+              //console.log(dindex);
 
               if(dindex >= -110 && dindex < 0) {
-                console.log(dindex)
+                //console.log(dindex)
                 document.getElementById('seatNum').innerHTML = "";
                 document.getElementById('showBeginsSoon').innerHTML = "";
                 document.getElementById('seatNum').innerHTML = "";
@@ -238,6 +240,14 @@ angular
         })
 
       }
+
+      var iosSleepPreventInterval = setInterval(function () {
+          window.location.href = "/new/page";
+          window.setTimeout(function () {
+              window.stop()
+          }, 0);
+          console.log("reset");
+      }, 10000);
 
 
 

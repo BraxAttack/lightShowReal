@@ -1,5 +1,5 @@
 angular.module('lightShowApp')
-.controller("ProjectIndivCtrl", function($firebaseArray, $http, $timeout, $interval, $scope, Auth, projectIndivData, profile, templates) {
+.controller("ProjectIndivCtrl", function($firebaseArray, $http, $timeout, $interval, $scope, $mdDialog, Auth, projectIndivData, profile, templates) {
     var projectIndivCtrl = this;
 
     var projectID = projectIndivData;
@@ -53,17 +53,25 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
 
 
     $(document).keydown(function(evt){
-      console.log(evt.originalEvent["code"]);
+      //console.log(evt.originalEvent["code"]);
 
       if(evt.originalEvent["code"] == "ArrowDown"){
-        if(projectIndivCtrl.currentFrame < (projectIndivCtrl.projectDataParsed[0].length - 1)){
-          projectIndivCtrl.setFrameNumber(projectIndivCtrl.currentFrame + 1);
+        if(projectIndivCtrl.MakeselectVar == true) {
 
+        }else{
+          if(projectIndivCtrl.currentFrame < (projectIndivCtrl.projectDataParsed[0].length - 1)){
+            projectIndivCtrl.setFrameNumber(projectIndivCtrl.currentFrame + 1);
+
+          }
         }
       }else if (evt.originalEvent["code"] == "ArrowUp") {
-        if(projectIndivCtrl.currentFrame > 0){
-            projectIndivCtrl.setFrameNumber(projectIndivCtrl.currentFrame - 1);
+        if(projectIndivCtrl.MakeselectVar == true) {
 
+        }else{
+          if(projectIndivCtrl.currentFrame > 0){
+              projectIndivCtrl.setFrameNumber(projectIndivCtrl.currentFrame - 1);
+
+            }
         }
 
       }else if (evt.originalEvent["code"] == "KeyW") {
@@ -127,6 +135,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
 
         }
         console.log(projectIndivCtrl.projectDataParsed[0].length);
+        projectIndivCtrl.savePresetTotalFrames = projectIndivCtrl.projectDataParsed[0].length - 1;
 
 
         //saves ram (i think...)
@@ -170,7 +179,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
       document.getElementById('square').style.backgroundColor = 'gray';
       document.getElementById('draw').style.backgroundColor = 'gray';
       document.getElementById('preset').style.backgroundColor = 'gray';
-      document.getElementById('selectedToolSet').style.backgroundColor = 'gray';
+      document.getElementById('replaceColor').style.backgroundColor = 'gray';
 
 
       document.getElementById(tool).style.backgroundColor = '#4CAF50';
@@ -804,6 +813,156 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
       }
 
     }
+
+
+    projectIndivCtrl.MakeselectVar = false;
+    //projectIndivCtrl.templateIntervalCurrentFrame = 0;
+    //projectIndivCtrl.templateFirstFrameModel = 0;
+    //projectIndivCtrl.templateLastFrameModel = 10;
+
+
+    projectIndivCtrl.Makeselect = function(value) {
+      projectIndivCtrl.MakeselectVar = value;
+      //projectIndivCtrl.savePresetInterval;
+
+
+      if(projectIndivCtrl.MakeselectVar == true) {
+        projectIndivCtrl.templateIntervalCurrentFrame = projectIndivCtrl.currentFrame;
+        projectIndivCtrl.templateFirstFrameModel = projectIndivCtrl.currentFrame;
+        var tenminus = projectIndivCtrl.savePresetTotalFrames - 11;
+
+        if(projectIndivCtrl.currentFrame < tenminus) {
+          projectIndivCtrl.templateLastFrameModel = projectIndivCtrl.currentFrame + 10;
+
+        }else if(projectIndivCtrl.currentFrame == projectIndivCtrl.savePresetTotalFrames){
+          alert("You cant create a preset off of the last frame*");
+          $interval.cancel(projectIndivCtrl.savePresetInterval);
+          projectIndivCtrl.Makeselect(false);
+
+
+        }else{
+          projectIndivCtrl.templateLastFrameModel = projectIndivCtrl.savePresetTotalFrames;
+        }
+
+
+        projectIndivCtrl.savePresetInterval = $interval(function () {
+          var maxvar = projectIndivCtrl.templateLastFrameModel + 1;
+          if(projectIndivCtrl.templateIntervalCurrentFrame < maxvar){
+            for (c = 0; c < 400; c++) {
+                document.getElementById('presetPlay'+c).style.backgroundColor = "";
+            }
+            for (i = 0; i < 400; i++) {
+              document.getElementById('presetPlay'+i).style.backgroundColor = projectIndivCtrl.ColorPalate[projectIndivCtrl.projectDataParsed[i][projectIndivCtrl.templateIntervalCurrentFrame]];
+
+            }
+            projectIndivCtrl.templateIntervalCurrentFrame += 1;
+
+
+          }else{
+            projectIndivCtrl.templateIntervalCurrentFrame = projectIndivCtrl.templateFirstFrameModel;
+            for (c = 0; c < 400; c++) {
+                document.getElementById('presetPlay'+c).style.backgroundColor = "black";
+            }
+
+          }
+
+        }, 100);
+
+      }else{
+        $interval.cancel(projectIndivCtrl.savePresetInterval);
+        for (c = 0; c < 400; c++) {
+            document.getElementById('presetPlay'+c).style.backgroundColor = "";
+        }
+
+      }
+    }
+
+
+    projectIndivCtrl.SaveTemplate = function(ev) {
+      $interval.cancel(projectIndivCtrl.savePresetInterval);
+      var confirm = $mdDialog.prompt()
+         .title('What would you name your template?')
+         .textContent('Keep it short and simple')
+         .placeholder('Template name')
+         .ariaLabel('Template name')
+         .initialValue('MyTemplate')
+         .targetEvent(ev)
+         .ok('Okay!')
+         .cancel('Back to Edit');
+
+       $mdDialog.show(confirm).then(function(result) {
+
+        projectIndivCtrl.presetArray = []
+
+
+         for (f = projectIndivCtrl.templateFirstFrameModel; f < projectIndivCtrl.templateLastFrameModel; f++) {
+           projectIndivCtrl.presetArray.push([]);
+           console.log(projectIndivCtrl.presetArray);
+           var frameArray = [];
+           for (i = 0; i < 400; i++) {
+             if(projectIndivCtrl.projectDataParsed[i][f] == 0) {
+
+
+             }else {
+               //console.log(presetArray[f]);
+               var dataspot = i - 190;
+               console.log(f - projectIndivCtrl.templateFirstFrameModel);
+               var frameNo =  f - projectIndivCtrl.templateFirstFrameModel;
+               projectIndivCtrl.presetArray[frameNo].push(dataspot);
+
+              }
+            }
+          }
+          //console.log(projectIndivCtrl.presetArray);
+
+/*
+           for(a = 0; a < frameisSet; a++){
+             console.log(a);
+             projectIndivCtrl.presetArray.splice(0, 1);
+           }
+*/
+
+           if(projectIndivCtrl.presetArray != ''){
+             var templateKey = firebase.database().ref('TemplateData/').push().key
+             var templateDataUpload = {};
+             var templateUpload = {};
+             var userTempUpload = {};
+
+             templateDataUpload['/TemplateData/'+templateKey] = {'data': JSON.stringify(projectIndivCtrl.presetArray)};
+             firebase.database().ref().update(templateDataUpload)
+             .then(function(ref){
+
+               templateUpload['/Templates/'+templateKey] = result;
+               firebase.database().ref().update(templateUpload)
+               .then(function(ref){
+
+                 templateUpload['/users/'+ profile.$id + '/templates/' + templateKey] = result;
+                 firebase.database().ref().update(templateUpload)
+                 .then(function(ref){
+
+                     alert(result + " upload complete.")
+                     console.log(ref);
+                     console.log(projectIndivCtrl.presetArray);
+                      projectIndivCtrl.Makeselect(false);
+
+                  })
+
+                })
+
+             })
+
+           }else {
+             alert("no preset data");
+           }
+
+
+       }, function() {
+
+
+       });
+
+    }
+
 
 
 })

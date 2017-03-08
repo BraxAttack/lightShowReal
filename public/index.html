@@ -7,29 +7,37 @@
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="mainDisplay.css">
 
+
   </head>
   <body ng-app="lightShowAppDisplay" ng-controller="lightShowAppDisplayCtrl as displayctrl">
 
+    <div class="headerDiv">
+      <img class="headerDivLogo" src="/edit/images/lightShow.png"/>
+      <h1 class="pageDisplay" ng-if="displayctrl.currentPage == 'chooseShow'">Select a show...</h1>
+      <h1 class="pageDisplay" ng-if="displayctrl.currentPage == 'chooseSeat'">Choose a seat</h1>
 
-    <div ng-if="displayctrl.currentPage == 'chooseShow'" style="position: absolute; top: 0; left: 0;">
-      <!--<a href="edit/">Edit</a>
-      <br />-->
+    </div>
+
+    <div ng-if="displayctrl.currentPage == 'chooseShow'" style="position: absolute; top: 56px; left: 0; width: 100vw; height: calc(100vh - 56px); background-color: #EEEEEE; overflow: hidden; overflow-y: auto;">
       <div class="showSelectDiv" ng-repeat="show in displayctrl.shows track by $index" ng-click="displayctrl.chooseShow(show['id'], show['uid'], $index)">
-        title: {{show['name']}}
+        <h1 class="showSelectTitle">{{show['name']}}</h1>
+        <h2 class="showSelectVenue">Southern Adventist University</h2>
       </div>
 
     </div>
 
-    <div ng-if="displayctrl.currentPage == 'chooseSeat'" style="position: absolute; top: 0; left: 0;">
-      <input type="number" min="0" max="399" ng-model="displayctrl.userSeat" style="float: left;"/>
-      <button ng-click="displayctrl.getShowData()">Select</button>
+    <div ng-if="displayctrl.currentPage == 'chooseSeat'" style="position: absolute; top: 56px; left: 0; width: 100vw; height: calc(100vh - 56px); background-color: #EEEEEE; overflow: hidden; overflow-y: auto;">
+      <h1 class="seatSelectShowName">{{displayctrl.shows[displayctrl.currentPlaylist]['name']}}</h1>
+      <h1 class="seatSelectNo">Seat No.</h1>
+      <input class="seatSelectInput" type="number" min="0" max="399" ng-model="displayctrl.userSeat" style="float: left;"/>
+      <button class="seatSelectSubmit" ng-click="displayctrl.getShowData()">Select</button>
 
     </div>
 
     <div ng-if="displayctrl.currentPage == 'displayShow'" style="position: absolute; top: 0; left: 0;">
       <div id="displayDiv" class="displayDiv">
-        <h1 id="seatNum" style="margin: 0; position: absolute; width: 100vw;"></h1>
-        <h2 id="showBeginsSoon" style="position: absolute; line-height: calc(100vh - 220px); top: 220px; margin: 0; width: 100vw; font-size: 20px;"></h2>
+        <h1 id="seatNum" style="margin: 0; position: absolute; width: 100vw; line-height: calc(100vh - 110px);"></h1>
+        <h2 id="showBeginsSoon" style="position: absolute; line-height: calc(100vh - 385px); top: 220px; margin: 0; width: 100vw; font-size: 20px;"></h2>
         <h1 id="countdown" style="position: absolute; width: 100vw; height: 100vh; margin: 0;"></h1>
       </div>
 

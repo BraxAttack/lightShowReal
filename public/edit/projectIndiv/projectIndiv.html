@@ -8,9 +8,39 @@
 
 <div ng-if="projectIndivCtrl.projectData">
 
+  <div  ng-if="projectIndivCtrl.MakeselectVar">
+      <div class="projectInvidPresetMakeDeselectDiv" ng-click="projectIndivCtrl.Makeselect(false)">
+      </div>
+
+      <div class="projectInvidPresetMakeShowDiv">
+          <div class="projectInvidPresetMakeDisplaySquare">
+            <div class="projectInvidPresetMakeDisplaySquareIndiv" id="presetPlay{{$index}}" ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
+
+            </div>
+
+          </div>
+          <div class="projectInvidPresetMakeDisplayOptionsDiv">
+            <md-input-container class="projectInvidPresetMakeDisplayOptionsNumInput md-icon-float md-icon-right md-block" style="margin-left: 20px;">
+              <label>First Frame</label>
+              <input ng-model="projectIndivCtrl.templateFirstFrameModel" type="number" step="1" min="0" max="{{projectIndivCtrl.templateLastFrameModel - 1}}">
+            </md-input-container>
+            <md-input-container class="projectInvidPresetMakeDisplayOptionsNumInput md-icon-float md-icon-right md-block">
+              <label>Last Frame</label>
+              <input ng-model="projectIndivCtrl.templateLastFrameModel" type="number" step="1" min="{{projectIndivCtrl.templateFirstFrameModel + 1}}" max="{{projectIndivCtrl.savePresetTotalFrames}}" >
+            </md-input-container>
+            <md-button class="projectInvidPresetMakeDisplayOptionsPlaySubmit" ng-click="projectIndivCtrl.SaveTemplate()">Submit</md-button>
+
+
+          </div>
+
+      </div>
+  </div>
 
   <div class="indivProjectPresetSelect">
     <md-button class="indivProjectSave" ng-click="projectIndivCtrl.SaveProject()">Save</md-button>
+    <md-button class="projectInvidPresetMakeselectBtn" ng-click="projectIndivCtrl.Makeselect(true)">Save Preset</md-button>
+
+
 
     <div class="inidivProjectPresetSelectDivHolder">
       <md-button id="template{{$index}}" ng-click="projectIndivCtrl.setPreset($index, template['$id']); projectIndivCtrl.selectedToolSet('preset');" class="indivProjectPresetSelectEachPreset" ng-repeat="template in projectIndivCtrl.templates">
@@ -23,6 +53,10 @@
   </div>
 
   <!--Project EDIT DIVS -->
+  <div class="indivProjectEditSquareEditCenterTemplateDiv">
+
+  </div>
+
   <div class="indivProjectEditSquareEdit">
     <a ng-mousedown="projectIndivCtrl.setNodeIN($index)" ng-mouseover="projectIndivCtrl.setNodeMouseOver($index)" ng-mouseup="projectIndivCtrl.setNodeOUT($index)" id="Edit{{ $index }}" class="indivProjectEditSquareEditIndivNode"  ng-repeat="node in projectIndivCtrl.projectDataParsed track by $index">
 
@@ -85,14 +119,17 @@
           <i class="material-icons" style="line-height: 50px;">volume_off</i>
       </md-button>
 
+      <audio id="songHolder" controls style="display: none;">
+        <source src="error.ogg" type="audio/ogg">
+        <source src="error.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+      </audio>
+
+
     </div>
 
 
-    <audio id="songHolder" controls style="display: none;">
-      <source src="error.ogg" type="audio/ogg">
-      <source src="error.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-    </audio>
+
   </div>
 
   <div class="indivProjectEditChooseColorDiv">
