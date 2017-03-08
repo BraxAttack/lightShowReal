@@ -24,6 +24,7 @@
         <h2 class="showSelectVenue">Southern Adventist University</h2>
       </div>
 
+
     </div>
 
     <div ng-if="displayctrl.currentPage == 'chooseSeat'" style="position: absolute; top: 56px; left: 0; width: 100vw; height: calc(100vh - 56px); background-color: #EEEEEE; overflow: hidden; overflow-y: auto;">
@@ -35,6 +36,18 @@
     </div>
 
     <div ng-if="displayctrl.currentPage == 'displayShow'" style="position: absolute; top: 0; left: 0;">
+      
+      <video width="400" controls muted loop id="videoScrensaver" style="position: absolute; z-index: 10; width: 100vw; height: 100vh;">
+        <source src=http://techslides.com/demos/sample-videos/small.webm type=video/webm>
+        <source src=http://techslides.com/demos/sample-videos/small.ogv type=video/ogg>
+        <source src=http://techslides.com/demos/sample-videos/small.mp4 type=video/mp4>
+        <source src=http://techslides.com/demos/sample-videos/small.3gp type=video/3gp>
+        Your browser does not support HTML5 video.
+      </video>
+      <div id="videoScrensaverBlackDiv" style="width: 100vw; height: 100vh; background-color: black; position: absolute; z-index: 9;">
+
+      </div>
+
       <div id="displayDiv" class="displayDiv">
         <h1 id="seatNum" style="margin: 0; position: absolute; width: 100vw; line-height: calc(100vh - 110px);"></h1>
         <h2 id="showBeginsSoon" style="position: absolute; line-height: calc(100vh - 385px); top: 220px; margin: 0; width: 100vw; font-size: 20px;"></h2>
@@ -44,6 +57,7 @@
 
 
     </div>
+
 
 
 

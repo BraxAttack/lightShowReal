@@ -153,6 +153,28 @@ angular
         var songData = $firebaseArray(Getref).$loaded()
         .then(function (songData){
             //console.log(JSON.parse(songData[0]['$value']));
+            //document.getElementById('videoScrensaver').play()
+            var countupforalert = 1;
+
+            displayctrl.startVideoInterval = $interval(function () {
+              if(countupforalert % 300 == 0) {
+                alert("Press Play to Join the Show");
+                countupforalert += 1;
+              }else{
+                countupforalert += 1;
+                console.log(countupforalert);
+              }
+
+              if(document.getElementById('videoScrensaver').paused == false) {
+                console.log("df")
+                document.getElementById('videoScrensaver').style.zIndex = "-10";
+                document.getElementById('videoScrensaverBlackDiv').style.zIndex = "-8";
+
+                $interval.cancel(displayctrl.startVideoInterval);
+              }else {
+                console.log("we")
+              }
+            }, 20);
             displayctrl.songDataActual = JSON.parse(songData[0]['$value']);
             displayctrl.currentPage = "displayShow";
 
@@ -241,13 +263,7 @@ angular
 
       }
 
-      var iosSleepPreventInterval = setInterval(function () {
-          window.location.href = "/new/page";
-          window.setTimeout(function () {
-              window.stop()
-          }, 0);
-          console.log("reset");
-      }, 10000);
+
 
 
 
