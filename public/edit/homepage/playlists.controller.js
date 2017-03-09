@@ -27,6 +27,18 @@ angular.module('lightShowApp')
       playlistsCtrl.CurrentPlalistStartTime = playlistsCtrl.shows[indexVar]['startTime'];
 
 
+      var songRef = firebase.storage().ref().child('projectSongs/'+projectID);
+      songRef.getDownloadURL().then(function(url) {
+        // Insert url into an <img> tag to "download"
+        console.log(url);
+        document.getElementById('songHolder2').src = url;
+        document.getElementById('songHolder2').currentTime = 0;
+
+      }).catch(function(error) {
+        console.log(error);
+
+      });
+
       var millisec = 0;
       $interval(function () {
         var date = new Date();
