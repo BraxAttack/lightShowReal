@@ -1,20 +1,84 @@
-<div class="playlistIndivDiv" ng-repeat="show in playlistsCtrl.shows">
-  <h1 class="playlistIndivDivTitle">{{show['name']}}</h1>
+<div id="playlistListOfEvents" ng-if="playlistsCtrl.whichPlaylistPage == 'playlistList'">
+  <div class="playlistIndivDiv" ng-repeat="show in playlistsCtrl.shows">
+    <h1 class="playlistIndivDivTitle">{{show['name']}}</h1>
 
-  <md-button ng-click="playlistsCtrl.setShowTime(100000000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">Pending...</md-button>
-  <md-button ng-click="playlistsCtrl.setShowTime(45000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">45 sec</md-button>
-  <md-button ng-click="playlistsCtrl.setShowTime(12000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">12 sec</md-button>
+    <md-button ng-click="playlistsCtrl.selectAShowToEdit(show['id'], show['uid'], $index, show.$id)" style="background-color:#03A9F4; float: right; margin-right: 10px; height: 35px; margin-top: 7px;">Edit</md-button>
+<!--
+    <md-button ng-click="playlistsCtrl.setShowTime(100000000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">Pending...</md-button>
+    <md-button ng-click="playlistsCtrl.setShowTime(45000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">45 sec</md-button>
+    <md-button ng-click="playlistsCtrl.setShowTime(12000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">12 sec</md-button>
+-->
+
+  </div>
 
 </div>
 
-<div id="displayDiv" class="displayDiv">
-  <h1 id="seatNum" style="margin: 0; position: absolute; width: 50vw;"></h1>
-  <h2 id="showBeginsSoon" style="position: absolute; line-height: calc(50vh - 220px); top: 220px; margin: 0; width: 50vw; font-size: 20px;"></h2>
-  <h1 id="countdown" style="position: absolute; width: 50vw; height: 50vh; margin: 0;"></h1>
-</div>
 
-<audio id="songHolder2" style="display: none;" loop="false" onended="alert('done')">
-  <source src="error.ogg" type="audio/ogg">
-  <source src="error.mp3" type="audio/mpeg">
-Your browser does not support the audio element.
-</audio>
+
+<div id="playlistEventControls" ng-if="playlistsCtrl.whichPlaylistPage == 'IndividualPlaylist'">
+
+  <md-button id="playistIndivBackToShowLists" class="md-icon-button" aria-label="Settings" ng-click="playlistsCtrl.whichPlaylistPage = 'playlistList'">
+    <i class="material-icons" style="font-size: 29px; text-align: center; width: 38px; float: left; margin-left: -8px; margin-top: -3px;">keyboard_arrow_left</i>
+  </md-button>
+
+<!--
+  <div id="displayDiv" class="displayDiv">
+    <h1 id="seatNum" style="margin: 0; position: absolute; width: 50vw;"></h1>
+    <h2 id="showBeginsSoon" style="position: absolute; line-height: calc(50vh - 220px); top: 220px; margin: 0; width: 50vw; font-size: 20px;"></h2>
+    <h1 id="countdown" style="position: absolute; width: 50vw; height: 50vh; margin: 0;"></h1>
+  </div>
+-->
+  <h1 class="playlistEventControlsTitle">{{playlistsCtrl.CurrentPlalistTitle}}</h1>
+  <h2 class="playlistEventControlsVenue">{{playlistsCtrl.CurrentPlalistVenue}}</h2>
+  <div class="playlistEventControlsTimeShowDiv">
+    <div class="playlistEventControlsTimeShowDivCurrentTimeDiv">
+      <h3 class="playlistEventControlsTimeShowDivCurrentTime">Current Time</h3>
+      <md-button id="playlistEventControlsTimeShowDivCurrentTimeDivAMPM">{{playlistsCtrl.CurrentPlalistCurrentTimeH}}:{{playlistsCtrl.CurrentPlalistCurrentTimeM}}:{{playlistsCtrl.CurrentPlalistCurrentTimeS}}</md-button>
+      <h3 class="playlistEventControlsTimeShowDivCurrentTimeleftInSong">Remaining Time</h3>
+      <md-button id="playlistEventControlsTimeShowDivCurrentTimeDivsongLeftDuration">00:00</md-button>
+
+    </div>
+    <md-button id="playlistEventControlsTimeShowDivTMinus">Pending...</md-button>
+    <div class="playlistEventControlsTimeShowDivSpeedUpDownDiv">
+      <md-button id="playlistEventControlsTimeShowDivSpeedUp">
+        <i class="material-icons" style="font-size: 95px; margin-top: 5px; color: #4CAF50;">arrow_drop_up</i>
+      </md-button>
+      <md-button id="playlistEventControlsTimeShowDivSpeedDown">
+        <i class="material-icons" style="font-size: 95px; margin-top: -10px; color: #f44336;">arrow_drop_down</i>
+      </md-button>
+    </div>
+
+  </div>
+  <div class="playlistEventControlsTimeSetDiv">
+    <div class="playlistEventControlsTimeSetLable">
+     Set t-minus...
+    </div>
+    <md-button class="playlistEventControlsTimeSetButtons">
+      Pending...
+    </md-button>
+    <md-button class="playlistEventControlsTimeSetButtons">
+      60 sec
+    </md-button>
+    <md-button class="playlistEventControlsTimeSetButtons">
+      15 sec
+    </md-button>
+    <md-button class="playlistEventControlsTimeSetButtons">
+      Custom
+    </md-button>
+
+  </div>
+
+  <md-button id="playlistEventControlsHypeZone" ng-click="playlistsCtrl.whichPlaylistPage = 'IndividualPlaylist'">
+    HypeZone
+  </md-button>
+
+  <audio id="songHolder2" style="display: none;" loop="false" onended="alert('done')">
+
+  <audio id="songHolder2" controls style="display: none;">
+
+    <source src="error.ogg" type="audio/ogg">
+    <source src="error.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+  </audio>
+
+</div>

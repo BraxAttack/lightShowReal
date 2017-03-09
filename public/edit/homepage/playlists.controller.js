@@ -3,6 +3,7 @@ angular.module('lightShowApp')
     var playlistsCtrl = this;
 
     playlistsCtrl.currentPage = currentPage;
+    playlistsCtrl.whichPlaylistPage = 'playlistList';
 
     playlistsCtrl.currentPage.add("Playlists");
     playlistsCtrl.intervalSet = "none";
@@ -14,8 +15,50 @@ angular.module('lightShowApp')
         console.log(PlaylistsList)
     })
 
+    playlistsCtrl.selectAShowToEdit = function(projectID, userID, indexVar, dollaID) {
+      playlistsCtrl.whichPlaylistPage = 'IndividualPlaylist';
+      console.log(projectID)
+
+      playlistsCtrl.CurrentPlalistTitle = playlistsCtrl.shows[indexVar]['name'];
+      playlistsCtrl.CurrentPlalistVenue = playlistsCtrl.shows[indexVar]['venue'];
+      playlistsCtrl.CurrentPlalistuserID = userID;
+      playlistsCtrl.CurrentPlalistindexVar = indexVar;
+      playlistsCtrl.CurrentPlalistDollaID = dollaID;
+
+      var date = new Date();
+      //var comp = date.getHours() + ":" + date.getMinutes(); + ":" + date.getSeconds()
+      playlistsCtrl.CurrentPlalistCurrentTimeH = date.getHours();
+      playlistsCtrl.CurrentPlalistCurrentTimeM = date.getMinutes();
+      var sec = date.getSeconds();
+      if(sec < 10){
+        playlistsCtrl.CurrentPlalistCurrentTimeS = "0"+sec;
+      }else{
+        playlistsCtrl.CurrentPlalistCurrentTimeS = sec;
+      }
+      $interval(function () {
+        var date = new Date();
+        //var comp = date.getHours() + ":" + date.getMinutes(); + ":" + date.getSeconds()
+        playlistsCtrl.CurrentPlalistCurrentTimeH = date.getHours();
+        playlistsCtrl.CurrentPlalistCurrentTimeM = date.getMinutes();
+        var sec = date.getSeconds();
+        if(sec < 10){
+          playlistsCtrl.CurrentPlalistCurrentTimeS = "0"+sec;
+        }else{
+          playlistsCtrl.CurrentPlalistCurrentTimeS = sec;
+        }
+
+      }, 1000);
+
+
+    }
+
+
+
+
+
 
     playlistsCtrl.setShowTime = function(tplus, projectID, userID, indexVar, dollaID) {
+
       var setPlaylistTime = {};
 
       playlistsCtrl.currentPlaylist = indexVar;
@@ -37,6 +80,7 @@ angular.module('lightShowApp')
         console.log(error);
 
       });
+
 
       setPlaylistTime['/Playlists/' + dollaID +'/startTime'] = playlistsCtrl.serverTime + tplus;
       firebase.database().ref().update(setPlaylistTime)
@@ -66,6 +110,7 @@ angular.module('lightShowApp')
         $interval.cancel(playlistsCtrl.playSongInterval);
         document.getElementById('songHolder2').play();
 
+
         //for pausing the song when it's done
         var songlength = document.getElementById('songHolder2').duration;
         var songlenghtvar = songlength * 1000;
@@ -73,6 +118,7 @@ angular.module('lightShowApp')
           document.getElementById('songHolder2').pause()
 
         }, songlenghtvar);
+
       }
     }, 20);
 

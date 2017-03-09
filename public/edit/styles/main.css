@@ -740,6 +740,194 @@ overflow: auto;
   margin: 0;
 }
 
+#playistIndivBackToShowLists {
+  background-color: #424242;
+  color: white;
+  text-align: center;
+  left: 12px;
+  margin: 0;
+  top: 12px;
+}
+
+.playlistEventControlsTitle {
+  position: absolute;
+  right:0;
+  top: 0;
+  width: calc(100% - 92px);
+  background-color: #4CAF50;
+  height: 60px;
+  margin: 0;
+  margin-top: 8px;
+  text-align: left;
+  color: white;
+  line-height: 60px;
+  text-indent: 12px;
+  font-size: 34px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: Arial;
+}
+
+.playlistEventControlsVenue {
+  position: absolute;
+  right: 0;
+  top: 63px;
+  width: calc(100% - 130px);
+  background-color: #212121;
+  height: 34px;
+  margin: 0;
+  margin-top: 8px;
+  text-align: left;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-indent: 12px;
+  font-size: 14px;
+  line-height: 34px;
+  font-family: Arial;
+}
+
+
+.playlistEventControlsTimeShowDiv {
+  width: 95%;
+  height: 175px;
+  background-color: #424242;
+  position: absolute;
+  top: 125px;
+  left: 2.5%;
+  border-radius: 3px;
+  color: white;
+
+}
+
+.playlistEventControlsTimeSetDiv {
+  width: 95%;
+  height: 110px;
+  background-color: #424242;
+  position: absolute;
+  top: 310px;
+  left: 2.5%;
+  border-radius: 3px;
+  color: white;
+  border-top-style: solid;
+  border-top-width: 4px;
+  border-top-color: #FF9800;
+}
+
+.playlistEventControlsTimeSetLable {
+  float: left;
+  background-color: #FF9800;
+  padding: 5px 14px 4px 0px;
+  color: black;
+  margin: 12px 100% 0px 0px;
+  text-indent: 5px;
+  width: 108px;
+  font-family: Arial;
+  font-size: 13px;
+  color: white;
+}
+
+.playlistEventControlsTimeSetButtons {
+  float: left;
+  height: 52px;
+  width: calc(25% - 16px);
+  background-color: #FF9800;
+  margin: 8px;
+  margin-top: 12px;
+}
+
+
+#playlistEventControlsHypeZone {
+  width: 95%;
+  height: 115px;
+  background-color: #f44336;
+  position: absolute;
+  top: 524px;
+  left: 2.5%;
+  border-radius: 3px;
+  color: white;
+  margin: 0;
+
+}
+
+.playlistEventControlsTimeShowDivCurrentTimeDiv {
+  float: left;
+  margin: 0;
+  height: 100%;
+  width: calc(33.33% - 1px);
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-right-color: white;
+}
+
+.playlistEventControlsTimeShowDivCurrentTime {
+  float: left;
+  margin: 0;
+  width: 33.33%;
+  text-align: center;
+  font-size: 17px;
+  margin-top: 13px;
+  position: absolute;
+  top: -4px;
+}
+
+#playlistEventControlsTimeShowDivCurrentTimeDivAMPM {
+  float: left;
+  width: 100%;
+  height: 86px;
+  margin: 0;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: white;
+  border-radius: 0;
+}
+
+.playlistEventControlsTimeShowDivCurrentTimeleftInSong {
+  float: left;
+  margin: 0;
+  width: 33.33%;
+  text-align: center;
+  font-size: 17px;
+  position: absolute;
+  top: 95px;
+}
+
+#playlistEventControlsTimeShowDivCurrentTimeDivsongLeftDuration {
+  width: 100%;
+  margin: 0;
+  height: 89px;
+}
+
+#playlistEventControlsTimeShowDivTMinus {
+  height: 100%;
+  float: left;
+  margin: 0;
+  width: calc(33.33% - 1px);
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-right-color: white;
+}
+
+.playlistEventControlsTimeShowDivSpeedUpDownDiv {
+  float: left;
+  height: 100%;
+  width: 33.33%;
+}
+
+#playlistEventControlsTimeShowDivSpeedUp {
+  margin: 0;
+  width: 100%;
+  height: 50%;
+}
+
+#playlistEventControlsTimeShowDivSpeedDown {
+  margin: 0;
+  width: 100%;
+  height: 50%;
+}
+
 .showSelectDiv {
   width: 200px;
   height: 50px;
