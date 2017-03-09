@@ -1,8 +1,10 @@
 <div id="playlistListOfEvents" ng-if="playlistsCtrl.whichPlaylistPage == 'playlistList'">
   <div class="playlistIndivDiv" ng-repeat="show in playlistsCtrl.shows">
     <h1 class="playlistIndivDivTitle">{{show['name']}}</h1>
+    <span style="width: calc(100% - 50px); height: 1px; float: left;"></span>
+    <md-button ng-click="playlistsCtrl.selectAShowToEdit(show['id'], show['uid'], $index, show.$id)" style="background-color:#03A9F4; float: right; margin-right: 10px; height: 35px; margin-top: -35px; line-height: 20px; color: white;">Present <i class="material-icons" style="font-size: 15px;">present_to_all</i></md-button>
+    <h2  class="playlistIndivDivTitleVenue">{{show['venue']}}</h2>
 
-    <md-button ng-click="playlistsCtrl.selectAShowToEdit(show['id'], show['uid'], $index, show.$id)" style="background-color:#03A9F4; float: right; margin-right: 10px; height: 35px; margin-top: 7px;">Edit</md-button>
 <!--
     <md-button ng-click="playlistsCtrl.setShowTime(100000000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">Pending...</md-button>
     <md-button ng-click="playlistsCtrl.setShowTime(45000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">45 sec</md-button>
@@ -21,6 +23,10 @@
     <i class="material-icons" style="font-size: 29px; text-align: center; width: 38px; float: left; margin-left: -8px; margin-top: -3px;">keyboard_arrow_left</i>
   </md-button>
 
+  <md-button id="playistIndivDeleteShow" class="md-icon-button" aria-label="Delete" ng-click="playlistsCtrl.deletePlaylist()">
+    <i class="material-icons" style="float: left; margin-left: -8px; margin-top: 0; width: 40px; text-align: center;">settings</i>
+  </md-button>
+
 <!--
   <div id="displayDiv" class="displayDiv">
     <h1 id="seatNum" style="margin: 0; position: absolute; width: 50vw;"></h1>
@@ -35,7 +41,7 @@
       <h3 class="playlistEventControlsTimeShowDivCurrentTime">Current Time</h3>
       <md-button id="playlistEventControlsTimeShowDivCurrentTimeDivAMPM">{{playlistsCtrl.CurrentPlalistCurrentTimeH}}:{{playlistsCtrl.CurrentPlalistCurrentTimeM}}:{{playlistsCtrl.CurrentPlalistCurrentTimeS}}:{{playlistsCtrl.CurrentPlalistCurrentTimeMS}}</md-button>
       <h3 class="playlistEventControlsTimeShowDivCurrentTimeleftInSong">Remaining Time</h3>
-      <md-button id="playlistEventControlsTimeShowDivCurrentTimeDivsongLeftDuration">00:00</md-button>
+      <md-button id="playlistEventControlsTimeShowDivCurrentTimeDivsongLeftDuration">{{playlistsCtrl.CurrentPlalistLimeLeftInSong}}</md-button>
 
     </div>
     <md-button id="playlistEventControlsTimeShowDivTMinus" style="background-color: #4CAF50;">
@@ -45,6 +51,8 @@
       <div id="countdowntimeHolder" ng-if="playlistsCtrl.countdownTime > -10000000">
         {{playlistsCtrl.countdownTime}}
       </div>
+
+
     </md-button>
     <div class="playlistEventControlsTimeShowDivSpeedUpDownDiv">
       <md-button id="playlistEventControlsTimeShowDivSpeedUp" ng-click="playlistsCtrl.timeAdjust(-100)">
@@ -69,8 +77,8 @@
     <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(60000)">
       60 sec
     </md-button>
-    <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(15000)" >
-      15 sec
+    <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(5000)" >
+      5 sec
     </md-button>
 
 
@@ -78,6 +86,7 @@
 
   <md-button id="playlistEventControlsHypeZone" ng-click="playlistsCtrl.whichPlaylistPage = 'IndividualPlaylist'">
     HypeZone
+    {{playlistsCtrl.timeAdjustHistoryVar}}
   </md-button>
 
   <audio id="songHolder2" controls style="display: none;">

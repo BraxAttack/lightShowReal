@@ -8,6 +8,15 @@ angular.module('lightShowApp')
     playlistsCtrl.currentPage.add("Playlists");
     playlistsCtrl.intervalSet = "none";
 
+    $interval(function () {
+      if(playlistsCtrl.currentPage['pageVar'] != 'Playlists') {
+          $interval.cancel(playlistsCtrl.getDurrationInterval);
+          $interval.cancel(playlistsCtrl.gettimeInterval);
+          $interval.cancel(playlistsCtrl.updateTimeInterval);
+
+      }
+    }, 3000);
+
     var ref = firebase.database().ref('/Playlists/');
     var PlaylistsList = $firebaseArray(ref).$loaded()
     .then(function (PlaylistsList){
@@ -34,14 +43,38 @@ angular.module('lightShowApp')
         document.getElementById('songHolder2').src = url;
         document.getElementById('songHolder2').currentTime = 0;
 
+       playlistsCtrl.getDurrationInterval = $interval(function () {
+          playlistsCtrl.CurrentPlalistlenghtOfSong = document.getElementById('songHolder2').duration;
+
+        }, 1000);
+
+
       }).catch(function(error) {
         console.log(error);
 
       });
 
+      var offsetRef = firebase.database().ref(".info/serverTimeOffset");
+      offsetRef.on("value", function(snap) {
+        var offset = snap.val();
+        var estimatedServerTimeMs = new Date().getTime() + offset;
+        playlistsCtrl.serverTime = estimatedServerTimeMs;
+      });
+
+      playlistsCtrl.gettimeInterval = $interval(function () {
+        var offsetRef = firebase.database().ref(".info/serverTimeOffset");
+        offsetRef.on("value", function(snap) {
+          var offset = snap.val();
+          var estimatedServerTimeMs = new Date().getTime() + offset;
+          playlistsCtrl.serverTime = estimatedServerTimeMs;
+        });
+      }, 3000);
+
+
       var millisec = 0;
-      $interval(function () {
+      playlistsCtrl.updateTimeInterval = $interval(function () {
         var date = new Date();
+
         //var comp = date.getHours() + ":" + date.getMinutes(); + ":" + date.getSeconds()
         playlistsCtrl.CurrentPlalistCurrentTimeH = date.getHours();
         playlistsCtrl.CurrentPlalistCurrentTimeM = date.getMinutes();
@@ -61,7 +94,7 @@ angular.module('lightShowApp')
         if(millisec == 100) {
           millisec = 0;
         }
-        var countdownvar = .001 * (date.getTime() - playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime']);
+        var countdownvar = .001 * (playlistsCtrl.serverTime - playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime']);
         playlistsCtrl.countdownTime = countdownvar.toFixed(1);
 
         if(playlistsCtrl.countdownTime < 0){
@@ -81,12 +114,40 @@ angular.module('lightShowApp')
           }else{
             document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#03A9F4";
           }
+          document.getElementById('songHolder2').pause();
+          document.getElementById('songHolder2').currentTime = 0;
         }
 
-        if(playlistsCtrl.countdownTime > 0 && playlistsCtrl.countdownTime < 1){
+        if(playlistsCtrl.countdownTime == 0){
           document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#4CAF50";
           document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#FAFAFA";
+          document.getElementById('songHolder2').currentTime = 0;
+          document.getElementById('songHolder2').play();
+
         }
+
+        var timeleftfirst = playlistsCtrl.CurrentPlalistlenghtOfSong - playlistsCtrl.countdownTime + Number(playlistsCtrl.timeAdjustHistoryVar);
+        var timeleft = timeleftfirst.toFixed(1);
+
+        if(timeleft < 0){
+          document.getElementById('songHolder2').pause();
+          document.getElementById('songHolder2').currentTime = 0;
+          playlistsCtrl.CurrentPlalistLimeLeftInSong = "00.0";
+          document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#616161";
+          document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#757575";
+
+        }else if(timeleft < playlistsCtrl.CurrentPlalistlenghtOfSong){
+          playlistsCtrl.CurrentPlalistLimeLeftInSong = timeleft
+          document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "white";
+
+        }else {
+          playlistsCtrl.CurrentPlalistLimeLeftInSong = playlistsCtrl.CurrentPlalistlenghtOfSong.toFixed(1);
+          document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "white";
+        }
+
+        //incriments time between syncs
+        playlistsCtrl.serverTime += 100
+
 
       }, 100);
 
@@ -130,7 +191,12 @@ angular.module('lightShowApp')
               })
     }
 
+    playlistsCtrl.timeAdjustHistoryVar = 0;
+
     playlistsCtrl.timeAdjust = function(direction) {
+      var dirtime = direction * .001;
+      var dirtimeedit = Number(playlistsCtrl.timeAdjustHistoryVar) + Number(dirtime);
+      playlistsCtrl.timeAdjustHistoryVar = dirtimeedit.toFixed(1);
       var setPlaylistTime2 = {};
       var dollaIDvar2 = playlistsCtrl.CurrentPlalistDollaID;
       setPlaylistTime2['/Playlists/' + dollaIDvar2 +'/startTime'] = playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime'] + direction;
@@ -143,6 +209,20 @@ angular.module('lightShowApp')
       });
 
     }
+
+    playlistsCtrl.deletePlaylist = function() {
+      var setPlaylistTime3 = {};
+      var dollaIDvar3 = playlistsCtrl.CurrentPlalistDollaID;
+      setPlaylistTime3['/Playlists/' + dollaIDvar3] = null;
+      firebase.database().ref().update(setPlaylistTime3)
+      .then(function(ref){
+          alert("deleted");
+          playlistsCtrl.whichPlaylistPage = 'playlistList';
+         }, function() {
+            return
+      });
+    }
+
 
 
 /*

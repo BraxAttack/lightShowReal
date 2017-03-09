@@ -728,16 +728,34 @@ overflow: auto;
   width: calc(100% - 20px);
   margin: 10px;
   background-color: lightgray;
-  height: 50px;
-
+  height: 60px;
 }
 
 .playlistIndivDivTitle {
   font-size: 16px;
   text-indent: 12px;
-  line-height: 50px;
+  line-height: 28px;
   float: left;
+  margin-top: 7px;
+  background-color: #4CAF50;
+  height: 28px;
+  padding-right: 17px;
+  max-width: calc(100% - 70px);
+  color: #212121;
+}
+
+.playlistIndivDivTitleVenue {
+  font-size: 11px;
+  text-indent: 12px;
+  line-height: 16px;
+  float: left;
+  background-color: #212121;
+  height: 16px;
+  padding-right: 17px;
   margin: 0;
+  color: white;
+  max-width: calc(100% - 182px);
+  margin-top: -11px;
 }
 
 #playistIndivBackToShowLists {
@@ -747,6 +765,17 @@ overflow: auto;
   left: 12px;
   margin: 0;
   top: 12px;
+}
+
+#playistIndivDeleteShow {
+  background-color: #424242;
+  color: white;
+  text-align: center;
+  right: 12px;
+  margin: 0;
+  top: 19px;
+  position: absolute;
+  z-index: 10;
 }
 
 .playlistEventControlsTitle {
