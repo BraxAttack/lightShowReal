@@ -1,5 +1,5 @@
 angular.module('lightShowApp')
-  .controller('PlaylistsCtrl', function($firebaseArray, $interval, $timeout, currentPage){
+  .controller('PlaylistsCtrl', function($firebaseArray, $interval, $timeout, $mdDialog, currentPage){
     var playlistsCtrl = this;
 
     playlistsCtrl.currentPage = currentPage;
@@ -24,17 +24,10 @@ angular.module('lightShowApp')
       playlistsCtrl.CurrentPlalistuserID = userID;
       playlistsCtrl.CurrentPlalistindexVar = indexVar;
       playlistsCtrl.CurrentPlalistDollaID = dollaID;
+      playlistsCtrl.CurrentPlalistStartTime = playlistsCtrl.shows[indexVar]['startTime'];
 
-      var date = new Date();
-      //var comp = date.getHours() + ":" + date.getMinutes(); + ":" + date.getSeconds()
-      playlistsCtrl.CurrentPlalistCurrentTimeH = date.getHours();
-      playlistsCtrl.CurrentPlalistCurrentTimeM = date.getMinutes();
-      var sec = date.getSeconds();
-      if(sec < 10){
-        playlistsCtrl.CurrentPlalistCurrentTimeS = "0"+sec;
-      }else{
-        playlistsCtrl.CurrentPlalistCurrentTimeS = sec;
-      }
+
+      var millisec = 0;
       $interval(function () {
         var date = new Date();
         //var comp = date.getHours() + ":" + date.getMinutes(); + ":" + date.getSeconds()
@@ -46,16 +39,101 @@ angular.module('lightShowApp')
         }else{
           playlistsCtrl.CurrentPlalistCurrentTimeS = sec;
         }
+        millisec += 10;
+        if(millisec == 100){
+          playlistsCtrl.CurrentPlalistCurrentTimeMS = "00";
+        }else{
+          playlistsCtrl.CurrentPlalistCurrentTimeMS = millisec;
+        }
 
-      }, 1000);
+        if(millisec == 100) {
+          millisec = 0;
+        }
+        var countdownvar = .001 * (date.getTime() - playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime']);
+        playlistsCtrl.countdownTime = countdownvar.toFixed(1);
+
+        if(playlistsCtrl.countdownTime < 0){
+          if(playlistsCtrl.countdownTime > -10){
+            document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#f44336";
+            document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#FAFAFA";
+          }else if(playlistsCtrl.countdownTime > -30){
+            document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#FF9800";
+            document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#FAFAFA";
+          }else if(playlistsCtrl.countdownTime > -60){
+            document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#FFC107";
+            document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#FAFAFA";
+          }else if(playlistsCtrl.countdownTime > -300){
+            document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#FFEB3B";
+            document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#212121";
+
+          }else{
+            document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#03A9F4";
+          }
+        }
+
+        if(playlistsCtrl.countdownTime > 0 && playlistsCtrl.countdownTime < 1){
+          document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#4CAF50";
+          document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#FAFAFA";
+        }
+
+      }, 100);
 
 
     }
 
 
 
+    playlistsCtrl.setShowTime = function(addtime) {
+      playlistsCtrl.serverTimeOffset = 'null';
+      var offsetRef = firebase.database().ref(".info/serverTimeOffset");
+      offsetRef.on("value", function(snap) {
+        var offset = snap.val();
+        playlistsCtrl.serverTimeOffset = offset;
+      });
+      var addtimenorm = addtime * .001;
+      var confirm = $mdDialog.confirm()
+            .title('Start '+ playlistsCtrl.CurrentPlalistTitle +' in ' + addtimenorm + ' seconds')
+            .textContent('')
+            .ariaLabel('TutorialsPoint.com')
+            .targetEvent(event)
+            .ok('Yes')
+            .cancel('No');
+            $mdDialog.show(confirm).then(function() {
+
+                if(playlistsCtrl.serverTimeOffset == 'null'){
+                  alert("An error has occured, please try again.")
+                }else {
+                  var currentTime =  new Date().getTime() + playlistsCtrl.serverTimeOffset;
+                  var setPlaylistTime = {};
+                  var dollaIDvar = playlistsCtrl.CurrentPlalistDollaID;
+                  setPlaylistTime['/Playlists/' + dollaIDvar +'/startTime'] = currentTime + addtime;
+                  firebase.database().ref().update(setPlaylistTime)
+                  .then(function(ref){
 
 
+                     }, function() {
+                        return
+                  });
+                }
+              })
+    }
+
+    playlistsCtrl.timeAdjust = function(direction) {
+      var setPlaylistTime2 = {};
+      var dollaIDvar2 = playlistsCtrl.CurrentPlalistDollaID;
+      setPlaylistTime2['/Playlists/' + dollaIDvar2 +'/startTime'] = playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime'] + direction;
+      firebase.database().ref().update(setPlaylistTime2)
+      .then(function(ref){
+
+
+         }, function() {
+            return
+      });
+
+    }
+
+
+/*
 
     playlistsCtrl.setShowTime = function(tplus, projectID, userID, indexVar, dollaID) {
 
@@ -294,5 +372,5 @@ angular.module('lightShowApp')
       })
 
     }
-
+*/
   });

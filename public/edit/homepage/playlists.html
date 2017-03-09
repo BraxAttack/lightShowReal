@@ -33,17 +33,24 @@
   <div class="playlistEventControlsTimeShowDiv">
     <div class="playlistEventControlsTimeShowDivCurrentTimeDiv">
       <h3 class="playlistEventControlsTimeShowDivCurrentTime">Current Time</h3>
-      <md-button id="playlistEventControlsTimeShowDivCurrentTimeDivAMPM">{{playlistsCtrl.CurrentPlalistCurrentTimeH}}:{{playlistsCtrl.CurrentPlalistCurrentTimeM}}:{{playlistsCtrl.CurrentPlalistCurrentTimeS}}</md-button>
+      <md-button id="playlistEventControlsTimeShowDivCurrentTimeDivAMPM">{{playlistsCtrl.CurrentPlalistCurrentTimeH}}:{{playlistsCtrl.CurrentPlalistCurrentTimeM}}:{{playlistsCtrl.CurrentPlalistCurrentTimeS}}:{{playlistsCtrl.CurrentPlalistCurrentTimeMS}}</md-button>
       <h3 class="playlistEventControlsTimeShowDivCurrentTimeleftInSong">Remaining Time</h3>
       <md-button id="playlistEventControlsTimeShowDivCurrentTimeDivsongLeftDuration">00:00</md-button>
 
     </div>
-    <md-button id="playlistEventControlsTimeShowDivTMinus">Pending...</md-button>
+    <md-button id="playlistEventControlsTimeShowDivTMinus" style="background-color: #4CAF50;">
+      <div ng-if="playlistsCtrl.countdownTime <= -10000000">
+        Pending...
+      </div>
+      <div id="countdowntimeHolder" ng-if="playlistsCtrl.countdownTime > -10000000">
+        {{playlistsCtrl.countdownTime}}
+      </div>
+    </md-button>
     <div class="playlistEventControlsTimeShowDivSpeedUpDownDiv">
-      <md-button id="playlistEventControlsTimeShowDivSpeedUp">
+      <md-button id="playlistEventControlsTimeShowDivSpeedUp" ng-click="playlistsCtrl.timeAdjust(-100)">
         <i class="material-icons" style="font-size: 95px; margin-top: 5px; color: #4CAF50;">arrow_drop_up</i>
       </md-button>
-      <md-button id="playlistEventControlsTimeShowDivSpeedDown">
+      <md-button id="playlistEventControlsTimeShowDivSpeedDown" ng-click="playlistsCtrl.timeAdjust(100)">
         <i class="material-icons" style="font-size: 95px; margin-top: -10px; color: #f44336;">arrow_drop_down</i>
       </md-button>
     </div>
@@ -53,18 +60,19 @@
     <div class="playlistEventControlsTimeSetLable">
      Set t-minus...
     </div>
-    <md-button class="playlistEventControlsTimeSetButtons">
+    <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(10000000000000000000000000)">
       Pending...
     </md-button>
-    <md-button class="playlistEventControlsTimeSetButtons">
+    <md-button class="playlistEventControlsTimeSetButtons"  ng-click="playlistsCtrl.setShowTime(300000)" >
+      5 min
+    </md-button>
+    <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(60000)">
       60 sec
     </md-button>
-    <md-button class="playlistEventControlsTimeSetButtons">
+    <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(15000)" >
       15 sec
     </md-button>
-    <md-button class="playlistEventControlsTimeSetButtons">
-      Custom
-    </md-button>
+
 
   </div>
 

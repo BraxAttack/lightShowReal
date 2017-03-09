@@ -867,10 +867,10 @@ overflow: auto;
   margin: 0;
   width: 33.33%;
   text-align: center;
-  font-size: 17px;
+  font-size: 13px;
   margin-top: 13px;
   position: absolute;
-  top: -4px;
+  top: 0px;
 }
 
 #playlistEventControlsTimeShowDivCurrentTimeDivAMPM {
@@ -882,6 +882,8 @@ overflow: auto;
   border-bottom-width: 1px;
   border-bottom-color: white;
   border-radius: 0;
+  line-height: 108px;
+  font-size: 30px;
 }
 
 .playlistEventControlsTimeShowDivCurrentTimeleftInSong {
@@ -889,15 +891,17 @@ overflow: auto;
   margin: 0;
   width: 33.33%;
   text-align: center;
-  font-size: 17px;
+  font-size: 15px;
   position: absolute;
-  top: 95px;
+  top: 98px;
 }
 
 #playlistEventControlsTimeShowDivCurrentTimeDivsongLeftDuration {
   width: 100%;
   margin: 0;
   height: 89px;
+  line-height: 108px;
+  font-size: 30px;
 }
 
 #playlistEventControlsTimeShowDivTMinus {
@@ -908,6 +912,7 @@ overflow: auto;
   border-right-style: solid;
   border-right-width: 1px;
   border-right-color: white;
+  font-size: 28px;
 }
 
 .playlistEventControlsTimeShowDivSpeedUpDownDiv {
