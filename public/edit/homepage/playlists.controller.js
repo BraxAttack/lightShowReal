@@ -1,9 +1,11 @@
 angular.module('lightShowApp')
-  .controller('PlaylistsCtrl', function($firebaseArray, $interval, $timeout, $mdDialog, currentPage){
+  .controller('PlaylistsCtrl', function($firebaseArray, $interval, $timeout, $mdDialog, currentPage, projects, profile){
     var playlistsCtrl = this;
 
     playlistsCtrl.currentPage = currentPage;
     playlistsCtrl.whichPlaylistPage = 'playlistList';
+    playlistsCtrl.projects = projects;
+    playlistsCtrl.profile = profile;
 
     playlistsCtrl.currentPage.add("Playlists");
     playlistsCtrl.intervalSet = "none";
@@ -13,11 +15,12 @@ angular.module('lightShowApp')
           $interval.cancel(playlistsCtrl.getDurrationInterval);
           $interval.cancel(playlistsCtrl.gettimeInterval);
           $interval.cancel(playlistsCtrl.updateTimeInterval);
+          $interval.cancel(playlistsCtrl.updateTimeIntervalPAUSEPLAY)
 
       }
     }, 3000);
 
-    var ref = firebase.database().ref('/Playlists/');
+    var ref = firebase.database().ref('/Playlists/'+playlistsCtrl.profile.$id);
     var PlaylistsList = $firebaseArray(ref).$loaded()
     .then(function (PlaylistsList){
         playlistsCtrl.shows = PlaylistsList;
@@ -67,6 +70,8 @@ angular.module('lightShowApp')
           var offset = snap.val();
           var estimatedServerTimeMs = new Date().getTime() + offset;
           playlistsCtrl.serverTime = estimatedServerTimeMs;
+          playlistsCtrl.serverTime2 = estimatedServerTimeMs;
+
         });
       }, 3000);
 
@@ -84,18 +89,9 @@ angular.module('lightShowApp')
         }else{
           playlistsCtrl.CurrentPlalistCurrentTimeS = sec;
         }
-        millisec += 10;
-        if(millisec == 100){
-          playlistsCtrl.CurrentPlalistCurrentTimeMS = "00";
-        }else{
-          playlistsCtrl.CurrentPlalistCurrentTimeMS = millisec;
-        }
 
-        if(millisec == 100) {
-          millisec = 0;
-        }
         var countdownvar = .001 * (playlistsCtrl.serverTime - playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime']);
-        playlistsCtrl.countdownTime = countdownvar.toFixed(1);
+        playlistsCtrl.countdownTime = countdownvar.toFixed(0);
 
         if(playlistsCtrl.countdownTime < 0){
           if(playlistsCtrl.countdownTime > -10){
@@ -118,21 +114,21 @@ angular.module('lightShowApp')
           document.getElementById('songHolder2').currentTime = 0;
         }
 
-        if(playlistsCtrl.countdownTime == 0){
+        if(playlistsCtrl.countdownTime > 0 && playlistsCtrl.countdownTime < 5){
           document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#4CAF50";
           document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#FAFAFA";
-          document.getElementById('songHolder2').currentTime = 0;
-          document.getElementById('songHolder2').play();
+          //document.getElementById('songHolder2').currentTime = 0;
+          //document.getElementById('songHolder2').play();
 
         }
 
         var timeleftfirst = playlistsCtrl.CurrentPlalistlenghtOfSong - playlistsCtrl.countdownTime + Number(playlistsCtrl.timeAdjustHistoryVar);
-        var timeleft = timeleftfirst.toFixed(1);
+        var timeleft = timeleftfirst.toFixed(0);
 
         if(timeleft < 0){
           document.getElementById('songHolder2').pause();
           document.getElementById('songHolder2').currentTime = 0;
-          playlistsCtrl.CurrentPlalistLimeLeftInSong = "00.0";
+          playlistsCtrl.CurrentPlalistLimeLeftInSong = "0";
           document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#616161";
           document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#757575";
 
@@ -141,20 +137,32 @@ angular.module('lightShowApp')
           document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "white";
 
         }else {
-          playlistsCtrl.CurrentPlalistLimeLeftInSong = playlistsCtrl.CurrentPlalistlenghtOfSong.toFixed(1);
+          playlistsCtrl.CurrentPlalistLimeLeftInSong = playlistsCtrl.CurrentPlalistlenghtOfSong.toFixed(0);
           document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "white";
         }
 
         //incriments time between syncs
-        playlistsCtrl.serverTime += 100
+        playlistsCtrl.serverTime += 1000
 
 
-      }, 100);
+      }, 1000);
 
 
     }
 
+    playlistsCtrl.updateTimeIntervalPAUSEPLAY = $interval(function () {
+      var countdownvar2 = .001 * (playlistsCtrl.serverTime2 - playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime']);
+      playlistsCtrl.countdownTimeMili = countdownvar2.toFixed(2);
+      if(playlistsCtrl.countdownTimeMili >= 0 && playlistsCtrl.countdownTimeMili < 0.05 ){
+        document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#4CAF50";
+        document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#FAFAFA";
+        document.getElementById('songHolder2').currentTime = 0;
+        document.getElementById('songHolder2').play();
 
+      }
+      playlistsCtrl.serverTime2 += 50
+
+    }, 50);
 
     playlistsCtrl.setShowTime = function(addtime) {
       playlistsCtrl.serverTimeOffset = 'null';
@@ -179,7 +187,7 @@ angular.module('lightShowApp')
                   var currentTime =  new Date().getTime() + playlistsCtrl.serverTimeOffset;
                   var setPlaylistTime = {};
                   var dollaIDvar = playlistsCtrl.CurrentPlalistDollaID;
-                  setPlaylistTime['/Playlists/' + dollaIDvar +'/startTime'] = currentTime + addtime;
+                  setPlaylistTime['/Playlists/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar +'/startTime'] = currentTime + addtime;
                   firebase.database().ref().update(setPlaylistTime)
                   .then(function(ref){
 
@@ -196,10 +204,10 @@ angular.module('lightShowApp')
     playlistsCtrl.timeAdjust = function(direction) {
       var dirtime = direction * .001;
       var dirtimeedit = Number(playlistsCtrl.timeAdjustHistoryVar) + Number(dirtime);
-      playlistsCtrl.timeAdjustHistoryVar = dirtimeedit.toFixed(1);
+      playlistsCtrl.timeAdjustHistoryVar = dirtimeedit.toFixed(0);
       var setPlaylistTime2 = {};
       var dollaIDvar2 = playlistsCtrl.CurrentPlalistDollaID;
-      setPlaylistTime2['/Playlists/' + dollaIDvar2 +'/startTime'] = playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime'] + direction;
+      setPlaylistTime2['/Playlists/'+ playlistsCtrl.profile.$id + dollaIDvar2 +'/startTime'] = playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime'] + direction;
       firebase.database().ref().update(setPlaylistTime2)
       .then(function(ref){
 
@@ -213,7 +221,7 @@ angular.module('lightShowApp')
     playlistsCtrl.deletePlaylist = function() {
       var setPlaylistTime3 = {};
       var dollaIDvar3 = playlistsCtrl.CurrentPlalistDollaID;
-      setPlaylistTime3['/Playlists/' + dollaIDvar3] = null;
+      setPlaylistTime3['/Playlists/'+ playlistsCtrl.profile.$id + dollaIDvar3] = null;
       firebase.database().ref().update(setPlaylistTime3)
       .then(function(ref){
           alert("deleted");
@@ -224,6 +232,54 @@ angular.module('lightShowApp')
     }
 
 
+
+
+
+    playlistsCtrl.gotoAddaPlaylist = function() {
+      playlistsCtrl.newPlaylistVenue = null;
+      playlistsCtrl.newPlaylistSetSelectedSongVar = 0;
+      playlistsCtrl.whichPlaylistPage = 'NewplaylistList';
+      $timeout(function () {
+        document.getElementById('newPlaylistOption0').style.backgroundColor = "#4CAF50";
+
+      }, 20);
+    }
+
+    playlistsCtrl.setNewPlaylistSetSelectedSongVar = function(num) {
+      playlistsCtrl.newPlaylistSetSelectedSongVar = num;
+
+      for (var key in playlistsCtrl.projects) {
+        if(!isNaN(key)){
+          document.getElementById('newPlaylistOption'+key).style.backgroundColor = "";
+        }
+
+      }
+      document.getElementById('newPlaylistOption'+num).style.backgroundColor = "#4CAF50";
+
+
+
+    }
+
+    playlistsCtrl.createPlaylist = function() {
+
+      console.log(playlistsCtrl.projects[playlistsCtrl.newPlaylistSetSelectedSongVar])
+      var playlistsKey = firebase.database().ref('Playlists/'+playlistsCtrl.profile.$id).push().key;
+
+      var updates = {};
+      var playlistData = {
+        id: playlistsCtrl.projects[playlistsCtrl.newPlaylistSetSelectedSongVar]['$id'],
+        name: playlistsCtrl.projects[playlistsCtrl.newPlaylistSetSelectedSongVar]['projectName'],
+        startTime: null,
+        uid: playlistsCtrl.projects[playlistsCtrl.newPlaylistSetSelectedSongVar]['user'],
+        venue: playlistsCtrl.newPlaylistVenue
+
+      };
+      updates['/Playlists/' + playlistsCtrl.profile.$id + '/' + playlistsKey] = playlistData;
+      firebase.database().ref().update(updates);
+
+      playlistsCtrl.whichPlaylistPage = 'playlistList';
+
+    }
 
 /*
 

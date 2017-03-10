@@ -19,7 +19,7 @@
     </div>
 
     <div ng-if="displayctrl.currentPage == 'chooseShow'" style="position: absolute; top: 56px; left: 0; width: 100vw; height: calc(100vh - 56px); background-color: #EEEEEE; overflow: hidden; overflow-y: auto;">
-      <div class="showSelectDiv" ng-repeat="show in displayctrl.shows track by $index" ng-click="displayctrl.chooseShow(show['id'], show['uid'], $index)">
+      <div class="showSelectDiv" ng-repeat="show in displayctrl.shows track by $index" ng-click="displayctrl.chooseShow(show['id'], show['uid'], $index, show['keyvalue'])">
         <h1 class="showSelectTitle">{{show['name']}}</h1>
         <h2 class="showSelectVenue">Southern Adventist University</h2>
       </div>

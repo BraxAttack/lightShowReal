@@ -134,16 +134,41 @@ angular
       var ref = firebase.database().ref('/Playlists/');
       var PlaylistsList = $firebaseArray(ref).$loaded()
       .then(function (PlaylistsList){
-          displayctrl.shows = PlaylistsList;
+        displayctrl.shows = [];
+        angular.forEach(PlaylistsList, function(value, key) {
+          displayctrl.PlaylistsListVar = PlaylistsList;
+          if(!isNaN(key)){
+            angular.forEach(PlaylistsList[key], function(value2, key2) {
+              if(key2 == "$id"){
+
+              }else if(key2 == '$priority'){
+
+              }else {
+                console.log(PlaylistsList[key][key2]['startTime'])
+                console.log("val2")
+                value2.keyvalue = key;
+                console.log(value2)
+                displayctrl.shows.push(value2);
+                console.log(displayctrl.shows);
+                console.log("-------")
+              }
+            });
+
+          }
+        })
+
+          console.log(displayctrl.shows);
+
+
 
       })
 
-      displayctrl.chooseShow = function(id, uid, indexVar) {
+      displayctrl.chooseShow = function(id, uid, indexVar, keyValue) {
         displayctrl.showID = id;
         displayctrl.showUID = uid;
         displayctrl.currentPage = "chooseSeat";
         displayctrl.currentPlaylist = indexVar;
-
+        displayctrl.keyValue = keyValue;
 
       }
 
@@ -172,7 +197,7 @@ angular
 
                 $interval.cancel(displayctrl.startVideoInterval);
               }else {
-                console.log("we")
+                //console.log("we")
               }
             }, 20);
             displayctrl.songDataActual = JSON.parse(songData[0]['$value']);
@@ -196,11 +221,16 @@ angular
                 var estimatedServerTimeMs = new Date().getTime() + offset;
                 displayctrl.serverTime = estimatedServerTimeMs;
               });
-            }, 3000);
+            }, 1500);
 
             $interval(function () {
-              displayctrl.serverTime += 50;
+              //console.log(displayctrl.shows[displayctrl.currentPlaylist]['startTime']);
+              displayctrl.serverTime += 25;
+
+              console.log(displayctrl.PlaylistsListVar[displayctrl.currentPlaylist][displayctrl.showID]['startTime'])
               displayctrl.Tminus = Math.ceil((displayctrl.serverTime - displayctrl.shows[displayctrl.currentPlaylist]['startTime']) / 100) * 100;
+
+
               var dindex = displayctrl.Tminus / 100;
               //console.log(dindex);
 
@@ -257,7 +287,7 @@ angular
               document.getElementById('displayDiv').style.backgroundColor = displayctrl.ColorPalate[displayctrl.songDataActual[dindex]];
 
 
-            }, 50);
+            }, 25);
 
         })
 

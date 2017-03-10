@@ -1,17 +1,58 @@
-<div id="playlistListOfEvents" ng-if="playlistsCtrl.whichPlaylistPage == 'playlistList'">
-  <div class="playlistIndivDiv" ng-repeat="show in playlistsCtrl.shows">
-    <h1 class="playlistIndivDivTitle">{{show['name']}}</h1>
-    <span style="width: calc(100% - 50px); height: 1px; float: left;"></span>
-    <md-button ng-click="playlistsCtrl.selectAShowToEdit(show['id'], show['uid'], $index, show.$id)" style="background-color:#03A9F4; float: right; margin-right: 10px; height: 35px; margin-top: -35px; line-height: 20px; color: white;">Present <i class="material-icons" style="font-size: 15px;">present_to_all</i></md-button>
-    <h2  class="playlistIndivDivTitleVenue">{{show['venue']}}</h2>
+<md-button id="playlistListOfEventsAddEventFab" class="md-fab md-primary md-hue-2" aria-label="Add" ng-if="playlistsCtrl.whichPlaylistPage == 'playlistList'" ng-click="playlistsCtrl.gotoAddaPlaylist();">
+  <i class="homepageProjectsAddFabPlus material-icons">add</i>
+</md-button>
 
-<!--
-    <md-button ng-click="playlistsCtrl.setShowTime(100000000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">Pending...</md-button>
-    <md-button ng-click="playlistsCtrl.setShowTime(45000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">45 sec</md-button>
-    <md-button ng-click="playlistsCtrl.setShowTime(12000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">12 sec</md-button>
--->
+<div class="playlistIndivDivDivHolder" ng-if="playlistsCtrl.whichPlaylistPage == 'playlistList'">
+  <div id="playlistListOfEvents" >
+    <div class="playlistIndivDiv" ng-repeat="show in playlistsCtrl.shows">
+      <h1 class="playlistIndivDivTitle">{{show['name']}}</h1>
+      <span style="width: calc(100% - 50px); height: 1px; float: left;"></span>
+      <md-button ng-click="playlistsCtrl.selectAShowToEdit(show['id'], show['uid'], $index, show.$id)" style="background-color:#03A9F4; float: right; margin-right: 10px; height: 35px; margin-top: -35px; line-height: 20px; color: white;">Present <i class="material-icons" style="font-size: 15px;">present_to_all</i></md-button>
+      <h2  class="playlistIndivDivTitleVenue">{{show['venue']}}</h2>
+
+  <!--
+      <md-button ng-click="playlistsCtrl.setShowTime(100000000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">Pending...</md-button>
+      <md-button ng-click="playlistsCtrl.setShowTime(45000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">45 sec</md-button>
+      <md-button ng-click="playlistsCtrl.setShowTime(12000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">12 sec</md-button>
+  -->
+
+    </div>
 
   </div>
+
+</div>
+
+<div class="playlistIndivDivDivHolder" ng-if="playlistsCtrl.whichPlaylistPage == 'NewplaylistList'">
+  <md-button id="playistIndivBackToShowLists" class="md-icon-button" aria-label="Settings" ng-click="playlistsCtrl.whichPlaylistPage = 'playlistList'">
+    <i class="material-icons" style="font-size: 29px; text-align: center; width: 38px; float: left; margin-left: -8px; margin-top: -3px;">keyboard_arrow_left</i>
+  </md-button>
+
+  <div class="playlistIndivNewPlaylist">
+    <div ng-repeat="project in playlistsCtrl.projects">
+      <md-button id="newPlaylistOption{{$index}}" class="playlistIndivNewPlaylistButton" ng-click="playlistsCtrl.setNewPlaylistSetSelectedSongVar($index)">
+            <h1 class="playlistIndivProjectName" style="background-color: {{project['color']}};">{{project['projectName']}}</h1>
+            <span style="width: calc(100%); height: 1px; float: left;"></span>
+            <h2 class="playlistIndivProjectArtistNam">{{project['songTitle']}}</h1>
+
+      </md-button>
+      <md-divider ></md-divider>
+    </div>
+
+    {{playlistsCtrl.newPlaylistSetSelectedSongVar}}
+  </div>
+
+  <form ng-submit="playlistsCtrl.createPlaylist()">
+    <div class="playlistEventNewPlaylistVenue">
+      <md-input-container>
+          <label>Venue Name</label>
+          <input required ng-model="playlistsCtrl.newPlaylistVenue" type="text">
+        </md-input-container>
+    </div>
+
+    <md-button id="playlistEventNewPlaylist" type="submit">
+      Create
+    </md-button>
+  </form>
 
 </div>
 
@@ -39,7 +80,7 @@
   <div class="playlistEventControlsTimeShowDiv">
     <div class="playlistEventControlsTimeShowDivCurrentTimeDiv">
       <h3 class="playlistEventControlsTimeShowDivCurrentTime">Current Time</h3>
-      <md-button id="playlistEventControlsTimeShowDivCurrentTimeDivAMPM">{{playlistsCtrl.CurrentPlalistCurrentTimeH}}:{{playlistsCtrl.CurrentPlalistCurrentTimeM}}:{{playlistsCtrl.CurrentPlalistCurrentTimeS}}:{{playlistsCtrl.CurrentPlalistCurrentTimeMS}}</md-button>
+      <md-button id="playlistEventControlsTimeShowDivCurrentTimeDivAMPM">{{playlistsCtrl.CurrentPlalistCurrentTimeH}}:{{playlistsCtrl.CurrentPlalistCurrentTimeM}}:{{playlistsCtrl.CurrentPlalistCurrentTimeS}}</md-button>
       <h3 class="playlistEventControlsTimeShowDivCurrentTimeleftInSong">Remaining Time</h3>
       <md-button id="playlistEventControlsTimeShowDivCurrentTimeDivsongLeftDuration">{{playlistsCtrl.CurrentPlalistLimeLeftInSong}}</md-button>
 
@@ -77,8 +118,8 @@
     <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(60000)">
       60 sec
     </md-button>
-    <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(5000)" >
-      5 sec
+    <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(15000)" >
+      15 sec
     </md-button>
 
 

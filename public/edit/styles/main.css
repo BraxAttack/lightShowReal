@@ -729,6 +729,13 @@ overflow: auto;
   margin: 10px;
   background-color: lightgray;
   height: 60px;
+  border-radius: 3px;
+}
+
+.playlistIndivDivDivHolder {
+  width: 100%;
+  height: calc(100vh - 60px);
+  overflow: auto;
 }
 
 .playlistIndivDivTitle {
@@ -758,6 +765,16 @@ overflow: auto;
   margin-top: -11px;
 }
 
+#playlistListOfEventsAddEventFab {
+  background-color: #40C4FF;
+  position: absolute;
+  bottom: 10vh;
+  right: 6vw;
+  height: 70px;
+  width: 70px;
+  display: block;
+}
+
 #playistIndivBackToShowLists {
   background-color: #424242;
   color: white;
@@ -765,6 +782,8 @@ overflow: auto;
   left: 12px;
   margin: 0;
   top: 12px;
+  z-index: 3;
+  position: absolute;
 }
 
 #playistIndivDeleteShow {
@@ -960,6 +979,77 @@ overflow: auto;
   margin: 0;
   width: 100%;
   height: 50%;
+}
+
+#playlistEventNewPlaylist {
+  width: 145px;
+  height: 60px;
+  background-color: #29B6F6;
+  position: absolute;
+  right: 30px;
+  bottom: 100px;
+}
+
+.playlistEventNewPlaylistVenue {
+  width: 145px;
+  height: 43px;
+  background-color: #E0E0E0;
+  position: absolute;
+  right: 194px;
+  bottom: 105px;
+  padding: 0px 10px 20px 10px;
+  border-radius: 3px;
+  margin: 0;
+}
+
+.playlistIndivNewPlaylist {
+  margin: 0;
+  float: left;
+  width: 100%;
+  height: 80px;
+}
+
+.playlistIndivNewPlaylistColorDot {
+  float: left;
+  height: 30px;
+  width: 30px;
+  background-color: gray;
+  border-radius: 50%;
+  margin: 25px 10px 25px 50px;
+}
+
+.playlistIndivNewPlaylistSelectBox {
+  float: left;
+  margin: 24px 1px 6px 60px;
+}
+
+.playlistIndivNewPlaylistButton {
+  margin: 0;
+  width: 100%;
+}
+
+.playlistIndivProjectName {
+  line-height: 30px;
+  background-color: #4CAF50;
+  font-size: 20px;
+  font-family: Arial;
+  text-indent: 7px;
+  padding-right: 14px;
+  margin: 13px 0px 10px 60px;
+  float: left;
+  color: white;
+}
+
+.playlistIndivProjectArtistNam {
+  line-height: 17px;
+  background-color: #212121;
+  font-size: 11px;
+  font-family: Arial;
+  text-indent: 7px;
+  padding-right: 14px;
+  margin: -9px 0px 7px 60px;
+  float: left;
+  color: white;
 }
 
 .showSelectDiv {

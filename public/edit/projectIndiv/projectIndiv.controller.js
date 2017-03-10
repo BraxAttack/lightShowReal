@@ -1,12 +1,22 @@
 angular.module('lightShowApp')
-.controller("ProjectIndivCtrl", function($firebaseArray, $http, $timeout, $interval, $scope, $mdDialog, Auth, projectIndivData, profile, templates) {
+.controller("ProjectIndivCtrl", function($firebaseArray, $http, $timeout, $interval, $scope, $mdDialog, Auth, projectIndivData, profile, templates, currentPage) {
     var projectIndivCtrl = this;
 
     var projectID = projectIndivData;
     var profileID = profile.$id;
 
+    projectIndivCtrl.currentPage = currentPage;
+
     console.log("profile " + profileID);
     console.log("profile " + projectID);
+
+    $interval(function () {
+      if(projectIndivCtrl.currentPage['pageVar'] != 'Homepage') {
+          $interval.cancel(projectIndivCtrl.playShowInterval);
+          $interval.cancel(projectIndivCtrl.savePresetInterval);
+
+      }
+    }, 3000);
 
 /*
     var element = document.getElementById('homepageProjectsAddFab').style.display;
