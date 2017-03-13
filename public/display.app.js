@@ -18,6 +18,7 @@ angular
       displayctrl.displayColorArray = [];
       displayctrl.userSeat = 0;
       displayctrl.currentPage = "chooseShow";
+      displayctrl.timeState = "ShowWillBeginSoon";
       displayctrl.ColorPalate = [
         '',
         '#f44336',
@@ -131,6 +132,8 @@ angular
 
       ];
 
+
+
       var ref = firebase.database().ref('/Playlists/');
       var PlaylistsList = $firebaseArray(ref).$loaded()
       .then(function (PlaylistsList){
@@ -144,10 +147,12 @@ angular
               }else if(key2 == '$priority'){
 
               }else {
-                console.log(PlaylistsList[key][key2]['startTime'])
+                console.log(key2)
                 console.log("val2")
                 value2.keyvalue = key;
-                console.log(value2)
+                value2.dollaValue = key2
+
+                //console.log(value2)
                 displayctrl.shows.push(value2);
                 console.log(displayctrl.shows);
                 console.log("-------")
@@ -163,14 +168,17 @@ angular
 
       })
 
-      displayctrl.chooseShow = function(id, uid, indexVar, keyValue) {
+      displayctrl.chooseShow = function(id, uid, indexVar, keyValue, indexKey) {
         displayctrl.showID = id;
         displayctrl.showUID = uid;
         displayctrl.currentPage = "chooseSeat";
         displayctrl.currentPlaylist = indexVar;
         displayctrl.keyValue = keyValue;
+        displayctrl.indexKey = indexKey;
 
       }
+
+
 
       displayctrl.getShowData = function(id, uid) {
         var seatNum = displayctrl.userSeat.toString();
@@ -187,11 +195,11 @@ angular
                 countupforalert += 1;
               }else{
                 countupforalert += 1;
-                console.log(countupforalert);
+                //console.log(countupforalert);
               }
 
               if(document.getElementById('videoScrensaver').paused == false) {
-                console.log("df")
+
                 document.getElementById('videoScrensaver').style.zIndex = "-10";
                 document.getElementById('videoScrensaverBlackDiv').style.zIndex = "-8";
 
@@ -208,9 +216,7 @@ angular
             $timeout(function () {
               document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
 
-              var seattext = "Seat " + seatNum;
-              document.getElementById('seatNum').innerHTML = seattext;
-              document.getElementById('showBeginsSoon').innerHTML = "The Show Will Begin Soon...";
+              displayctrl.seattext = "Seat " + seatNum;
 
             }, 100);
 
@@ -220,15 +226,55 @@ angular
                 var offset = snap.val();
                 var estimatedServerTimeMs = new Date().getTime() + offset;
                 displayctrl.serverTime = estimatedServerTimeMs;
+                displayctrl.serverTime2 = estimatedServerTimeMs;
               });
-            }, 1500);
+            }, 2000);
 
+            displayctrl.setDisplayInterval = $interval(function () {
+
+              console.log(displayctrl.songDataActual.length )
+
+              var timecount = (displayctrl.countdownvar2 * .001).toFixed(0);
+              //console.log(timecount);
+              if(timecount > -11 && timecount < 0){
+                displayctrl.timeState = 'Countdown';
+                displayctrl.countdownDisplay = timecount;
+                document.getElementById('displayDiv').style.backgroundColor = "#f44336";
+              }else if(timecount == 0){
+                displayctrl.countdownDisplay = "Go"
+              }else if((displayctrl.songDataActual.length/10) < timecount) {
+                displayctrl.timeState = 'Complete';
+                document.getElementById('displayDiv').style.backgroundColor = "#212121";
+
+              }else if(timecount > 0 ){
+                displayctrl.timeState = 'Displaying';
+              }else{
+                displayctrl.timeState = 'ShowWillBeginSoon';
+                document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
+
+              }
+            }, 1000);
+
+
+            displayctrl.updateIntervalFast = $interval(function() {
+              displayctrl.serverTime2 += 10;
+              displayctrl.countdownvar2 = (displayctrl.serverTime2 - displayctrl.PlaylistsListVar[displayctrl.keyValue][displayctrl.indexKey]['startTime']).toFixed(1);
+              displayctrl.countdownvar2arrayval = (displayctrl.countdownvar2 * .01).toFixed(0)
+
+              document.getElementById('displayDiv').style.backgroundColor = displayctrl.ColorPalate[displayctrl.songDataActual[displayctrl.countdownvar2arrayval]];
+
+
+            }, 10)
+
+/*
             $interval(function () {
               //console.log(displayctrl.shows[displayctrl.currentPlaylist]['startTime']);
               displayctrl.serverTime += 25;
-
-              console.log(displayctrl.PlaylistsListVar[displayctrl.currentPlaylist][displayctrl.showID]['startTime'])
-              displayctrl.Tminus = Math.ceil((displayctrl.serverTime - displayctrl.shows[displayctrl.currentPlaylist]['startTime']) / 100) * 100;
+              //console.log(displayctrl.currentPlaylist)
+              //console.log(displayctrl.showID)
+              //console.log(displayctrl.PlaylistsListVar[displayctrl.keyValue][displayctrl.indexKey]['startTime'])
+              //this is to get the live data from the actual stuff
+              displayctrl.Tminus = Math.ceil((displayctrl.serverTime - displayctrl.PlaylistsListVar[displayctrl.keyValue][displayctrl.indexKey]['startTime']) / 100) * 100;
 
 
               var dindex = displayctrl.Tminus / 100;
@@ -288,7 +334,7 @@ angular
 
 
             }, 25);
-
+*/
         })
 
       }

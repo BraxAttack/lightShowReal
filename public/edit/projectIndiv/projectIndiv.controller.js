@@ -7,8 +7,8 @@ angular.module('lightShowApp')
 
     projectIndivCtrl.currentPage = currentPage;
 
-    console.log("profile " + profileID);
-    console.log("profile " + projectID);
+    //console.log("profile " + profileID);
+    //console.log("profile " + projectID);
 
     $interval(function () {
       if(projectIndivCtrl.currentPage['pageVar'] != 'Homepage') {
@@ -48,7 +48,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
     var stop = $interval(function () {
         if(projectIndivCtrl.templates == null) {
             projectIndivCtrl.templates = templates;
-            console.log(projectIndivCtrl.templates);
+            //console.log(projectIndivCtrl.templates);
             projectIndivCtrl.templates.forEach(function(i) {
                 projectIndivCtrl.presetExamp.push([])
             })
@@ -58,7 +58,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
           $interval.cancel(stop)
           document.getElementById('template0').style.backgroundColor = '#4CAF50';
         }
-        console.log("going");
+        //console.log("going");
     }, 100);
 
 
@@ -114,7 +114,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
         var ref = firebase.database().ref('/TemplateData/').child(pID);
         var templateData = $firebaseArray(ref).$loaded()
         .then(function (templateData){
-            console.log(JSON.parse(templateData[0]['$value']));
+            //console.log(JSON.parse(templateData[0]['$value']));
             projectIndivCtrl.presetExamp[projectIndivCtrl.selectedPreset] = JSON.parse(templateData[0]['$value']);
 
         })
@@ -144,7 +144,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
             projectIndivCtrl.projectDataParsed.push(arraypush);
 
         }
-        console.log(projectIndivCtrl.projectDataParsed[0].length);
+        //console.log(projectIndivCtrl.projectDataParsed[0].length);
         projectIndivCtrl.savePresetTotalFrames = projectIndivCtrl.projectDataParsed[0].length - 1;
 
 
@@ -158,12 +158,12 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
         var songRef = firebase.storage().ref().child('projectSongs/'+projectID);
         songRef.getDownloadURL().then(function(url) {
           // Insert url into an <img> tag to "download"
-          console.log(url);
+          //console.log(url);
           document.getElementById('songHolder').src = url;
 
 
         }).catch(function(error) {
-          console.log(error);
+          //console.log(error);
 
         });
 
@@ -178,7 +178,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
 
 
     projectIndivCtrl.displayArray = function() {
-      console.log(projectIndivCtrl.projectDataParsed[0]);
+      //console.log(projectIndivCtrl.projectDataParsed[0]);
 
     }
 
@@ -211,7 +211,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
 
 
     projectIndivCtrl.moveTool = function(direction) {
-      console.log(direction);
+      //console.log(direction);
       var copyarray = [];
 
       //console.log(copyarray);
@@ -219,7 +219,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
             copyarray.push(projectIndivCtrl.projectDataParsed[c][projectIndivCtrl.currentFrame]);
         }
 
-        console.log(copyarray);
+        //console.log(copyarray);
       if(direction == "right") {
         for (i = 0; i < 400; i++) {
 
@@ -678,9 +678,9 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
 
                           }
                         }else if (xid < 10) {
-                          console.log(elID )
+                          //console.log(elID )
                           if((elID % 20) < (10 + xid)){
-                            console.log(elID % 20);
+                            //console.log(elID % 20);
                             projectIndivCtrl.projectDataParsed[elID][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;
 
                           }
@@ -749,8 +749,8 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
               document.getElementById('songHolder').currentTime = projectIndivCtrl.currentFrame * .1;
               document.getElementById('songHolder').play();
             }
-            console.log(projectIndivCtrl.projectDataParsed[0].length);
-            console.log(projectIndivCtrl.currentFrame);
+            //console.log(projectIndivCtrl.projectDataParsed[0].length);
+            //console.log(projectIndivCtrl.currentFrame);
               projectIndivCtrl.currentFrame +=1;
           }
 
@@ -907,7 +907,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
 
          for (f = projectIndivCtrl.templateFirstFrameModel; f < projectIndivCtrl.templateLastFrameModel; f++) {
            projectIndivCtrl.presetArray.push([]);
-           console.log(projectIndivCtrl.presetArray);
+           //console.log(projectIndivCtrl.presetArray);
            var frameArray = [];
            for (i = 0; i < 400; i++) {
              if(projectIndivCtrl.projectDataParsed[i][f] == 0) {
@@ -916,7 +916,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
              }else {
                //console.log(presetArray[f]);
                var dataspot = i - 190;
-               console.log(f - projectIndivCtrl.templateFirstFrameModel);
+               //console.log(f - projectIndivCtrl.templateFirstFrameModel);
                var frameNo =  f - projectIndivCtrl.templateFirstFrameModel;
                projectIndivCtrl.presetArray[frameNo].push(dataspot);
 
@@ -951,8 +951,8 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
                  .then(function(ref){
 
                      alert(result + " upload complete.")
-                     console.log(ref);
-                     console.log(projectIndivCtrl.presetArray);
+                     //console.log(ref);
+                     //console.log(projectIndivCtrl.presetArray);
                       projectIndivCtrl.Makeselect(false);
 
                   })
