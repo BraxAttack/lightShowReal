@@ -124,6 +124,9 @@ angular.module('lightShowApp')
 
         var timeleftfirst = playlistsCtrl.CurrentPlalistlenghtOfSong - playlistsCtrl.countdownTime + Number(playlistsCtrl.timeAdjustHistoryVar);
         var timeleft = timeleftfirst.toFixed(0);
+        playlistsCtrl.CurrentPlalistLimeLeftInSong = timeleft;
+        //console.log(playlistsCtrl.CurrentPlalistlenghtOfSong);
+        //console.log(timeleft);
 
         if(timeleft < 0){
           document.getElementById('songHolder2').pause();
@@ -202,12 +205,14 @@ angular.module('lightShowApp')
     playlistsCtrl.timeAdjustHistoryVar = 0;
 
     playlistsCtrl.timeAdjust = function(direction) {
-      var dirtime = direction * .001;
+      var dirtime = direction;
       var dirtimeedit = Number(playlistsCtrl.timeAdjustHistoryVar) + Number(dirtime);
-      playlistsCtrl.timeAdjustHistoryVar = dirtimeedit.toFixed(0);
+      playlistsCtrl.timeAdjustHistoryVar = dirtimeedit;
       var setPlaylistTime2 = {};
       var dollaIDvar2 = playlistsCtrl.CurrentPlalistDollaID;
-      setPlaylistTime2['/Playlists/'+ playlistsCtrl.profile.$id + dollaIDvar2 +'/startTime'] = playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime'] + direction;
+
+      setPlaylistTime2['/Playlists/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar2 +'/startTime'] = Number(playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime']) + Number(direction);
+
       firebase.database().ref().update(setPlaylistTime2)
       .then(function(ref){
 

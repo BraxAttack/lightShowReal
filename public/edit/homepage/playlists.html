@@ -128,6 +128,10 @@
   <md-button id="playlistEventControlsHypeZone" ng-click="playlistsCtrl.whichPlaylistPage = 'IndividualPlaylist'">
     HypeZone
     {{playlistsCtrl.timeAdjustHistoryVar}}
+    <br />
+    {{playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime']}}
+    <br />
+    {{playlistsCtrl.serverTime2}}
   </md-button>
 
   <audio id="songHolder2" controls style="display: none;">

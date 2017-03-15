@@ -188,7 +188,7 @@ angular
             //console.log(JSON.parse(songData[0]['$value']));
             //document.getElementById('videoScrensaver').play()
             var countupforalert = 1;
-
+            /*
             displayctrl.startVideoInterval = $interval(function () {
               if(countupforalert % 300 == 0) {
                 alert("Press Play to Join the Show");
@@ -208,6 +208,7 @@ angular
                 //console.log("we")
               }
             }, 20);
+            */
             displayctrl.songDataActual = JSON.parse(songData[0]['$value']);
             displayctrl.currentPage = "displayShow";
 
@@ -223,16 +224,22 @@ angular
             $interval(function () {
               var offsetRef = firebase.database().ref(".info/serverTimeOffset");
               offsetRef.on("value", function(snap) {
+
                 var offset = snap.val();
                 var estimatedServerTimeMs = new Date().getTime() + offset;
                 displayctrl.serverTime = estimatedServerTimeMs;
                 displayctrl.serverTime2 = estimatedServerTimeMs;
               });
+
+              // Get created date from Firebase servers
+              var createdDate = new Firebase('https://lightsapp-b03f4.firebaseIO.com/post/createDate');
+              createdDate.set(Firebase.ServerValue.TIMESTAMP);
+
             }, 2000);
 
             displayctrl.setDisplayInterval = $interval(function () {
 
-              console.log(displayctrl.songDataActual.length )
+              //console.log(displayctrl.songDataActual.length )
 
               var timecount = (displayctrl.countdownvar2 * .001).toFixed(0);
               //console.log(timecount);
@@ -262,7 +269,12 @@ angular
               displayctrl.countdownvar2arrayval = (displayctrl.countdownvar2 * .01).toFixed(0)
 
               document.getElementById('displayDiv').style.backgroundColor = displayctrl.ColorPalate[displayctrl.songDataActual[displayctrl.countdownvar2arrayval]];
+              document.getElementById('completediv').style.backgroundColor = "black";
 
+              if(displayctrl.serverTime2 % 500 == 0){
+                document.getElementById('completediv').style.backgroundColor = "blue";
+
+              }
 
             }, 10)
 
