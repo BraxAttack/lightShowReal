@@ -19,6 +19,7 @@ angular
       displayctrl.userSeat = 0;
       displayctrl.currentPage = "chooseShow";
       displayctrl.timeState = "ShowWillBeginSoon";
+      displayctrl.billingSetVar = false;
       displayctrl.ColorPalate = [
         '',
         '#f44336',
@@ -133,6 +134,33 @@ angular
       ];
 
 
+      firebase.auth().signInAnonymously().catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorMessage)
+        // ...
+      });
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          displayctrl.user = user;
+          //alert(uid)
+          // ...
+        } else {
+          // User is signed out.
+          // ...
+        }
+        // ...
+      });
+
+
+
+
+
 
       var ref = firebase.database().ref('/Playlists/');
       var PlaylistsList = $firebaseArray(ref).$loaded()
@@ -147,22 +175,22 @@ angular
               }else if(key2 == '$priority'){
 
               }else {
-                console.log(key2)
-                console.log("val2")
+                //console.log(key2)
+                //console.log("val2")
                 value2.keyvalue = key;
                 value2.dollaValue = key2
 
                 //console.log(value2)
                 displayctrl.shows.push(value2);
-                console.log(displayctrl.shows);
-                console.log("-------")
+                //console.log(displayctrl.shows);
+                //console.log("-------")
               }
             });
 
           }
         })
 
-          console.log(displayctrl.shows);
+          //console.log(displayctrl.shows);
 
 
 
@@ -175,6 +203,7 @@ angular
         displayctrl.currentPlaylist = indexVar;
         displayctrl.keyValue = keyValue;
         displayctrl.indexKey = indexKey;
+        displayctrl.billingSetVar = false;
 
       }
 
@@ -213,6 +242,25 @@ angular
             displayctrl.currentPage = "displayShow";
 
 
+            if(displayctrl.billingSetVar == false) {
+              displayctrl.billingSetVar = true;
+              console.log(displayctrl.user.uid)
+              console.log(displayctrl.PlaylistsListVar[displayctrl.keyValue][displayctrl.indexKey]);
+
+
+              var addusertoBilling = {};
+              addusertoBilling['/Billing/' + displayctrl.PlaylistsListVar[displayctrl.keyValue][displayctrl.indexKey]['uid'] + '/' + displayctrl.PlaylistsListVar[displayctrl.keyValue][displayctrl.indexKey]['id'] + '/' + displayctrl.user.uid] = 1;
+              firebase.database().ref().update(addusertoBilling)
+              .then(function(ref){
+
+
+                 }, function() {
+                    return
+              });
+
+
+            }
+
 
             $timeout(function () {
               document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
@@ -232,13 +280,15 @@ angular
               });
 
               // Get created date from Firebase servers
-              var createdDate = new Firebase('https://lightsapp-b03f4.firebaseIO.com/post/createDate');
-              createdDate.set(Firebase.ServerValue.TIMESTAMP);
+              //var createdDate = new Firebase('https://lightsapp-b03f4.firebaseIO.com/post/createDate');
+              //createdDate.set(Firebase.ServerValue.TIMESTAMP);
+
 
             }, 2000);
 
-            displayctrl.setDisplayInterval = $interval(function () {
+            displayctrl.startHypezoneInterval = false;
 
+            displayctrl.setDisplayInterval = $interval(function () {
               //console.log(displayctrl.songDataActual.length )
 
               var timecount = (displayctrl.countdownvar2 * .001).toFixed(0);
@@ -247,20 +297,49 @@ angular
                 displayctrl.timeState = 'Countdown';
                 displayctrl.countdownDisplay = timecount;
                 document.getElementById('displayDiv').style.backgroundColor = "#f44336";
+                $interval.cancel(displayctrl.hypezoneInterval);
+                displayctrl.startHypezoneInterval = false;
+
               }else if(timecount == 0){
                 displayctrl.countdownDisplay = "Go"
+                $interval.cancel(displayctrl.hypezoneInterval);
+                displayctrl.startHypezoneInterval = false;
+
               }else if((displayctrl.songDataActual.length/10) < timecount) {
                 displayctrl.timeState = 'Complete';
                 document.getElementById('displayDiv').style.backgroundColor = "#212121";
+                $interval.cancel(displayctrl.hypezoneInterval);
+                displayctrl.startHypezoneInterval = false;
 
               }else if(timecount > 0 ){
                 displayctrl.timeState = 'Displaying';
+                $interval.cancel(displayctrl.hypezoneInterval);
+                displayctrl.startHypezoneInterval = false;
+
               }else{
                 displayctrl.timeState = 'ShowWillBeginSoon';
                 document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
+                //console.log(displayctrl.shows[displayctrl.keyValue]['hypezone'])
+
+                if(displayctrl.startHypezoneInterval != true) {
+                  displayctrl.startHypezoneInterval = true;
+                  displayctrl.hypezoneInterval = $interval(function() {
+                    displayctrl.hypeIntCount = ((displayctrl.serverTime2 - displayctrl.shows[displayctrl.keyValue]['hypezone']['HypeStartTIme']) * .01).toFixed(0);
+                    //console.log(displayctrl.hypeIntCount);
+
+
+
+                  }, 10);
+                }
+
 
               }
             }, 1000);
+
+            //console.log(displayctrl.PlaylistsListVar[displayctrl.keyValue])
+
+
+
 
 
             displayctrl.updateIntervalFast = $interval(function() {
@@ -269,12 +348,9 @@ angular
               displayctrl.countdownvar2arrayval = (displayctrl.countdownvar2 * .01).toFixed(0)
 
               document.getElementById('displayDiv').style.backgroundColor = displayctrl.ColorPalate[displayctrl.songDataActual[displayctrl.countdownvar2arrayval]];
-              document.getElementById('completediv').style.backgroundColor = "black";
+              //document.getElementById('completediv').style.backgroundColor = "black";
 
-              if(displayctrl.serverTime2 % 500 == 0){
-                document.getElementById('completediv').style.backgroundColor = "blue";
 
-              }
 
             }, 10)
 

@@ -12,7 +12,7 @@
   <body ng-app="lightShowAppDisplay" ng-controller="lightShowAppDisplayCtrl as displayctrl">
 
     <div class="headerDiv">
-      <img class="headerDivLogo" src="/edit/images/lightShow.png"/>
+      <img class="headerDivLogo" src="/edit/images/glowSync.png"/>
       <h1 class="pageDisplay" ng-if="displayctrl.currentPage == 'chooseShow'">Select a show...</h1>
       <h1 class="pageDisplay" ng-if="displayctrl.currentPage == 'chooseSeat'">Choose a seat</h1>
 
@@ -50,9 +50,14 @@
       </div>
     -->
       <div id="displayDiv" class="displayDiv">
+
         <div ng-if="displayctrl.timeState == 'ShowWillBeginSoon'">
+          <p class="displaypleasescrolldown">
+            Please Scroll Down to hide the Navbar
+          </p>
           <h1 id="seatNum" style="margin: 0; position: absolute; width: 100vw; line-height: calc(100vh - 110px);">{{displayctrl.seattext}}</h1>
           <h2 id="showBeginsSoon" style="position: absolute; line-height: calc(100vh - 385px); top: 220px; margin: 0; width: 100vw; font-size: 20px;">The Show Will Begin Soon...</h2>
+
 
         </div>
         <div ng-if="displayctrl.timeState == 'Countdown'">
@@ -64,6 +69,10 @@
 
         </div>
 
+        <div ng-if="displayctrl.timeState == 'HypeZone'">
+          <h1 id="HypeDiv" style="position: absolute; width: 100vw; height: 100vh; margin: 0; font-size: 20px;">HypeZone</h1>
+
+        </div>
 
       </div>
 

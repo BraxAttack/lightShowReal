@@ -140,8 +140,8 @@ angular
         controller: 'TemplatesCtrl as templatesCtrl',
 
       })
-      .state('homepage.playlists', {
-        url: '/playlists',
+      .state('homepage.GoLive', {
+        url: '/golive',
         templateUrl: 'homepage/playlists.html',
         controller: 'PlaylistsCtrl as playlistsCtrl',
         resolve: {
@@ -161,6 +161,23 @@ angular
         url: '/profile',
         controller: 'ProfileCtrl as profileCtrl',
         templateUrl: 'users/profile.html',
+        resolve: {
+          auth: function($state, Users, Auth){
+            return Auth.$requireSignIn().catch(function(){
+              $state.go('login');
+            });
+          },
+          profile: function(Users, Auth){
+            return Auth.$requireSignIn().then(function(auth){
+              return Users.getProfile(auth.uid).$loaded();
+            });
+          }
+        }
+      })
+      .state('homepage.Billing', {
+        url: '/billing',
+        controller: 'BillingCtrl as billingCtrl',
+        templateUrl: 'Billing/billing.html',
         resolve: {
           auth: function($state, Users, Auth){
             return Auth.$requireSignIn().catch(function(){

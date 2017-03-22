@@ -31,9 +31,9 @@ angular.module('lightShowApp')
         icon: 'invert_colors'
       },
       {
-        link : 'playlists',
-        title: 'Playlists',
-        icon: 'list'
+        link : 'GoLive',
+        title: 'GoLive',
+        icon: 'play_circle_filled'
       }
     ];
 

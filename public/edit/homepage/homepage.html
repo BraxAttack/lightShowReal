@@ -55,22 +55,32 @@
      </a>
    </md-item>
 
-   <md-divider></md-divider>
 
-   <md-item>
-     <a>
-       <md-button md-ink-ripple layout="row" md-ink-ripple layout="row" layout-align="start center" style="width: 100%; padding: 0px; margin: 0;" ng-click="homepageCtrl.closeSidenav()">
-         <div class="inset" style="line-height: 0px;">
-          <i class="material-icons">arrow_back</i>
-         </div>
-         <div class="inset">
-           Minimize SideNav
-         </div>
-       </md-button>
-     </a>
-   </md-item>
+ <md-divider style="position: absolute; bottom: 112px; width: 100%;"></md-divider>
+  <md-item class="homepageSidenavBilling">
+    <a>
+      <md-button md-ink-ripple layout="row" md-ink-ripple layout="row" layout-align="start center" style="width: 100%; padding: 0px; margin: 0;" ui-sref="homepage.Billing">
+        <div class="inset" style="line-height: 0px;">
+         <i class="material-icons">attach_money</i>
+        </div>
+        <div class="inset">
+          <h3 class="SidenavBillingPaymentPlan">StartGlow</h3>
+          <p class="SidenavBillingPaymentPlanDescription">Free $0/month</p>
 
-  </md-list>
+        </div>
+
+      </md-button>
+    </a>
+  </md-item>
+  <md-divider style="position: absolute; bottom: 55px; width: 100%;"></md-divider>
+  <md-item class="homepageSidenavMinimize">
+    <md-button class="md-icon-button" aria-label="Minimize" id="homepageMinimizeSidenav" ng-click="homepageCtrl.closeSidenav()">
+        <i class="material-icons">arrow_back</i>
+    </md-button>
+  </md-item>
+
+ </md-list>
+
   </md-sidenav>
   <button ng-click="homepageCtrl.logout($event)" style="position:absolute;">log out</button>
 
@@ -78,7 +88,7 @@
     <i class="material-icons" ng-click="homepageCtrl.openSideNav()" ng-if="homepageCtrl.sideNavState == 'closed'" id="menubuttonicon">menu</i>
     <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'Projects'">dashboard</i>
     <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'Templates'">invert_colors</i>
-    <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'Playlists'">menu</i>
+    <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'GoLive'">play_circle_filled</i>
     <h1 class="homepageCurrentPage">{{homepageCtrl.currentPage.pageVar}}</h1>
     <img class="homepgeTopbarLogo" src="images/lightShow.png"/>
   </div>

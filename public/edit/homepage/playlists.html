@@ -4,58 +4,140 @@
 
 <div class="playlistIndivDivDivHolder" ng-if="playlistsCtrl.whichPlaylistPage == 'playlistList'">
   <div id="playlistListOfEvents" >
+    <h2 class="playlistsIndivTitle" style="text-indent: 15px;">Shows</h2>
+
     <div class="playlistIndivDiv" ng-repeat="show in playlistsCtrl.shows">
-      <h1 class="playlistIndivDivTitle">{{show['name']}}</h1>
+      <h1 class="playlistIndivDivTitle"> {{show['appxStartDate'] | date : "MMM d"}} - {{show['showName']}}</h1>
       <span style="width: calc(100% - 50px); height: 1px; float: left;"></span>
       <md-button ng-click="playlistsCtrl.selectAShowToEdit(show['id'], show['uid'], $index, show.$id)" style="background-color:#03A9F4; float: right; margin-right: 10px; height: 35px; margin-top: -35px; line-height: 20px; color: white;">Present <i class="material-icons" style="font-size: 15px;">present_to_all</i></md-button>
-      <h2  class="playlistIndivDivTitleVenue">{{show['venue']}}</h2>
+      <h2  class="playlistIndivDivTitleVenue">{{show['venue']}} </h2>
 
-  <!--
-      <md-button ng-click="playlistsCtrl.setShowTime(100000000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">Pending...</md-button>
-      <md-button ng-click="playlistsCtrl.setShowTime(45000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">45 sec</md-button>
-      <md-button ng-click="playlistsCtrl.setShowTime(12000, show['id'], show['uid'], $index, show.$id)" style="float: right; background-color: #4CAF50; width: 90px;">12 sec</md-button>
-  -->
+    </div>
+
+  </div>
+
+  <div id="playlistListOfEvents" >
+    <h2 class="playlistsIndivTitle" style="text-indent: 15px;">Playlists</h2>
+
+    <div class="playlistIndivDiv" ng-repeat="playlist in playlistsCtrl.playlists">
+      <h1 class="playlistIndivDivTitle" style="background-color: #FF5722;"> {{playlist['playlistTitle']}} - {{playlist['ids'].length}}</h1>
+      <span style="width: calc(100% - 50px); height: 1px; float: left;"></span>
+      <md-button ng-click="playlistsCtrl.gotoAddShowFunc($index)" style="background-color:#03A9F4; float: right; margin-right: 10px; height: 35px; margin-top: -35px; line-height: 20px; color: white;"><i class="material-icons" style="font-size: 15px;">add</i> Add show</md-button>
 
     </div>
 
   </div>
 
 </div>
+
+
 
 <div class="playlistIndivDivDivHolder" ng-if="playlistsCtrl.whichPlaylistPage == 'NewplaylistList'">
   <md-button id="playistIndivBackToShowLists" class="md-icon-button" aria-label="Settings" ng-click="playlistsCtrl.whichPlaylistPage = 'playlistList'">
     <i class="material-icons" style="font-size: 29px; text-align: center; width: 38px; float: left; margin-left: -8px; margin-top: -3px;">keyboard_arrow_left</i>
   </md-button>
 
-  <div class="playlistIndivNewPlaylist">
-    <div ng-repeat="project in playlistsCtrl.projects">
-      <md-button id="newPlaylistOption{{$index}}" class="playlistIndivNewPlaylistButton" ng-click="playlistsCtrl.setNewPlaylistSetSelectedSongVar($index)">
-            <h1 class="playlistIndivProjectName" style="background-color: {{project['color']}};">{{project['projectName']}}</h1>
-            <span style="width: calc(100%); height: 1px; float: left;"></span>
-            <h2 class="playlistIndivProjectArtistNam">{{project['songTitle']}}</h1>
+<form ng-submit="playlistsCtrl.createPlaylist()">
+  <div class="playlistsIndivNewTextInputDiv">
+    <h2 class="playlistsIndivTitle">New Playlist</h2>
+    <md-input-container style="margin-bottom: 0;">
+      <label>Playlist Name</label>
+      <input required ng-model="playlistsCtrl.newPlaylistPlaylistName" type="text">
+    </md-input-container>
+    <br />
 
-      </md-button>
-      <md-divider ></md-divider>
+    <div class="playlistsNewPlaylistSelectProjectsDiv">
+      <div class="playlistIndivNewPlaylistColumnTitle" style="border-right-style: solid; border-right-width: 2px; border-right-color: lightgray;">
+        Projects
+      </div>
+      <div class="playlistIndivNewPlaylistColumnTitle">
+        Playlist
+      </div>
+      <div class="playlistsNewPlaylistSelectProjectsProjectsDiv">
+
+        <div ng-repeat="project in playlistsCtrl.projects">
+          <md-button id="newPlaylistOption{{$index}}" class="playlistIndivNewPlaylistButton" ng-click="playlistsCtrl.setNewPlaylistSetSelectedSongVar($index)">
+                <h1 class="playlistIndivProjectName" style="background-color: {{project['color']}};">{{project['projectName']}}</h1>
+                <span style="width: calc(100%); height: 1px; float: left;"></span>
+                <h2 class="playlistIndivProjectArtistNam">{{project['songTitle']}}</h1>
+
+          </md-button>
+          <md-divider ></md-divider>
+        </div>
+
+      </div>
+      <div class="playlistsNewPlaylistSelectProjectsInPlaylistDiv">
+          <div ng-repeat="project in playlistsCtrl.playlistOrderIDs track by $index">
+
+            <md-button id="newPlaylistOption{{$index}}" class="playlistIndivNewPlaylistButton" ng-click="playlistsCtrl.setNewPlaylistSetDeselectSong($index)">
+                  <h1 class="playlistIndivProjectName" style="background-color: {{playlistsCtrl.projects[project]['color']}};">{{$index}} - {{playlistsCtrl.projects[project]['projectName']}}</h1>
+                  <span style="width: calc(100%); height: 1px; float: left;"></span>
+                  <h2 class="playlistIndivProjectArtistNam">{{playlistsCtrl.projects[project]['songTitle']}}</h1>
+
+            </md-button>
+            <md-divider ></md-divider>
+          </div>
+
+
+      </div>
+
+
     </div>
 
-    {{playlistsCtrl.newPlaylistSetSelectedSongVar}}
-  </div>
-
-  <form ng-submit="playlistsCtrl.createPlaylist()">
-    <div class="playlistEventNewPlaylistVenue">
-      <md-input-container>
-          <label>Venue Name</label>
-          <input required ng-model="playlistsCtrl.newPlaylistVenue" type="text">
-        </md-input-container>
-    </div>
 
     <md-button id="playlistEventNewPlaylist" type="submit">
       Create
     </md-button>
-  </form>
+
+  </div>
+</form>
 
 </div>
 
+
+<div class="playlistIndivDivDivHolder" ng-if="playlistsCtrl.whichPlaylistPage == 'NewShow'">
+  <md-button id="playistIndivBackToShowLists" class="md-icon-button" aria-label="Settings" ng-click="playlistsCtrl.whichPlaylistPage = 'playlistList'">
+    <i class="material-icons" style="font-size: 29px; text-align: center; width: 38px; float: left; margin-left: -8px; margin-top: -3px;">keyboard_arrow_left</i>
+  </md-button>
+
+    <form ng-submit="playlistsCtrl.createShow()">
+      <div class="playlistsIndivNewTextInputDiv">
+        <h2 class="playlistsIndivTitle">New Show</h2>
+        <md-input-container style="margin-bottom: 0;">
+          <label>Show Name</label>
+          <input required ng-model="playlistsCtrl.newPlaylistShowName" type="text">
+        </md-input-container>
+        <br />
+        <md-input-container style="margin: 0;">
+          <label>Venue</label>
+          <input required ng-model="playlistsCtrl.newPlaylistVenue" type="text">
+        </md-input-container>
+        <br />
+        <md-datepicker ng-model="playlistsCtrl.myDate" md-placeholder="Enter date" md-is-open="playlistsCtrl.isOpen" style="margin-left: -15px;"></md-datepicker>
+        <md-button class="md-primary md-raised" ng-click="playlistsCtrl.isOpen = true">Select</md-button>
+        <br />
+        <br />
+        <br />
+        <span style="font-size: 11px;">Time closest to showtime...</span>
+
+        <div layout="row">
+          <md-select ng-model="playlistsCtrl.showtime" placeholder="Time" class="playlistsIndivShowtime md-no-underline" required md-no-asterisk="false">
+            <md-option value="6">6am</md-option>
+            <md-option value="13">1pm</md-option>
+            <md-option value="18">6pm</md-option>
+            <md-option value="21">9pm</md-option>
+          </md-select>
+        </div>
+        <br />
+
+        <md-button id="playlistEventNewPlaylist" type="submit">
+          Create
+        </md-button>
+
+        {{playlistsCtrl.selectedPlaylistForShowCreation}}
+      </div>
+    </form>
+</div>
 
 
 <div id="playlistEventControls" ng-if="playlistsCtrl.whichPlaylistPage == 'IndividualPlaylist'">
@@ -75,7 +157,7 @@
     <h1 id="countdown" style="position: absolute; width: 50vw; height: 50vh; margin: 0;"></h1>
   </div>
 -->
-  <h1 class="playlistEventControlsTitle">{{playlistsCtrl.CurrentPlalistTitle}}</h1>
+  <h1 class="playlistEventControlsTitle">{{ playlistsCtrl.CurrentPlalistDate | date : "MMM d"}} - {{playlistsCtrl.CurrentPlalistTitle}}</h1>
   <h2 class="playlistEventControlsVenue">{{playlistsCtrl.CurrentPlalistVenue}}</h2>
   <div class="playlistEventControlsTimeShowDiv">
     <div class="playlistEventControlsTimeShowDivCurrentTimeDiv">
@@ -125,13 +207,9 @@
 
   </div>
 
-  <md-button id="playlistEventControlsHypeZone" ng-click="playlistsCtrl.whichPlaylistPage = 'IndividualPlaylist'">
+  <md-button id="playlistEventControlsHypeZone" ng-click="playlistsCtrl.whichPlaylistPage = 'HypeZone'">
     HypeZone
-    {{playlistsCtrl.timeAdjustHistoryVar}}
-    <br />
-    {{playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime']}}
-    <br />
-    {{playlistsCtrl.serverTime2}}
+
   </md-button>
 
   <audio id="songHolder2" controls style="display: none;">
@@ -140,5 +218,20 @@
     <source src="error.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
   </audio>
+
+</div>
+
+
+
+<div id="playlistEventControls" ng-if="playlistsCtrl.whichPlaylistPage == 'HypeZone'">
+
+  <md-button id="playistIndivBackIndivShow" class="md-icon-button" aria-label="Settings" ng-click="playlistsCtrl.whichPlaylistPage = 'IndividualPlaylist'">
+    <i class="material-icons" style="font-size: 29px; text-align: center; width: 38px; float: left; margin-left: -8px; margin-top: -3px;">keyboard_arrow_left</i>
+  </md-button>
+
+  <md-button id="playlistEventControlsHypeZone" ng-click="playlistsCtrl.SetHypeColor()">
+    Color
+
+  </md-button>
 
 </div>

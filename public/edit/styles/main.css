@@ -155,6 +155,55 @@ body {
   white-space: nowrap;
 }
 
+.homepageSidenavBilling {
+  position: absolute;
+  bottom: 56px;
+  width: 100%;
+
+}
+
+.SidenavBillingPaymentPlan {
+
+margin: 0;
+
+line-height: 30px;
+
+height: 20px;
+
+font-size: 12px;
+
+text-align: left;
+}
+
+.SidenavBillingPaymentPlanDescription {
+
+margin: 0;
+
+line-height: 20px;
+
+height: 20px;
+
+font-size: 8px;
+}
+
+.homepageSidenavMinimize {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 55px;
+}
+
+#homepageMinimizeSidenav {
+
+float: right;
+
+margin-right: 12px;
+
+margin-top: 10px;
+
+height: 5px;
+}
+
 .homepageProjectsSongTitle {
   float: left;
   width: 314px;
@@ -375,16 +424,12 @@ body {
 }
 
 .inidivProjectPresetSelectDivHolder {
+  width: calc(100% - 232px);
+  height: 70px;
+  float: left;
+  margin-top: 5px;
+  overflow: auto;
 
-width: calc(100% - 232px);
-
-height: 70px;
-
-float: left;
-
-margin-top: 5px;
-
-overflow: auto;
 }
 
 .indivProjectPresetSelect {
@@ -738,6 +783,51 @@ overflow: auto;
   overflow: auto;
 }
 
+.playlistsIndivNewTextInputDiv {
+  width: calc(100% - 70px);
+  margin-left: 70px;
+
+}
+
+.playlistsIndivTitle {
+
+}
+
+.playlistsIndivShowtime {
+
+}
+
+.playlistsNewPlaylistSelectProjectsDiv {
+  width: calc(100% - 58px);
+  height: calc(100vh - 340px);
+  background-color: #E0E0E0;
+  border-radius: 2px;
+}
+
+.playlistsNewPlaylistSelectProjectsProjectsDiv {
+  float: left;
+  height: calc(100% - 50px);
+  width: calc(50% - 2px);
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: lightgray;
+  overflow-y: auto;
+}
+
+.playlistsNewPlaylistSelectProjectsInPlaylistDiv {
+  float: left;
+  height: 100%;
+  width: 50%;
+  overflow-y: auto;
+}
+
+.playlistsIndivSelectProject {
+  height: 300px;
+  overflow-y: auto;
+  width: calc(100% - 60px);
+
+}
+
 .playlistIndivDivTitle {
   font-size: 16px;
   text-indent: 12px;
@@ -776,6 +866,17 @@ overflow: auto;
 }
 
 #playistIndivBackToShowLists {
+  background-color: #424242;
+  color: white;
+  text-align: center;
+  left: 12px;
+  margin: 0;
+  top: 12px;
+  z-index: 3;
+  position: absolute;
+}
+
+#playistIndivBackIndivShow {
   background-color: #424242;
   color: white;
   text-align: center;
@@ -900,6 +1001,19 @@ overflow: auto;
 
 }
 
+#playlistEventControlsHypeZoneSetColor {
+  width: 95%;
+  height: 115px;
+  background-color: #26C6DA;
+  position: absolute;
+  top: 524px;
+  left: 2.5%;
+  border-radius: 3px;
+  color: white;
+  margin: 0;
+
+}
+
 .playlistEventControlsTimeShowDivCurrentTimeDiv {
   float: left;
   margin: 0;
@@ -985,9 +1099,8 @@ overflow: auto;
   width: 145px;
   height: 60px;
   background-color: #29B6F6;
-  position: absolute;
-  right: 30px;
-  bottom: 100px;
+  float: right;
+  margin: 30px 60px;
 }
 
 .playlistEventNewPlaylistVenue {
@@ -1023,10 +1136,24 @@ overflow: auto;
   margin: 24px 1px 6px 60px;
 }
 
-.playlistIndivNewPlaylistButton {
-  margin: 0;
-  width: 100%;
+.playlistIndivNewPlaylistColumnTitle {
+  width: calc(50% - 2px);
+  height: 50px;
+  float: left;
+  text-align: center;
+  line-height: 50px;
+  font-family: Arial Black;
+  font-size: 15px;
+  background-color: #9E9E9E;
+  color: #212121;
 }
+
+.playlistIndivNewPlaylistButton {
+  margin: 0 0 1px 0;
+  width: 100%;
+  background-color: #BDBDBD;
+}
+
 
 .playlistIndivProjectName {
   line-height: 30px;
@@ -1035,7 +1162,7 @@ overflow: auto;
   font-family: Arial;
   text-indent: 7px;
   padding-right: 14px;
-  margin: 13px 0px 10px 60px;
+  margin: 13px 0px 10px 0px;
   float: left;
   color: white;
 }
@@ -1047,7 +1174,7 @@ overflow: auto;
   font-family: Arial;
   text-indent: 7px;
   padding-right: 14px;
-  margin: -9px 0px 7px 60px;
+  margin: -9px 0px 7px 0px;
   float: left;
   color: white;
 }

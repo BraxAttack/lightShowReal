@@ -8,8 +8,9 @@ angular.module('lightShowApp')
 
     templatesCtrl.templates = templates;
 
+    //console.log(templates)
+    templatesCtrl.profile = profile;
 
-  
     var profileID = profile.$id;
 
 
@@ -566,5 +567,31 @@ angular.module('lightShowApp')
       templatesCtrl.setTemplateCenterDiv();
 
     }, 1000);
+
+
+
+    templatesCtrl.deleteTemplate = function(tempplateID) {
+      var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to delete this Template?')
+            .textContent('')
+            .ariaLabel('')
+            .targetEvent(event)
+            .ok('Yes')
+            .cancel('No');
+            $mdDialog.show(confirm).then(function() {
+                var templateToDelete = {};
+                templateToDelete['/users/'+ templatesCtrl.profile.$id + '/templates/' + tempplateID] = null;
+                firebase.database().ref().update(templateToDelete)
+                .then(function(ref){
+
+
+                   }, function() {
+                      return
+                });
+
+
+              })
+
+    }
 
   })
