@@ -139,6 +139,8 @@ angular.module('lightShowApp')
           //alert("trueness");
 
           console.log(vid.duration);
+
+          projectsCtrl.videoDuration = vid.duration;
           //console.log(projectsCtrl.newProjectData.songData);
 
           //10 frames for each second of the song plus 4 just in case
@@ -194,12 +196,22 @@ angular.module('lightShowApp')
                 document.getElementById("loadPercent").innerHTML = percent;
 
                 if(projectsCtrl.uploadCount == 400) {
-                  $timeout(function() {
-                    projectsCtrl.uploadCountIsComplete = 'null';
-                    $state.go('homepage.projects');
-                    location.reload();
-                  }, 1000);
 
+                  var projectsetlength = {};
+
+                  projectsetlength['/Projects/' + projectsCtrl.profile.$id + '/' + projectsCtrl.projectKeyVar + '/duration'] = projectsCtrl.videoDuration;
+                  firebase.database().ref().update(projectsetlength)
+                  .then(function(ref){
+
+                      $timeout(function() {
+                        projectsCtrl.uploadCountIsComplete = 'null';
+                        $state.go('homepage.projects');
+                        location.reload();
+
+                      }, 1000);
+
+
+                  })
 
                 }
 
@@ -257,6 +269,7 @@ angular.module('lightShowApp')
       }else{ */
         //console.log(projectsCtrl.newProject.songurl);
           var projectKey = firebase.database().ref('Projects/' + projectsCtrl.profile.$id).push().key;
+          projectsCtrl.projectKeyVar = projectKey
           var projectUpdates = {};
           var projectDataUpdates = {};
 

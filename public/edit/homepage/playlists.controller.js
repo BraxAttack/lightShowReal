@@ -74,7 +74,8 @@ angular.module('lightShowApp')
 
       playlistsCtrl.CurrentPlalistTitle = playlistsCtrl.shows[indexVar]['showName'];
       playlistsCtrl.CurrentPlalistVenue = playlistsCtrl.shows[indexVar]['venue'];
-      playlistsCtrl.CurrentPlalistDate = playlistsCtrl.shows[indexVar]['appxStartDate']
+      playlistsCtrl.CurrentPlalistDate = playlistsCtrl.shows[indexVar]['appxStartDate'];
+      playlistsCtrl.incrumentPart = playlistsCtrl.shows[indexVar]['incrumentPart'];
       playlistsCtrl.CurrentPlalistuserID = userID;
       playlistsCtrl.CurrentPlalistindexVar = indexVar;
       playlistsCtrl.CurrentPlalistDollaID = dollaID;
@@ -419,6 +420,10 @@ angular.module('lightShowApp')
 
       })
 
+    }
+
+    playlistsCtrl.SetIncrumentPartFunc = function(setVal) {
+        alert(setVal)
     }
 
   });
