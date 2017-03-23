@@ -75,7 +75,7 @@
   <md-divider style="position: absolute; bottom: 55px; width: 100%;"></md-divider>
   <md-item class="homepageSidenavMinimize">
     <md-button class="md-icon-button" aria-label="Minimize" id="homepageMinimizeSidenav" ng-click="homepageCtrl.closeSidenav()">
-        <i class="material-icons">arrow_back</i>
+        <i class="material-icons" style="font-size: 32px;">keyboard_arrow_left</i>
     </md-button>
   </md-item>
 
@@ -90,7 +90,7 @@
     <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'Templates'">invert_colors</i>
     <i class="homepageCurrentPageIcon material-icons" ng-if="homepageCtrl.currentPage.pageVar == 'GoLive'">play_circle_filled</i>
     <h1 class="homepageCurrentPage">{{homepageCtrl.currentPage.pageVar}}</h1>
-    <img class="homepgeTopbarLogo" src="images/lightShow.png"/>
+    <img class="homepgeTopbarLogo" src="images/glowSync.png"/>
   </div>
 
   <md-button id="homepageProjectsAddFab" ui-sref="homepage.newproject" class="md-fab md-primary md-hue-2" aria-label="Profile" ng-if="homepageCtrl.currentPage.pageVar == 'Projects'">

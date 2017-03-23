@@ -43,7 +43,34 @@ angular.module('lightShowApp')
 
     playlistsCtrl.selectAShowToEdit = function(projectID, userID, indexVar, dollaID) {
       playlistsCtrl.whichPlaylistPage = 'IndividualPlaylist';
-      console.log(projectID)
+      playlistsCtrl.IndivShowPlaylistData = [];
+      angular.forEach(playlistsCtrl.playlists, function(value, key) {
+
+        if(value['$id'] == playlistsCtrl.shows[indexVar]['playlistID']) {
+          //console.log(value)
+          playlistsCtrl.individualShowPlaylist = value;
+
+          angular.forEach(playlistsCtrl.individualShowPlaylist['ids'], function(value2, key2) {
+            //console.log(value2)
+
+              angular.forEach(playlistsCtrl.projects, function(value3, key3) {
+
+                if(value3['$id'] == value2) {
+                    console.log(value3)
+                    playlistsCtrl.IndivShowPlaylistData.push(value3)
+
+                }
+
+              })
+
+          })
+
+        }
+
+      })
+
+      //console.log(playlistsCtrl.shows)
+      //console.log(playlistsCtrl.playlists.indexOf(playlistsCtrl.shows[indexVar]['playlistID']))
 
       playlistsCtrl.CurrentPlalistTitle = playlistsCtrl.shows[indexVar]['showName'];
       playlistsCtrl.CurrentPlalistVenue = playlistsCtrl.shows[indexVar]['venue'];
@@ -53,7 +80,7 @@ angular.module('lightShowApp')
       playlistsCtrl.CurrentPlalistDollaID = dollaID;
       playlistsCtrl.CurrentPlalistStartTime = playlistsCtrl.shows[indexVar]['startTime'];
 
-
+/*
       var songRef = firebase.storage().ref().child('projectSongs/'+projectID);
       songRef.getDownloadURL().then(function(url) {
         // Insert url into an <img> tag to "download"
@@ -71,7 +98,7 @@ angular.module('lightShowApp')
         console.log(error);
 
       });
-
+*/
       var offsetRef = firebase.database().ref(".info/serverTimeOffset");
       offsetRef.on("value", function(snap) {
         var offset = snap.val();
@@ -161,7 +188,7 @@ angular.module('lightShowApp')
 
         //incriments time between syncs
         playlistsCtrl.serverTime += 1000
-
+        s
 
       }, 1000);
 
@@ -205,7 +232,7 @@ angular.module('lightShowApp')
                   var currentTime =  new Date().getTime() + playlistsCtrl.serverTimeOffset;
                   var setPlaylistTime = {};
                   var dollaIDvar = playlistsCtrl.CurrentPlalistDollaID;
-                  setPlaylistTime['/Playlists/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar +'/startTime'] = currentTime + addtime;
+                  setPlaylistTime['/Showings/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar +'/startTime'] = currentTime + addtime;
                   firebase.database().ref().update(setPlaylistTime)
                   .then(function(ref){
 

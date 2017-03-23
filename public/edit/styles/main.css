@@ -3,7 +3,7 @@ body {
 }
 
 .loginTopLogo {
-  height: 26px;
+  height: 20px;
   margin: 17px;
   float: left;
 }
@@ -938,9 +938,38 @@ height: 5px;
   font-family: Arial;
 }
 
+.playlistEventControlsPlaylistIndexSetDiv {
+  width: 22.5%;
+  height: 400px;
+  background-color: #424242;
+  position: absolute;
+  top: 125px;
+  right: 2.5%;
+  border-radius: 3px;
+  color: white;
+  border-top-style: solid;
+  border-top-width: 4px;
+  border-top-color: #4CAF50;
+  overflow: hidden;
+}
+
+
+.playlistEventControlsPlaylistIndexSetLable {
+  float: left;
+  background-color: #4CAF50;
+  padding: 5px 14px 4px 0px;
+  color: black;
+  margin: 12px 100% 0px 0px;
+  text-indent: 5px;
+  width: 108px;
+  font-family: Arial;
+  font-size: 13px;
+  color: white;
+  margin-bottom: 12px;
+}
 
 .playlistEventControlsTimeShowDiv {
-  width: 95%;
+  width: 70%;
   height: 175px;
   background-color: #424242;
   position: absolute;
@@ -948,15 +977,14 @@ height: 5px;
   left: 2.5%;
   border-radius: 3px;
   color: white;
-
 }
 
 .playlistEventControlsTimeSetDiv {
-  width: 95%;
+  width: 70%;
   height: 110px;
   background-color: #424242;
   position: absolute;
-  top: 310px;
+  top: 320px;
   left: 2.5%;
   border-radius: 3px;
   color: white;
@@ -993,12 +1021,11 @@ height: 5px;
   height: 115px;
   background-color: #f44336;
   position: absolute;
-  top: 524px;
+  top: 600px;
   left: 2.5%;
   border-radius: 3px;
   color: white;
   margin: 0;
-
 }
 
 #playlistEventControlsHypeZoneSetColor {
@@ -1094,6 +1121,53 @@ height: 5px;
   width: 100%;
   height: 50%;
 }
+
+.playlistEventControlsPlaylistIndexEachProjectDivDiv {
+  width: 100%;
+  height: calc(100% - 47px);
+  float: left;
+  overflow-y: auto;
+}
+
+.playlistEventControlsPlaylistIndexEachProjectDiv {
+  float: left;
+  background-color: gray;
+  width: calc(100% - 4px);
+  height: 75px;
+  border-radius: 2px;
+  margin: 2px 2px 0 2px;
+}
+
+.playlistEventControlsPlaylistIndexEachProjectProjectName {
+  line-height: 30px;
+  background-color: #4CAF50;
+  font-size: 20px;
+  font-family: Arial;
+  text-indent: 7px;
+  padding-right: 14px;
+  margin: 13px 0px 10px 0px;
+  float: left;
+  color: white;
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlistEventControlsPlaylistIndexEachProjectSongTitle {
+  line-height: 17px;
+  background-color: #212121;
+  font-size: 11px;
+  font-family: Arial;
+  text-indent: 7px;
+  padding-right: 14px;
+  margin: -9px 0px 7px 0px;
+  float: left;
+  color: white;
+
+}
+
+
 
 #playlistEventNewPlaylist {
   width: 145px;
