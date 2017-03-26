@@ -180,11 +180,21 @@
 
 
     </md-button>
-    <div class="playlistEventControlsTimeShowDivSpeedUpDownDiv">
-      <md-button id="playlistEventControlsTimeShowDivSpeedUp" ng-click="playlistsCtrl.timeAdjust(-100)">
+    <div class="playlistEventControlsTimeShowDivSpeedUpDownDiv" >
+      <div ng-if="playlistsCtrl.timeAdjustHistoryVar == 0" style="height: 50%;">
+        <md-button id="playlistEventControlsTimeShowDivSpeedSYNC" style="background-color: lightgray">
+          <i class="material-icons">sync</i> Sync
+        </md-button>
+      </div>
+      <div ng-if="playlistsCtrl.timeAdjustHistoryVar != 0" style="height: 50%;">
+        <md-button id="playlistEventControlsTimeShowDivSpeedSYNC" ng-click="playlistsCtrl.SyncTimeForShow()">
+          <i class="material-icons">sync</i> Sync
+        </md-button>
+      </div>
+      <md-button id="playlistEventControlsTimeShowDivSpeedUp" ng-click="playlistsCtrl.timeAdjust(5000)">
         <i class="material-icons" style="font-size: 95px; margin-top: 5px; color: #4CAF50;">arrow_drop_up</i>
       </md-button>
-      <md-button id="playlistEventControlsTimeShowDivSpeedDown" ng-click="playlistsCtrl.timeAdjust(100)">
+      <md-button id="playlistEventControlsTimeShowDivSpeedDown" ng-click="playlistsCtrl.timeAdjust(-5000)">
         <i class="material-icons" style="font-size: 95px; margin-top: -10px; color: #f44336;">arrow_drop_down</i>
       </md-button>
     </div>
@@ -192,12 +202,12 @@
   </div>
   <div class="playlistEventControlsPlaylistIndexSetDiv">
     <div class="playlistEventControlsPlaylistIndexSetLable">
-     Playlist... {{playlistsCtrl.incrumentPart + 1}}
+     Playlist... {{playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart'] }}
     </div>
     <div class="playlistEventControlsPlaylistIndexEachProjectDivDiv">
-      <md-button class="playlistEventControlsPlaylistIndexEachProjectDiv" ng-repeat="project in playlistsCtrl.IndivShowPlaylistData track by $index" ng-click="playlistsCtrl.SetIncrumentPartFunc($index)">
+      <md-button id="playlistButton{{$index}}" class="playlistEventControlsPlaylistIndexEachProjectDiv" ng-repeat="project in playlistsCtrl.IndivShowPlaylistData track by $index" ng-click="playlistsCtrl.SetIncrumentPartFunc($index)">
         <p class="playlistEventControlsPlaylistIndexEachProjectProjectName" style="background-color: {{project['color']}};">
-          {{$index + 1}} - 4:23 - {{project['projectName']}}
+          {{$index + 1}} - {{(project['duration'] / 60) -1 | number:0 }}:{{project['duration'] % 60 | number:0 }} - {{project['projectName']}}
         </p>
         <span style="width: calc(100%); height: 1px; float: left;" class="ng-scope"></span>
         <p class="playlistEventControlsPlaylistIndexEachProjectSongTitle">
@@ -217,14 +227,14 @@
     <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(10000000000000000000000000)">
       Pending...
     </md-button>
-    <md-button class="playlistEventControlsTimeSetButtons"  ng-click="playlistsCtrl.setShowTime(300000)" >
-      5 min
+    <md-button class="playlistEventControlsTimeSetButtons"  ng-click="playlistsCtrl.setShowTime(60000)" >
+      60 min
     </md-button>
-    <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(60000)">
-      60 sec
-    </md-button>
-    <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(15000)" >
+    <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(15000)">
       15 sec
+    </md-button>
+    <md-button class="playlistEventControlsTimeSetButtons" ng-click="playlistsCtrl.setShowTime(1000)" >
+      Now
     </md-button>
 
 
@@ -232,10 +242,10 @@
 
   <md-button id="playlistEventControlsHypeZone" ng-click="playlistsCtrl.whichPlaylistPage = 'HypeZone'">
     HypeZone
-
+    {{playlistsCtrl.countdownTimeMili}}
   </md-button>
 
-  <audio id="songHolder2" controls style="display: none;">
+  <audio id="songIndex{{$index}}" controls style="display: none;" ng-repeat="projectSong in playlistsCtrl.IndivShowPlaylistData track by $index">
 
     <source src="error.ogg" type="audio/ogg">
     <source src="error.mp3" type="audio/mpeg">

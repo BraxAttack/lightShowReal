@@ -157,9 +157,9 @@ body {
 
 .homepageSidenavBilling {
   position: absolute;
-  bottom: 56px;
+  bottom: 52px;
   width: 100%;
-
+  background-color: #FAFAFA;
 }
 
 .SidenavBillingPaymentPlan {
@@ -1112,14 +1112,34 @@ height: 5px;
 
 #playlistEventControlsTimeShowDivSpeedUp {
   margin: 0;
-  width: 100%;
+  width: 50%;
   height: 50%;
+  float: left;
+  text-align: center;
 }
 
 #playlistEventControlsTimeShowDivSpeedDown {
   margin: 0;
-  width: 100%;
+  width: 50%;
   height: 50%;
+  float: left;
+}
+
+#playlistEventControlsTimeShowDivSpeedSYNC {
+
+width: calc(100% + 2px);
+
+margin: 0;
+
+height: 100%;
+
+background-color: #66BB6A;
+
+border-radius: 0;
+
+font-size: 22px;
+
+color: white;
 }
 
 .playlistEventControlsPlaylistIndexEachProjectDivDiv {
@@ -1148,10 +1168,11 @@ height: 5px;
   margin: 13px 0px 10px 0px;
   float: left;
   color: white;
-  width: 80%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: left;
+  max-width: 80%;
 }
 
 .playlistEventControlsPlaylistIndexEachProjectSongTitle {

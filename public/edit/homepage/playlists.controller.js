@@ -16,6 +16,15 @@ angular.module('lightShowApp')
     playlistsCtrl.intervalSet = "none";
     playlistsCtrl.playlistOrderIDs = []
 
+    $timeout(function () {
+      playlistsCtrl.lengthofPlaylist = -1;
+      angular.forEach(playlistsCtrl.IndivShowPlaylistData, function(value, key) {
+        playlistsCtrl.lengthofPlaylist += 1;
+
+      })
+    }, 3000);
+
+
 
     $interval(function () {
       if(playlistsCtrl.currentPage['pageVar'] != 'GoLive') {
@@ -31,14 +40,14 @@ angular.module('lightShowApp')
     var ShowingsList = $firebaseArray(ref).$loaded()
     .then(function (ShowingsList){
         playlistsCtrl.shows = ShowingsList;
-        console.log(ShowingsList)
+        //console.log(ShowingsList)
     })
 
     var ref2 = firebase.database().ref('/Playlists/'+playlistsCtrl.profile.$id);
     var PlaylistsList = $firebaseArray(ref2).$loaded()
     .then(function (PlaylistsList){
         playlistsCtrl.playlists = PlaylistsList;
-        console.log(PlaylistsList)
+        //console.log(PlaylistsList)
     })
 
     playlistsCtrl.selectAShowToEdit = function(projectID, userID, indexVar, dollaID) {
@@ -56,7 +65,7 @@ angular.module('lightShowApp')
               angular.forEach(playlistsCtrl.projects, function(value3, key3) {
 
                 if(value3['$id'] == value2) {
-                    console.log(value3)
+                    //console.log(value3)
                     playlistsCtrl.IndivShowPlaylistData.push(value3)
 
                 }
@@ -81,25 +90,29 @@ angular.module('lightShowApp')
       playlistsCtrl.CurrentPlalistDollaID = dollaID;
       playlistsCtrl.CurrentPlalistStartTime = playlistsCtrl.shows[indexVar]['startTime'];
 
-/*
-      var songRef = firebase.storage().ref().child('projectSongs/'+projectID);
-      songRef.getDownloadURL().then(function(url) {
-        // Insert url into an <img> tag to "download"
-        console.log(url);
-        document.getElementById('songHolder2').src = url;
-        document.getElementById('songHolder2').currentTime = 0;
 
-       playlistsCtrl.getDurrationInterval = $interval(function () {
-          playlistsCtrl.CurrentPlalistlenghtOfSong = document.getElementById('songHolder2').duration;
+//Have to do an ng-repeat for each song and i dont feel like doing this right now cause that's a TON of work but pretty much what i would do is make a sound element for each of the items in teh playlist and then make an array of the length of each of the songs so they can be used to get CurrentPlalistlenghtOfSong workign and then the incrument wont have an issue and the remaining time wont be NAN
 
-        }, 1000);
+      angular.forEach(playlistsCtrl.IndivShowPlaylistData, function(value, key) {
+        console.log(value['$id'])
+
+        var songRef = firebase.storage().ref().child('projectSongs/'+value['$id']);
+        songRef.getDownloadURL().then(function(url) {
+          // Insert url into an <img> tag to "download"
+          console.log(url);
+          document.getElementById('songIndex'+key).src = url;
+          document.getElementById('songIndex'+key).currentTime = 0;
+
+        }).catch(function(error) {
+          console.log(error);
+
+        });
+
+      })
 
 
-      }).catch(function(error) {
-        console.log(error);
 
-      });
-*/
+
       var offsetRef = firebase.database().ref(".info/serverTimeOffset");
       offsetRef.on("value", function(snap) {
         var offset = snap.val();
@@ -153,8 +166,8 @@ angular.module('lightShowApp')
           }else{
             document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#03A9F4";
           }
-          document.getElementById('songHolder2').pause();
-          document.getElementById('songHolder2').currentTime = 0;
+          document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).pause();
+          document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).currentTime = 0;
         }
 
         if(playlistsCtrl.countdownTime > 0 && playlistsCtrl.countdownTime < 5){
@@ -165,18 +178,46 @@ angular.module('lightShowApp')
 
         }
 
-        var timeleftfirst = playlistsCtrl.CurrentPlalistlenghtOfSong - playlistsCtrl.countdownTime + Number(playlistsCtrl.timeAdjustHistoryVar);
+        var timeleftfirst = playlistsCtrl.CurrentPlalistlenghtOfSong - playlistsCtrl.countdownTime;
+        //console.log(timeleftfirst)
+        playlistsCtrl.timeleftfirstVar = timeleftfirst;
         var timeleft = timeleftfirst.toFixed(0);
         playlistsCtrl.CurrentPlalistLimeLeftInSong = timeleft;
         //console.log(playlistsCtrl.CurrentPlalistlenghtOfSong);
         //console.log(timeleft);
 
         if(timeleft < 0){
-          document.getElementById('songHolder2').pause();
-          document.getElementById('songHolder2').currentTime = 0;
+          document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).pause();
+          document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).currentTime = 0;
           playlistsCtrl.CurrentPlalistLimeLeftInSong = "0";
           document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#616161";
           document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#757575";
+
+
+          var setPlaylistTime2 = {};
+          var dollaIDvar = playlistsCtrl.CurrentPlalistDollaID;
+          setPlaylistTime2['/Showings/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar +'/startTime'] = 100000000000000000;
+          firebase.database().ref().update(setPlaylistTime2)
+          .then(function(ref){
+
+
+             }, function() {
+                return
+          });
+
+          var setincrumentPart = {};
+
+          if(playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart'] < playlistsCtrl.lengthofPlaylist ){
+            setincrumentPart['/Showings/'+ playlistsCtrl.profile.$id + '/' + playlistsCtrl.CurrentPlalistDollaID +'/incrumentPart'] = playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart'] + 1;
+            firebase.database().ref().update(setincrumentPart)
+            .then(function(ref){
+
+                   }, function() {
+                      return
+
+            })
+
+          }
 
         }else if(timeleft < playlistsCtrl.CurrentPlalistlenghtOfSong){
           playlistsCtrl.CurrentPlalistLimeLeftInSong = timeleft
@@ -188,22 +229,115 @@ angular.module('lightShowApp')
         }
 
         //incriments time between syncs
+        //playlistsCtrl.countdownTime += 1
         playlistsCtrl.serverTime += 1000
-        s
+
 
       }, 1000);
 
 
     }
 
+
+/* get back to work right here
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+it's the next thing down. you were working on getting the song to sync up ever 30 seconds and it was being a butt.
+=
+=
+=
+=
+=
+=
+*/
+
+    playlistsCtrl.updateTimeIntervalVolume = $interval(function () {
+      if(playlistsCtrl.countdownTimeMili > -4) {
+        document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).volume = 1;
+
+      }else{
+        document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).volume = 0;
+      }
+
+    }, 15000);
+
+    playlistsCtrl.updateTimeInterval = $interval(function () {
+      document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).currentTime = playlistsCtrl.countdownTimeMili;
+      document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).play()
+
+    }, 15000);
+
+    playlistsCtrl.SyncTimeForShow = function() {
+      //alert("sync")
+
+      var setPlaylistTime2 = {};
+      var dollaIDvar2 = playlistsCtrl.CurrentPlalistDollaID;
+
+      setPlaylistTime2['/Showings/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar2 +'/startTime'] = Number(playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime']) - Number(playlistsCtrl.timeAdjustHistoryVar);
+
+      firebase.database().ref().update(setPlaylistTime2)
+      .then(function(ref){
+          playlistsCtrl.timeAdjustHistoryVar = 0;
+
+         }, function() {
+            return
+      });
+
+
+    }
+
+
+    playlistsCtrl.timeAdjustHistoryVar = 0;
+
+    playlistsCtrl.timeAdjust = function(direction) {
+      var dirtime = direction;
+      var dirtimeedit = Number(playlistsCtrl.timeAdjustHistoryVar) + Number(dirtime);
+      playlistsCtrl.timeAdjustHistoryVar = dirtimeedit;
+      console.log(playlistsCtrl.countdownTimeMili + (playlistsCtrl.timeAdjustHistoryVar * .001))
+      document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).currentTime = Number(playlistsCtrl.countdownTimeMili) + Number(playlistsCtrl.timeAdjustHistoryVar * .001);
+      document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).play();
+
+
+    }
+
+
+
+
     playlistsCtrl.updateTimeIntervalPAUSEPLAY = $interval(function () {
       var countdownvar2 = .001 * (playlistsCtrl.serverTime2 - playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime']);
       playlistsCtrl.countdownTimeMili = countdownvar2.toFixed(2);
+      //console.log(playlistsCtrl.countdownTimeMili);
       if(playlistsCtrl.countdownTimeMili >= 0 && playlistsCtrl.countdownTimeMili < 0.05 ){
         document.getElementById('playlistEventControlsTimeShowDivTMinus').style.backgroundColor = "#4CAF50";
         document.getElementById('playlistEventControlsTimeShowDivTMinus').style.color = "#FAFAFA";
-        document.getElementById('songHolder2').currentTime = 0;
-        document.getElementById('songHolder2').play();
+        playlistsCtrl.timeAdjustHistoryVar = 0;
+        document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).volume = 1;
+        document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).currentTime = 0;
+        document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).play();
 
       }
       playlistsCtrl.serverTime2 += 50
@@ -211,6 +345,7 @@ angular.module('lightShowApp')
     }, 50);
 
     playlistsCtrl.setShowTime = function(addtime) {
+
       playlistsCtrl.serverTimeOffset = 'null';
       var offsetRef = firebase.database().ref(".info/serverTimeOffset");
       offsetRef.on("value", function(snap) {
@@ -226,6 +361,13 @@ angular.module('lightShowApp')
             .ok('Yes')
             .cancel('No');
             $mdDialog.show(confirm).then(function() {
+
+                angular.forEach(playlistsCtrl.IndivShowPlaylistData, function(value, key) {
+                  //console.log(value['$id'])
+                  document.getElementById('songIndex'+key).pause();
+                  document.getElementById('songIndex'+key).currentTime = 0;
+
+                })
 
                 if(playlistsCtrl.serverTimeOffset == 'null'){
                   alert("An error has occured, please try again.")
@@ -245,26 +387,7 @@ angular.module('lightShowApp')
               })
     }
 
-    playlistsCtrl.timeAdjustHistoryVar = 0;
 
-    playlistsCtrl.timeAdjust = function(direction) {
-      var dirtime = direction;
-      var dirtimeedit = Number(playlistsCtrl.timeAdjustHistoryVar) + Number(dirtime);
-      playlistsCtrl.timeAdjustHistoryVar = dirtimeedit;
-      var setPlaylistTime2 = {};
-      var dollaIDvar2 = playlistsCtrl.CurrentPlalistDollaID;
-
-      setPlaylistTime2['/Playlists/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar2 +'/startTime'] = Number(playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['startTime']) + Number(direction);
-
-      firebase.database().ref().update(setPlaylistTime2)
-      .then(function(ref){
-
-
-         }, function() {
-            return
-      });
-
-    }
 
     playlistsCtrl.deletePlaylist = function() {
       var confirm = $mdDialog.confirm()
@@ -339,7 +462,7 @@ angular.module('lightShowApp')
 
       })
 
-      console.log(playlistData)
+      //console.log(playlistData)
 
 
       newPlaylist['/Playlists/' + playlistsCtrl.profile.$id + '/' + playlistsKey] = playlistData;
@@ -372,6 +495,7 @@ angular.module('lightShowApp')
             playlistID: playlistsCtrl.selectedPlaylistForShowCreation['$id'],
             uid: playlistsCtrl.profile.$id,
             startTime: 1.0000000000001491e+25,
+            incrumentPart: 0,
             showName: playlistsCtrl.newPlaylistShowName,
             venue: playlistsCtrl.newPlaylistVenue,
             appxStartDate: playlistsCtrl.myDate,
@@ -379,7 +503,7 @@ angular.module('lightShowApp')
 
       }
 
-      console.log(showingData)
+      //console.log(showingData)
 
       newShowing['/Showings/' + playlistsCtrl.profile.$id + '/' + showingKey] = showingData;
       firebase.database().ref().update(newShowing);
@@ -423,7 +547,83 @@ angular.module('lightShowApp')
     }
 
     playlistsCtrl.SetIncrumentPartFunc = function(setVal) {
-        alert(setVal)
+
+      var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to Change Songs?')
+            .textContent('The current song will stop playing')
+            .ariaLabel('TutorialsPoint.com')
+            .targetEvent(event)
+            .ok('Yes I\'m sure')
+            .cancel('No');
+            $mdDialog.show(confirm).then(function() {
+
+                angular.forEach(playlistsCtrl.IndivShowPlaylistData, function(value, key) {
+                  //console.log(value['$id'])
+                  document.getElementById('songIndex'+key).pause();
+                  document.getElementById('songIndex'+key).currentTime = 0;
+
+                })
+                var setPlaylistTime2 = {};
+                var dollaIDvar = playlistsCtrl.CurrentPlalistDollaID;
+                setPlaylistTime2['/Showings/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar +'/startTime'] = 100000000000000000;
+                firebase.database().ref().update(setPlaylistTime2)
+                .then(function(ref){
+
+
+                   }, function() {
+                      return
+                });
+
+                var setincrumentPart = {};
+
+                setincrumentPart['/Showings/'+ playlistsCtrl.profile.$id + '/' + playlistsCtrl.CurrentPlalistDollaID +'/incrumentPart'] = setVal;
+                firebase.database().ref().update(setincrumentPart)
+                .then(function(ref){
+
+
+                   }, function() {
+                      return
+                });
+
+                playlistsCtrl.getDurrationInterval = $interval(function () {
+
+                }, 10000);
+
+                $interval.cancel(playlistsCtrl.getDurrationInterval);
+
+
+                $timeout(function () {
+                    playlistsCtrl.getDurrationInterval = $interval(function () {
+                       playlistsCtrl.CurrentPlalistlenghtOfSong = document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).duration;
+
+                       angular.forEach(playlistsCtrl.IndivShowPlaylistData, function(value, key) {
+                         document.getElementById('playlistButton'+key).style.backgroundColor = '';
+
+
+                       })
+                       document.getElementById('playlistButton'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).style.backgroundColor = '#4CAF50';
+
+
+                     }, 1000);
+
+                 }, 500);
+
+            })
+
     }
+
+
+    playlistsCtrl.getDurrationInterval = $interval(function () {
+       playlistsCtrl.CurrentPlalistlenghtOfSong = document.getElementById('songIndex'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).duration;
+
+       angular.forEach(playlistsCtrl.IndivShowPlaylistData, function(value, key) {
+         document.getElementById('playlistButton'+key).style.backgroundColor = '';
+
+
+       })
+       document.getElementById('playlistButton'+playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart']).style.backgroundColor = '#4CAF50';
+
+
+     }, 1000);
 
   });
