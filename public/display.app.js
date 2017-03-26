@@ -162,7 +162,7 @@ angular
 
 
 
-      var ref = firebase.database().ref('/Playlists/');
+      var ref = firebase.database().ref('/Showings/');
       var PlaylistsList = $firebaseArray(ref).$loaded()
       .then(function (PlaylistsList){
         displayctrl.shows = [];
@@ -208,7 +208,104 @@ angular
       }
 
 
+displayctrl.getShowData = function(id, uid) {
+  //console.log(displayctrl.shows[displayctrl.currentPlaylist])
+  var GetrefShowing = firebase.database().ref('/Showings/'+ displayctrl.shows[displayctrl.currentPlaylist]['uid'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue']);
+  var showingData = $firebaseArray(GetrefShowing).$loaded()
+  .then(function (showingData){
+    displayctrl.showingData = showingData
 
+
+    console.log(displayctrl.showingData)
+
+    var seatNum = displayctrl.userSeat.toString();
+    var Getref = firebase.database().ref('/Playlists/'+ displayctrl.shows[displayctrl.currentPlaylist]['uid'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['playlistID']);
+    var songData = $firebaseArray(Getref).$loaded()
+    .then(function (songData){
+        //console.log(JSON.parse(songData[0]['$value']));
+        //document.getElementById('videoScrensaver').play()
+        //displayctrl.songDataActual = JSON.parse(songData[0]['$value']);
+
+        if(displayctrl.billingSetVar == false) {
+          displayctrl.billingSetVar = true;
+          //console.log(displayctrl.user.uid)
+          //console.log(displayctrl.PlaylistsListVar[displayctrl.keyValue][displayctrl.indexKey]);
+
+          var addusertoBilling = {};
+          addusertoBilling['/Billing/' + displayctrl.showingData[6]['$value'] + '/' + displayctrl.showingData[3]['$value'] + '/' + displayctrl.user.uid] = 1;
+          firebase.database().ref().update(addusertoBilling)
+          .then(function(ref){
+
+             }, function() {
+                return
+          });
+
+        }
+
+        //console.log(songData[0])
+        var seatNum = displayctrl.userSeat.toString();
+        displayctrl.songDataActual = [];
+
+        angular.forEach(songData[0], function(value, key) {
+            //console.log(value)
+            var Getref = firebase.database().ref('/ProjectData/'+ displayctrl.showingData[6]['$value'] + '/' + value + '/' + seatNum );
+            var songData = $firebaseArray(Getref).$loaded()
+            .then(function (songData){
+              displayctrl.songDataActual.push(JSON.parse(songData[0]['$value']));
+
+        })
+      })
+      //console.log(displayctrl.songDataActual)
+      displayctrl.currentPage = "displayShow";
+
+      $timeout(function () {
+        document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
+
+        displayctrl.seattext = "Seat " + seatNum;
+
+      }, 100);
+
+      $interval(function () {
+        var offsetRef = firebase.database().ref(".info/serverTimeOffset");
+        offsetRef.on("value", function(snap) {
+
+          var offset = snap.val();
+          var estimatedServerTimeMs = new Date().getTime() + offset;
+          displayctrl.serverTime = estimatedServerTimeMs;
+          displayctrl.serverTime2 = estimatedServerTimeMs;
+        });
+
+        //console.log(displayctrl.countdownvar2arrayval)
+
+      }, 2000);
+
+
+      displayctrl.updateIntervalFast = $interval(function() {
+        displayctrl.serverTime2 += 10;
+        //console.log(displayctrl.showingData[5]['$value']);
+        displayctrl.countdownvar2 = (Number(displayctrl.serverTime2) - Number(displayctrl.showingData[5]['$value'])).toFixed(1);
+
+        displayctrl.countdownvar2arrayval = (displayctrl.countdownvar2 * .01).toFixed(0)
+
+
+        document.getElementById('displayDiv').style.backgroundColor = displayctrl.ColorPalate[displayctrl.songDataActual[displayctrl.showingData[2]['$value']][displayctrl.countdownvar2arrayval]];
+        //document.getElementById('completediv').style.backgroundColor = "black";
+
+
+      }, 10)
+
+
+
+
+
+
+
+    })
+
+  })
+
+}
+/*
       displayctrl.getShowData = function(id, uid) {
         var seatNum = displayctrl.userSeat.toString();
         var Getref = firebase.database().ref('/ProjectData/'+ displayctrl.showUID + '/' + displayctrl.showID + '/' + seatNum );
@@ -217,27 +314,7 @@ angular
             //console.log(JSON.parse(songData[0]['$value']));
             //document.getElementById('videoScrensaver').play()
             var countupforalert = 1;
-            /*
-            displayctrl.startVideoInterval = $interval(function () {
-              if(countupforalert % 300 == 0) {
-                alert("Press Play to Join the Show");
-                countupforalert += 1;
-              }else{
-                countupforalert += 1;
-                //console.log(countupforalert);
-              }
 
-              if(document.getElementById('videoScrensaver').paused == false) {
-
-                document.getElementById('videoScrensaver').style.zIndex = "-10";
-                document.getElementById('videoScrensaverBlackDiv').style.zIndex = "-8";
-
-                $interval.cancel(displayctrl.startVideoInterval);
-              }else {
-                //console.log("we")
-              }
-            }, 20);
-            */
             displayctrl.songDataActual = JSON.parse(songData[0]['$value']);
             displayctrl.currentPage = "displayShow";
 
@@ -278,11 +355,6 @@ angular
                 displayctrl.serverTime = estimatedServerTimeMs;
                 displayctrl.serverTime2 = estimatedServerTimeMs;
               });
-
-              // Get created date from Firebase servers
-              //var createdDate = new Firebase('https://lightsapp-b03f4.firebaseIO.com/post/createDate');
-              //createdDate.set(Firebase.ServerValue.TIMESTAMP);
-
 
             }, 2000);
 
@@ -354,80 +426,12 @@ angular
 
             }, 10)
 
-/*
-            $interval(function () {
-              //console.log(displayctrl.shows[displayctrl.currentPlaylist]['startTime']);
-              displayctrl.serverTime += 25;
-              //console.log(displayctrl.currentPlaylist)
-              //console.log(displayctrl.showID)
-              //console.log(displayctrl.PlaylistsListVar[displayctrl.keyValue][displayctrl.indexKey]['startTime'])
-              //this is to get the live data from the actual stuff
-              displayctrl.Tminus = Math.ceil((displayctrl.serverTime - displayctrl.PlaylistsListVar[displayctrl.keyValue][displayctrl.indexKey]['startTime']) / 100) * 100;
 
-
-              var dindex = displayctrl.Tminus / 100;
-              //console.log(dindex);
-
-              if(dindex >= -110 && dindex < 0) {
-                //console.log(dindex)
-                document.getElementById('seatNum').innerHTML = "";
-                document.getElementById('showBeginsSoon').innerHTML = "";
-                document.getElementById('seatNum').innerHTML = "";
-                if(dindex >= -110 & dindex < -101){
-                  document.getElementById('countdown').innerHTML = "10";
-                  document.getElementById('displayDiv').style.backgroundColor = "#c62828"
-                }else if (dindex >= -100 & dindex < -91) {
-                  document.getElementById('countdown').innerHTML = "9";
-                  document.getElementById('displayDiv').style.backgroundColor = "#c62828"
-                }else if (dindex >= -90 & dindex < -81) {
-                  document.getElementById('countdown').innerHTML = "8";
-                  document.getElementById('displayDiv').style.backgroundColor = "#c62828"
-                }else if (dindex >= -80 & dindex < -71) {
-                  document.getElementById('countdown').innerHTML = "7";
-                  document.getElementById('displayDiv').style.backgroundColor = "#c62828"
-                }else if (dindex >= -70 & dindex < -61) {
-                  document.getElementById('countdown').innerHTML = "6";
-                  document.getElementById('displayDiv').style.backgroundColor = "#c62828"
-                }else if (dindex >= -60 & dindex < -51) {
-                  document.getElementById('countdown').innerHTML = "5";
-                  document.getElementById('displayDiv').style.backgroundColor = "#c62828"
-                }else if (dindex >= -50 & dindex < -41) {
-                  document.getElementById('countdown').innerHTML = "4";
-                  document.getElementById('displayDiv').style.backgroundColor = "#c62828"
-                }else if (dindex >= -40 & dindex < -31) {
-                  document.getElementById('countdown').innerHTML = "3"
-                  document.getElementById('displayDiv').style.backgroundColor = "#c62828"
-                }else if (dindex >= -30 & dindex < -21) {
-                  document.getElementById('countdown').innerHTML = "2";
-                  document.getElementById('displayDiv').style.backgroundColor = "#c62828"
-                }else if (dindex >= -20 & dindex < -11) {
-                  document.getElementById('countdown').innerHTML = "1";
-                  document.getElementById('displayDiv').style.backgroundColor = "#c62828"
-                }else if (dindex >= -10 & dindex < -1) {
-                  document.getElementById('countdown').innerHTML = "GO";
-                  document.getElementById('displayDiv').style.backgroundColor = "#c62828"
-                  $timeout(function () {
-                      document.getElementById('countdown').innerHTML = "";
-                      document.getElementById('displayDiv').style.backgroundColor = "black"
-                  }, 100);
-                }
-              }else if (dindex > 10) {
-                document.getElementById('seatNum').innerHTML = "";
-                document.getElementById('showBeginsSoon').innerHTML = "";
-                document.getElementById('displayDiv').style.backgroundColor = "black";
-              }
-
-
-              document.getElementById('displayDiv').style.backgroundColor = displayctrl.ColorPalate[displayctrl.songDataActual[dindex]];
-
-
-            }, 25);
-*/
         })
 
       }
 
-
+*/
 
 
 

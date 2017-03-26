@@ -1,1108 +1,180 @@
 body {
-
+  margin: 0;
+  background-color: black;
 }
 
-.loginTopLogo {
-  height: 26px;
-  margin: 17px;
-  float: left;
-}
-
-.loginTopRegisterLink {
-  float: right;
-  background-color: #1b96fe;
-  margin: 20px;
-  color: white;
-}
-
-.loginSyncLogo {
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  font-size: 70px;
-  color: white;
-  margin-top: 15px;
-  text-indent: -18px;
-  text-align: center;
-}
-
-.LoginExternalAuthSignInDiv {
-  margin: 18px;
-}
-
-.loginExternalAuthButton {
-  background-color: #da4c22;
-  color: white;
-  height: 50px;
-  width: 150px;
-  line-height: 60px;
-  padding: 0px;
-}
-
-.loginHeader {
-  margin-top: calc(50vh - 225px);
-  color: white;
-  font-size: 42px;
-  width: 100%;
-  text-align: center;
-}
-
-
-
-.homepageTopBar {
-  width: calc(100vw - 320px);
-  height: 59px;
+.headerDiv {
   background-color: #212121;
+  height: 55px;
+  width: calc(100vw - 1px);
   position: absolute;
-  left: 320px;
-  border-bottom-style: solid;
-  border-bottom-color: white;
-  border-bottom-width: 1px;
-}
-
-#menubuttonicon {
-  color: white;
-  float: left;
-  margin: 12px 0px 12px 12px;
-  font-size: 35px;
-}
-
-.homepageCurrentPageIcon {
-  float: left;
-  color: white;
-  width: 60px;
-  text-align: center;
-  height: 60px;
-  line-height: 60px;
-  font-size: 30px;
-  margin-right: -30px;
-}
-
-.homepageCurrentPage {
-  margin: 0;
-  line-height: 59px;
-  float: left;
-  color: white;
-  text-indent: 20px;
-}
-
-.homepageUIView {
-  position: absolute;
-  top: 60px;
-  left: 320px;
-  width: calc(100vw - 320px);
-  height: calc(100vh - 60px);
-  overflow: auto;
-  background-color: #EEEEEE;
-}
-
-#homepageProjectsAddFab {
-  background-color: #40C4FF;
-  position: absolute;
-  bottom: 10vh;
-  right: 6vw;
-  height: 70px;
-  width: 70px;
-  display: block;
-}
-
-.homepageProjectsAddFabPlus {
-    font-size: 50px;
-    line-height: 70px;
-    color: white;
-}
-
-.homepageProjectsColorDiv {
-  width: 100%;
-  height: 5px;
-  background-color: #4CAF50;
-  float: left;
-}
-
-.homepageProjectsDiv {
-  width: 450px;
-  float: left;
-}
-
-.homepageProjectsTitle {
-  position: absolute;
-  top: -68px;
-  z-index: 28;
-}
-
-.homepageProjectsInfoDiv {
-  width: 335px;
-  height: 279px;
-  float: left;
-  background-color: #212121;
-}
-
-
-.homepageProjectsInfoDiv:hover{
-  background-color: #1a1a1a;
-}
-
-.homepageProjectsProjectName {
-  float: left;
-  width: 280px;
-  background-color: #66BB6A;
-  padding: 10px;
-  margin-top: 34px;
-  color: white;
-  font-size: 27px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.homepageSidenavBilling {
-
-position: absolute;
-
-bottom: 55px;
-}
-
-.homepageSidenavMinimize {
-
-position: absolute;
-
-bottom: 0;
-}
-
-.homepageProjectsSongTitle {
-  float: left;
-  width: 314px;
-  padding: 10px;
-  margin-top: 86px;
-  margin-bottom: 0;
-  color: white;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.homepageProjectsLastEdit {
-  float: left;
-  max-width: 226px;
-  background-color: white;
-  padding: 10px;
-  margin: 0 0px;
-  font-size: 16px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.hompageProjectsDivEditBtn {
-  width: 115px;
-  height: 140px;
-  float: left;
-  margin: 0;
-  padding: 0;
-  line-height: 140px;
-}
-
-.hompageProjectsDivPlay {
-  width: 115px;
-  height: 140px;
-  float: left;
-  margin: 0;
-  padding: 0;
-}
-
-.homepageProfilePic {
-  background-color: #424242;
-  height: 95px;
-  width: 95px;
-  border-radius: 50%;
-  margin: 5px;
-  border-style: solid;
-  border-width: 3px;
-  border-color: #757575;
-}
-
-.homepageProfilePicNoPic {
-  background-color: #2196F3;
-  height: 95px;
-  width: 95px;
-  border-radius: 50%;
-  margin: 5px;
-  border-style: solid;
-  border-width: 3px;
-  border-color: #757575;
-}
-
-.homepageProfileDisplayName {
-  margin-bottom: 7px;
-  width: 290px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  margin-left: 8px;
-}
-
-.homepageProfileEmail {
-  font-size: 12px;
-  margin-bottom: 12px;
-  width: 290px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-left: 8px;
-}
-
-.homepgeTopbarLogo {
-  height: 20px;
-  margin: 20px;
-  float: right;
-}
-
-.homepageTemplatesColorDiv {
-  width: 100%;
-  height: 5px;
-  background-color: #FF5722;
-  float: left;
-}
-
-.homepageTemplatesDiv {
-  width: 495px;
-  float: left;
-}
-
-.homepageTemplatesTitle {
-  position: absolute;
-  top: -68px;
-  z-index: 28;
-}
-
-.homepageTemplatesInfoDiv {
-  width: 384px;
-  height: 320px;
-  float: left;
-  background-color: #212121;
-}
-
-.homepageTemplatesInfoDiv:hover{
-  background-color: #424242;
-}
-
-.homepageTemplatesTemplateName {
-  float: left;
-  max-width: 280px;
-  background-color: #FF5722;
-  padding: 10px;
-  margin-top: 34px;
-  color: white;
-  font-size: 27px;
-  min-width: 70px;
-}
-
-.homepageTemplatesSongTitle {
-  float: left;
-  max-width: 280px;
-  padding: 10px;
-  margin-top: 122px;
-  margin-bottom: 0;
-  color: white;
-}
-
-.homepageTemplatesLastEdit {
-  float: left;
-  max-width: 280px;
-  background-color: white;
-  padding: 10px;
-  margin: 0 0;
-  margin-right: 150px;
-  font-size: 16px;
-}
-
-.hompageTemplatesDivEditBtn {
-  width: 115px;
-  height: 160px;
-  float: left;
-  margin: 0;
-  padding: 0;
-}
-
-.hompageTemplatesDivPlay {
-  width: 115px;
-  height: 320px;
-  float: left;
-  margin: 0;
-  padding: 0;
-}
-
-.projectNewColorPickerDiv {
-  float: left;
-  width: 728px;
-  margin-left: -92px;
-}
-
-.uploadPercentDiv {
-  height: 32px;
-  width: 712px;
-  float: left;
-  background-color: #757575;
-  margin: 0px 0 22px 0;
-  border-radius: 3px;
-  color: white;
-  text-align: center;
-  line-height: 32px;
-}
-
-.fileUpload {
-    position: relative;
-    overflow: hidden;
-    margin: 0px calc(100%) 0px 0px;
-    background-color: #E64A19;
-    float: left;
-    width: 712px;
-    color: white;
-}
-.fileUpload input.upload {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0;
-    filter: alpha(opacity=0);
-}
-
-.newProjectLoadingDiv {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 25;
-  background-color: #EEEEEE;
   top: 0;
-  left: 0px;
-}
-
-.newProjectLoadingDivCircle {
-  position: absolute;
-  left: calc(50% - 25px);
-  top: calc(50% - 90px);
-}
-
-.inidivProjectPresetSelectDivHolder {
-  width: calc(100% - 232px);
-  height: 70px;
-  float: left;
-  margin-top: 5px;
-  overflow: auto;
-
-}
-
-.indivProjectPresetSelect {
-  width: calc(100% - 10px);
-  height: 80px;
-  background-color: lightgray;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  border-radius: 2px;
-}
-
-.indivProjectPresetSelectEachPreset {
-  height: 63px;
-  width: 140px;
-  background-color: gray;
-  border-radius: 2px;
-  text-align: center;
-  float: left;
-  margin: 6px;
-  margin-right: 0px;
-  line-height: 68px;
-  font-size: 11px;
-  color: white;
-  overflow: hidden;
-}
-
-.indivProjectEditSquareDisplay {
-  width: calc(100vh - 160px);
-  height: calc(100vh - 160px);
-  position: absolute;
-  top: 90px;
-  left: calc((100% - (100vh - 160px))/2);
-  z-index: 6;
-}
-
-.indivProjecthighlightDiv {
-  width: calc(100vh - 160px);
-  height: calc(100vh - 160px);
-  position: absolute;
-  top: 90px;
-  left: calc((100% - (100vh - 160px))/2);
-  z-index: 8;
-}
-
-.indivProjecthighlightDivNode {
-  height: calc((100vh - 200px)/20);
-  width: calc((100vh - 200px)/20);
-  float: left;
-  border-style: solid;
-  border-width: 1px;
-
-}
-
-.indivProjectEditSquareEditCenterTemplateDiv {
-  height: calc((100vh - 200px)/20);
-  width: calc((100vh - 200px)/20);
-  background-color: black;
-  opacity: .3;
-  position: absolute;
-  z-index: 7;
-  top: calc(50vh - 28px);
-  left: calc(50vw + 1px);
-}
-
-.indivProjectEditSquareEdit {
-  width: calc(100vh - 160px);
-  height: calc(100vh - 160px);
-  position: absolute;
-  top: 90px;
-  left: calc((100% - (100vh - 160px))/2);
-  z-index: 10;
-}
-
-.indivProjectEditVeryBottomDisplay {
-  width: calc(100vh - 160px);
-  height: calc(100vh - 160px);
-  position: absolute;
-  top: 90px;
-  left: calc((100% - (100vh - 160px))/2);
-  z-index: 1;
-  background-color: gray;
-}
-
-
-.indivProjectEditSquareEditIndivNode {
-  height: calc((100vh - 200px)/20);
-  width: calc((100vh - 200px)/20);
-  float: left;
-  border-style: solid;
-  border-width: 1px;
-}
-
-/*
-.indivProjectEditSquareEditIndivNode:hover {
-  background-color: white;
-
-}
-*/
-
-.indivProjectEditSquareDisplayIndivNode {
-  height: calc((100vh - 200px)/20);
-  width: calc((100vh - 200px)/20);
-  float: left;
-  text-align: center;
-  line-height: calc((80vh - 200px)/20);
-  border-style: solid;
-  border-width: 1px;
-  opacity: 1;
-}
-
-
-.indivProjectEditChooseFrameDiv {
-  background-color: lightgray;
-  width: calc(((100% - (100vh - 160px))/2) - 10px);
-  position: absolute;
-  right: 5px;
-  height: calc(80vh - 160px);
-  overflow: auto;
-  top: 90px;
-  border-radius: 2px;
-}
-
-.indivProjectEditChooseFrameDivCurrentFrame {
-  width: calc(100% - 10px);
-  height: 75px;
-  background-color: #4CAF50;
-  margin: 5px;
-  text-align: center;
-  line-height: 75px;
-  color: white;
-  border-radius: 2px;
-}
-
-.indivProjectEditChooseFrameDivSelectFrameDiv {
-  width: calc(100% - 10px);
-  margin-left: 5px;
-  height: calc(100% - 90px);
-  overflow: auto;
-}
-
-.indivProjectEditChooseFrameDivEachFrame {
-  width: calc(33.3% - 5px);
-  height: 50px;
-  float: left;
-  text-align: center;
-  line-height: 50px;
-  background-color: gray;
-  margin: 2px;
-  border-radius: 1px;
-  overflow: hidden;
-}
-
-.indivProjectPlayPauseDiv {
-  background-color: lightgray;
-  width: calc(((100% - (100vh - 160px))/2) - 20px);
-  position: absolute;
-  right: 5px;
-  height: calc(20vh - 15px);
-  overflow: auto;
-  top: calc(80vh - 65px);
-  padding: 5px;
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.indivProjectTools {
-  background-color: lightgray;
-  width: calc(((100% - (100vh - 160px))/2) - 20px);
-  position: absolute;
-  left: 5px;
-  height: calc(20vh - 15px);
-  overflow: auto;
-  top: calc(80vh - 65px);
-  padding: 5px;
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.othertoolsDiv {
-  height: calc(20vh - 15px);
-  float: left;
-  width: calc(100% - 130px);
-  overflow: auto;
-}
-
-.toolMoveToolDiv {
-  height: calc(20vh - 15px);
-  width: 120px;
-  float: right;
-  margin-right: 8px;
-}
-
-.indivProjectEditChooseColorDiv {
-  background-color: lightgray;
-  width: calc(((100% - (100vh - 170px))/2) - 20px);
-  position: absolute;
-  left: 5px;
-  height: calc(80vh - 170px);
-  overflow: auto;
-  top: 90px;
-  padding-left: 5px;
-  border-radius: 2px;
-  padding-top: 5px;
-}
-
-.indivProjectEditChooseColorSelectedColor {
-  width: calc(100% - 5px);
-  height: 75px;
-  background-color: black;
-  color: white;
-  text-align: center;
-  line-height: 75px;
-  padding: 0px;
-  margin: 0px;
-  margin-bottom: 5px;
-  min-width: 0px;
-}
-
-.indivProjectEditChooseColorDivScroll {
-  width: 100%;
-  height: calc(100% - 85px);
-  overflow: auto;
-}
-
-.indivProjectEditChooseColorSelectAColor {
-  width: calc(33.33% - 5px);
-  height: 50px;
-  background-color: black;
-  float: left;
-  margin: 0;
-  margin-right: 5px;
-  margin-top: 5px;
-  min-width: 0px;
-}
-
-.indivProjectPlayPause {
-  width: 100%;
-  height: 45%;
-  border-radius: 2px;
-  background-color: #4CAF50;
-  color: white;
-  min-width: 0px;
-  margin: 0;
-}
-
-.indivProjectPlayFromBegin {
-  float: left;
-  width: 40%;
-  height: 40%;
-  background-color: #f44336;
-  border-radius: 2px;
-  color: white;
-  margin: 0px;
-  margin-top: 2.5%;
-  min-width: 0px;
-}
-
-.indivProjectSave {
-  float: right;
-  background-color: #03A9F4;
-  height: calc(100% - 12px);
-  width: 100px;
-}
-
-.indivProjectAudioDiv {
-  float: left;
-  border-radius: 3px;
-  margin-top: 2.5%;
-  margin-left: 5px;
-  width: 200px;
-}
-
-.projectInvidPresetMakeselectBtn {
-  float: right;
-  background-color: #FF5722;
-  height: calc(100% - 12px);
-  width: 100px;
- }
-
-.projectInvidPresetMakeDeselectDiv {
-  height: 100%;
-  width: 100%;
-  background-color: black;
-  position: absolute;
-  z-index: 45;
-  opacity: .4;
-}
-
-.projectInvidPresetMakeShowDiv {
-  height: calc(100% - 200px);
-  width: calc(100% - 200px);
-  background-color: white;
-  position: absolute;
-  z-index: 50;
-  left: 100px;
-  top: 100px;
-  overflow: hidden;
-}
-
-.projectInvidPresetMakeDisplaySquare {
-  width: calc(50vh);
-  height: calc(50vh);
-  background-color: lightgray;
-  margin: 20px;
-  margin-left: calc(50% - 25vh);
-}
-
-.projectInvidPresetMakeDisplaySquareIndiv {
-  width: calc(50vh/20);
-  height: calc(50vh/20);
-  background-color: gray;
-  float: left;
-}
-
-.projectInvidPresetMakeDisplayOptionsDiv {
-  width: calc(50vh);
-  height: 120px;
-  background-color: lightgray;
-  margin-left: calc(50% - 25vh);
-
-}
-
-.projectInvidPresetMakeDisplayOptionsNumInput {
-  width: 120px;
-  margin: 0;
-  float: left;
-  margin-top: 40px;
-}
-
-.projectInvidPresetMakeDisplayOptionsPlaySubmit {
-  width: 120px;
-  margin: 0;
-  float: left;
-  margin-top: 30px;
-  background-color: #FF5722;
-  height: 50px;
-}
-
-.playlistIndivDiv {
-  width: calc(100% - 20px);
-  margin: 10px;
-  background-color: lightgray;
-  height: 60px;
-  border-radius: 3px;
-}
-
-.playlistIndivDivDivHolder {
-  width: 100%;
-  height: calc(100vh - 60px);
-  overflow: auto;
-}
-
-.playlistIndivDivTitle {
-  font-size: 16px;
-  text-indent: 12px;
-  line-height: 28px;
-  float: left;
-  margin-top: 7px;
-  background-color: #4CAF50;
-  height: 28px;
-  padding-right: 17px;
-  max-width: calc(100% - 70px);
-  color: #212121;
-}
-
-.playlistIndivDivTitleVenue {
-  font-size: 11px;
-  text-indent: 12px;
-  line-height: 16px;
-  float: left;
-  background-color: #212121;
-  height: 16px;
-  padding-right: 17px;
-  margin: 0;
-  color: white;
-  max-width: calc(100% - 182px);
-  margin-top: -11px;
-}
-
-#playlistListOfEventsAddEventFab {
-  background-color: #40C4FF;
-  position: absolute;
-  bottom: 10vh;
-  right: 6vw;
-  height: 70px;
-  width: 70px;
-  display: block;
-}
-
-#playistIndivBackToShowLists {
-  background-color: #424242;
-  color: white;
-  text-align: center;
-  left: 12px;
-  margin: 0;
-  top: 12px;
-  z-index: 3;
-  position: absolute;
-}
-
-#playistIndivBackIndivShow {
-  background-color: #424242;
-  color: white;
-  text-align: center;
-  left: 12px;
-  margin: 0;
-  top: 12px;
-  z-index: 3;
-  position: absolute;
-}
-
-#playistIndivDeleteShow {
-  background-color: #424242;
-  color: white;
-  text-align: center;
-  right: 12px;
-  margin: 0;
-  top: 19px;
-  position: absolute;
-  z-index: 10;
-}
-
-.playlistEventControlsTitle {
-  position: absolute;
-  right:0;
-  top: 0;
-  width: calc(100% - 92px);
-  background-color: #4CAF50;
-  height: 60px;
-  margin: 0;
-  margin-top: 8px;
-  text-align: left;
-  color: white;
-  line-height: 60px;
-  text-indent: 12px;
-  font-size: 34px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: Arial;
-}
-
-.playlistEventControlsVenue {
-  position: absolute;
-  right: 0;
-  top: 63px;
-  width: calc(100% - 130px);
-  background-color: #212121;
-  height: 34px;
-  margin: 0;
-  margin-top: 8px;
-  text-align: left;
-  color: white;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-indent: 12px;
-  font-size: 14px;
-  line-height: 34px;
-  font-family: Arial;
-}
-
-
-.playlistEventControlsTimeShowDiv {
-  width: 95%;
-  height: 175px;
-  background-color: #424242;
-  position: absolute;
-  top: 125px;
-  left: 2.5%;
-  border-radius: 3px;
-  color: white;
-
-}
-
-.playlistEventControlsTimeSetDiv {
-  width: 95%;
-  height: 110px;
-  background-color: #424242;
-  position: absolute;
-  top: 310px;
-  left: 2.5%;
-  border-radius: 3px;
-  color: white;
-  border-top-style: solid;
-  border-top-width: 4px;
-  border-top-color: #FF9800;
-}
-
-.playlistEventControlsTimeSetLable {
-  float: left;
-  background-color: #FF9800;
-  padding: 5px 14px 4px 0px;
-  color: black;
-  margin: 12px 100% 0px 0px;
-  text-indent: 5px;
-  width: 108px;
-  font-family: Arial;
-  font-size: 13px;
-  color: white;
-}
-
-.playlistEventControlsTimeSetButtons {
-  float: left;
-  height: 52px;
-  width: calc(25% - 16px);
-  background-color: #FF9800;
-  margin: 8px;
-  margin-top: 12px;
-}
-
-
-#playlistEventControlsHypeZone {
-  width: 95%;
-  height: 115px;
-  background-color: #f44336;
-  position: absolute;
-  top: 524px;
-  left: 2.5%;
-  border-radius: 3px;
-  color: white;
-  margin: 0;
-
-}
-
-#playlistEventControlsHypeZoneSetColor {
-  width: 95%;
-  height: 115px;
-  background-color: #26C6DA;
-  position: absolute;
-  top: 524px;
-  left: 2.5%;
-  border-radius: 3px;
-  color: white;
-  margin: 0;
-
-}
-
-.playlistEventControlsTimeShowDivCurrentTimeDiv {
-  float: left;
-  margin: 0;
-  height: 100%;
-  width: calc(33.33% - 1px);
-  border-right-style: solid;
-  border-right-width: 1px;
-  border-right-color: white;
-}
-
-.playlistEventControlsTimeShowDivCurrentTime {
-  float: left;
-  margin: 0;
-  width: 33.33%;
-  text-align: center;
-  font-size: 13px;
-  margin-top: 13px;
-  position: absolute;
-  top: 0px;
-}
-
-#playlistEventControlsTimeShowDivCurrentTimeDivAMPM {
-  float: left;
-  width: 100%;
-  height: 86px;
-  margin: 0;
+  left: 0;
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: white;
-  border-radius: 0;
-  line-height: 108px;
-  font-size: 30px;
 }
 
-.playlistEventControlsTimeShowDivCurrentTimeleftInSong {
-  float: left;
-  margin: 0;
-  width: 33.33%;
-  text-align: center;
-  font-size: 15px;
-  position: absolute;
-  top: 98px;
-}
-
-#playlistEventControlsTimeShowDivCurrentTimeDivsongLeftDuration {
-  width: 100%;
-  margin: 0;
-  height: 89px;
-  line-height: 108px;
-  font-size: 30px;
-}
-
-#playlistEventControlsTimeShowDivTMinus {
-  height: 100%;
-  float: left;
-  margin: 0;
-  width: calc(33.33% - 1px);
-  border-right-style: solid;
-  border-right-width: 1px;
-  border-right-color: white;
-  font-size: 28px;
-}
-
-.playlistEventControlsTimeShowDivSpeedUpDownDiv {
-  float: left;
-  height: 100%;
-  width: 33.33%;
-}
-
-#playlistEventControlsTimeShowDivSpeedUp {
-  margin: 0;
-  width: 100%;
-  height: 50%;
-}
-
-#playlistEventControlsTimeShowDivSpeedDown {
-  margin: 0;
-  width: 100%;
-  height: 50%;
-}
-
-#playlistEventNewPlaylist {
-  width: 145px;
-  height: 60px;
-  background-color: #29B6F6;
-  position: absolute;
-  right: 30px;
-  bottom: 100px;
-}
-
-.playlistEventNewPlaylistVenue {
-  width: 145px;
-  height: 43px;
-  background-color: #E0E0E0;
-  position: absolute;
-  right: 194px;
-  bottom: 105px;
-  padding: 0px 10px 20px 10px;
-  border-radius: 3px;
-  margin: 0;
-}
-
-.playlistIndivNewPlaylist {
-  margin: 0;
-  float: left;
-  width: 100%;
-  height: 80px;
-}
-
-.playlistIndivNewPlaylistColorDot {
-  float: left;
-  height: 30px;
-  width: 30px;
-  background-color: gray;
-  border-radius: 50%;
-  margin: 25px 10px 25px 50px;
-}
-
-.playlistIndivNewPlaylistSelectBox {
-  float: left;
-  margin: 24px 1px 6px 60px;
-}
-
-.playlistIndivNewPlaylistButton {
-  margin: 0;
-  width: 100%;
-}
-
-.playlistIndivProjectName {
-  line-height: 30px;
-  background-color: #4CAF50;
-  font-size: 20px;
-  font-family: Arial;
-  text-indent: 7px;
-  padding-right: 14px;
-  margin: 13px 0px 10px 60px;
-  float: left;
-  color: white;
-}
-
-.playlistIndivProjectArtistNam {
-  line-height: 17px;
-  background-color: #212121;
-  font-size: 11px;
-  font-family: Arial;
-  text-indent: 7px;
-  padding-right: 14px;
-  margin: -9px 0px 7px 60px;
-  float: left;
-  color: white;
+.headerDivLogo {
+  float: right;
+  margin: 20px 19px;
+  max-height: 25px;
+  max-width: 25vw;
 }
 
 .showSelectDiv {
-  width: 200px;
-  height: 50px;
-  background-color: gray;
-  line-height: 50px;
-  text-align: center;
-  color: white;
+  width: 100vw;
+  height: 75px;
+  background-color: white;
+  line-height: 100px;
+  color: #212121;
+  float: left;
+  font-family: Arial;
+  font-size: 18px;
+  border-bottom-style: solid;
+  border-bottom-color: lightgray;
+  border-bottom-width: 1px;
 }
 
 .displayDiv {
-  width: 50vw;
-  height: 50vh;
+  width: 100vw;
+  height: 115vh;
   background-color: black;
   text-align: center;
-  line-height: 50vh;
+  line-height: 100vh;
   color: white;
   font-size: 40px;
   font-family: Arial;
-  margin-left: 25vw;
+}
+
+.pageDisplay {
+  float: left;
+  color: white;
+  text-indent: 12px;
+  height: 55px;
+  margin: 0;
+  line-height: 55px;
+  font-family: Arial;
+  font-size: 19px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50vw;
+}
+
+.showSelectTitle {
+  margin: 20px 0px 0px 0px;
+  height: 40px;
+  line-height: 40px;
+  text-indent: 20px;
+  background-color: #2196F3;
+  float: left;
+  padding-right: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50vw;
+}
+
+.showSelectVenue {
+  margin: 0;
+  height: 23px;
+  line-height: 23px;
+  font-size: 16px;
+  text-indent: 20px;
+  margin-right: 100vw;
+  float: left;
+  width: 50vw;
+
+  }
+  .showSelectTitle {
+  margin: 18px 0px 0px 0px;
+  height: 30px;
+  line-height: 33px;
+  text-indent: 20px;
+  background-color: #2196F3;
+  float: left;
+  padding-right: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80vw;
+  font-size: 18px;
+}
+
+.showSelectVenue {
+  margin: 0;
+  height: 23px;
+  line-height: 19px;
+  text-indent: 20px;
+  margin-right: 100vw;
+  float: left;
+  width: 80vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+}
+
+.seatSelectShowName {
+  width: 100vw;
+  text-align: center;
+  position: absolute;
+  font-family: Arial;
+  font-size: 20px;
+  top: calc(50vh - 260px);
+  color: #212121;
+}
+
+.seatSelectNo {
+  width: 100vw;
+  text-align: center;
+  position: absolute;
+  font-family: Arial;
+  font-size: 40px;
+  top: calc(50vh - 219px);
+  color: #757575;
+}
+
+.seatSelectInput {
+  width: 90vw;
+  left: 5vw;
+  position: absolute;
+  height: 100px;
+  top: calc(50vh - 126px);
+  text-align: center;
+  font-size: 40px;
+  font-family: Arial;
+  border-radius: 4px;
+  padding: 0;
+  border-style: solid;
+  border-width: 1px;
+  border-color: lightgray;
+  color: #212121;
+}
+
+.seatSelectSubmit {
+  position: absolute;
+  width: 90vw;
+  height: 75px;
+  left: 5vw;
+  top: calc(50vh + 22px);
+  background-color: #29B6F6;
+  color: white;
+  font-family: Arial;
+  font-size: 25px;
+  border-radius: 2px;
+  border-color: #03A9F4;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.displaypleasescrolldown {
+  width: 100vw;
+  height: 20px;
+  background-color: #F44336;
+  text-align: center;
+  font-size: 12px;
+  line-height: 20px;
+  font-family: Arial;
+  margin: 0;
 }
