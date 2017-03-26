@@ -3,21 +3,7 @@
 [debug] CLI Version:  3.2.3
 [debug] Platform:     win32
 [debug] Node Version: v6.9.4
-[debug] Time:         Fri Mar 24 2017 17:55:16 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\young\Documents\GitHub\lightshowreal
-[info] Public Directory: public
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\young\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.2.3
-[debug] Platform:     win32
-[debug] Node Version: v6.9.4
-[debug] Time:         Sat Mar 25 2017 20:28:16 GMT-0400 (Eastern Daylight Time)
+[debug] Time:         Sun Mar 26 2017 18:45:40 GMT-0400 (Eastern Daylight Time)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [info] Starting Firebase development server...

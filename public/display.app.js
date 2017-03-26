@@ -253,6 +253,8 @@ displayctrl.getShowData = function(id, uid) {
             .then(function (songData){
               displayctrl.songDataActual.push(JSON.parse(songData[0]['$value']));
 
+
+
         })
       })
       //console.log(displayctrl.songDataActual)
@@ -295,7 +297,45 @@ displayctrl.getShowData = function(id, uid) {
       }, 10)
 
 
+      displayctrl.setDisplayInterval = $interval(function () {
+        displayctrl.lengthofSong = displayctrl.songDataActual[displayctrl.showingData[2]['$value']].length
 
+        //console.log(displayctrl.lengthofSong)
+
+
+        var timecount = (displayctrl.countdownvar2 * .001).toFixed(0);
+        //console.log(timecount);
+        if(timecount > -11 && timecount < 0){
+          displayctrl.timeState = 'Countdown';
+          displayctrl.countdownDisplay = timecount;
+          document.getElementById('displayDiv').style.backgroundColor = "#f44336";
+          $interval.cancel(displayctrl.hypezoneInterval);
+          displayctrl.startHypezoneInterval = false;
+
+        }else if(timecount == 0){
+          displayctrl.countdownDisplay = "Go"
+          $interval.cancel(displayctrl.hypezoneInterval);
+          displayctrl.startHypezoneInterval = false;
+
+        }else if((displayctrl.lengthofSong/10) < timecount) {
+          displayctrl.timeState = 'Complete';
+          document.getElementById('displayDiv').style.backgroundColor = "#212121";
+          $interval.cancel(displayctrl.hypezoneInterval);
+          displayctrl.startHypezoneInterval = false;
+
+        }else if(timecount > 0 ){
+          displayctrl.timeState = 'Displaying';
+          $interval.cancel(displayctrl.hypezoneInterval);
+          displayctrl.startHypezoneInterval = false;
+
+        }else{
+          displayctrl.timeState = 'ShowWillBeginSoon';
+          document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
+          //console.log(displayctrl.shows[displayctrl.keyValue]['hypezone'])
+
+
+        }
+      }, 1000);
 
 
 
