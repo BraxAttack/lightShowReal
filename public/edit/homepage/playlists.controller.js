@@ -207,7 +207,7 @@ angular.module('lightShowApp')
 
           var setincrumentPart = {};
 
-          if(playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart'] < playlistsCtrl.lengthofPlaylist ){
+          if(playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart'] <= playlistsCtrl.lengthofPlaylist ){
             setincrumentPart['/Showings/'+ playlistsCtrl.profile.$id + '/' + playlistsCtrl.CurrentPlalistDollaID +'/incrumentPart'] = playlistsCtrl.shows[playlistsCtrl.CurrentPlalistindexVar]['incrumentPart'] + 1;
             firebase.database().ref().update(setincrumentPart)
             .then(function(ref){

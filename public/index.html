@@ -55,7 +55,7 @@
           <p class="displaypleasescrolldown">
             Please Scroll Down to hide the Navbar
           </p>
-          
+
           <h1 id="seatNum" style="margin: 0; position: absolute; width: 100vw; line-height: calc(100vh - 110px);">{{displayctrl.seattext}}</h1>
           <h2 id="showBeginsSoon" style="position: absolute; line-height: calc(100vh - 385px); top: 220px; margin: 0; width: 100vw; font-size: 20px;">The Show Will Begin Soon...</h2>
 
@@ -66,16 +66,30 @@
 
         </div>
         <div ng-if="displayctrl.timeState == 'Complete'">
-          <h1 id="completediv" style="position: absolute; width: 100vw; height: 100vh; margin: 0; font-size: 20px;">The Show is Complete</h1>
+          <h1 id="completediv" style="position: absolute; width: 100vw; height: 100vh; margin: 0; font-size: 20px;">Next song pending...</h1>
 
         </div>
+
+        <div ng-if="displayctrl.timeState == 'TotalComplete'">
+          <h1 id="totalcompletediv" style="position: absolute; width: 100vw; height: 100vh; margin: 0; font-size: 20px;">The Show is Complete</h1>
+
+        </div>
+
+
 
         <div ng-if="displayctrl.timeState == 'HypeZone'">
           <h1 id="HypeDiv" style="position: absolute; width: 100vw; height: 100vh; margin: 0; font-size: 20px;">HypeZone</h1>
 
         </div>
 
+        <div ng-if="displayctrl.timeState == 'midShowWillBeginSoon'">
+            <h1 id="midShowWillBeginSoon" style="position: absolute; width: 100vw; height: 100vh; margin: 0; font-size: 20px;">Next song pending...</h1>
+
+        </div>
+
       </div>
+
+
 
 
 

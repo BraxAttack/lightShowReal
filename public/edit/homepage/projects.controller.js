@@ -20,6 +20,12 @@ angular.module('lightShowApp')
 
     projectsCtrl.gotoIndiv = function(name) {
       projectsCtrl.currentPage.add(name);
+      $timeout(function() {
+        //projectsCtrl.uploadCountIsComplete = 'null';
+        //$state.go('homepage.projects');
+        location.reload();
+
+      }, 50);
     }
 
     projectsCtrl.newProject = {
@@ -193,7 +199,7 @@ angular.module('lightShowApp')
                 //console.log(projectsCtrl.uploadCount);
                 var percent = projectsCtrl.uploadCount/400;
 
-                document.getElementById("loadPercent").innerHTML = percent;
+                //document.getElementById("loadPercent").innerHTML = percent;
 
                 if(projectsCtrl.uploadCount == 400) {
 

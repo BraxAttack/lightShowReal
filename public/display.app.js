@@ -297,44 +297,121 @@ displayctrl.getShowData = function(id, uid) {
       }, 10)
 
 
+
+
       displayctrl.setDisplayInterval = $interval(function () {
         displayctrl.lengthofSong = displayctrl.songDataActual[displayctrl.showingData[2]['$value']].length
 
         //console.log(displayctrl.lengthofSong)
-
-
+        console.log(displayctrl.songDataActual.length - 1)
+        console.log(displayctrl.showingData[2]['$value'])
         var timecount = (displayctrl.countdownvar2 * .001).toFixed(0);
         //console.log(timecount);
-        if(timecount > -11 && timecount < 0){
-          displayctrl.timeState = 'Countdown';
-          displayctrl.countdownDisplay = timecount;
-          document.getElementById('displayDiv').style.backgroundColor = "#f44336";
-          $interval.cancel(displayctrl.hypezoneInterval);
-          displayctrl.startHypezoneInterval = false;
 
-        }else if(timecount == 0){
-          displayctrl.countdownDisplay = "Go"
-          $interval.cancel(displayctrl.hypezoneInterval);
-          displayctrl.startHypezoneInterval = false;
+        if(displayctrl.showingData[2]['$value'] == 0) {
+          console.log("begin")
+          if(timecount > -11 && timecount < 0){
+            displayctrl.timeState = 'Countdown';
+            displayctrl.countdownDisplay = timecount;
+            document.getElementById('displayDiv').style.backgroundColor = "#f44336";
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
 
-        }else if((displayctrl.lengthofSong/10) < timecount) {
-          displayctrl.timeState = 'Complete';
-          document.getElementById('displayDiv').style.backgroundColor = "#212121";
-          $interval.cancel(displayctrl.hypezoneInterval);
-          displayctrl.startHypezoneInterval = false;
+          }else if(timecount == 0){
+            displayctrl.countdownDisplay = "Go"
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
 
-        }else if(timecount > 0 ){
-          displayctrl.timeState = 'Displaying';
-          $interval.cancel(displayctrl.hypezoneInterval);
-          displayctrl.startHypezoneInterval = false;
+          }else if((displayctrl.lengthofSong/10) < timecount) {
+            displayctrl.timeState = 'midComplete';
+            document.getElementById('displayDiv').style.backgroundColor = "#212121";
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
 
-        }else{
-          displayctrl.timeState = 'ShowWillBeginSoon';
-          document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
-          //console.log(displayctrl.shows[displayctrl.keyValue]['hypezone'])
+          }else if(timecount > 0 ){
+            displayctrl.timeState = 'Displaying';
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
+
+          }else{
+            displayctrl.timeState = 'ShowWillBeginSoon';
+            document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
+            //console.log(displayctrl.shows[displayctrl.keyValue]['hypezone'])
+
+
+          }
+
+
+        }else if(displayctrl.songDataActual.length + 1 == displayctrl.showingData[2]['$value']){
+          console.log("end")
+          if(timecount > -11 && timecount < 0){
+            displayctrl.timeState = 'Countdown';
+            displayctrl.countdownDisplay = timecount;
+            document.getElementById('displayDiv').style.backgroundColor = "#f44336";
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
+
+          }else if(timecount == 0){
+            displayctrl.countdownDisplay = "Go"
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
+
+          }else if((displayctrl.lengthofSong/10) < timecount) {
+            displayctrl.timeState = 'TotalComplete';
+            document.getElementById('displayDiv').style.backgroundColor = "#212121";
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
+
+          }else if(timecount > 0 ){
+            displayctrl.timeState = 'Displaying';
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
+
+          }else{
+            displayctrl.timeState = 'midShowWillBeginSoon';
+            document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
+            //console.log(displayctrl.shows[displayctrl.keyValue]['hypezone'])
+
+
+          }
+
+        }else if (displayctrl.songDataActual.length > displayctrl.showingData[2]['$value']) {
+          console.log("mid")
+          if(timecount > -11 && timecount < 0){
+            displayctrl.timeState = 'Countdown';
+            displayctrl.countdownDisplay = timecount;
+            document.getElementById('displayDiv').style.backgroundColor = "#f44336";
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
+
+          }else if(timecount == 0){
+            displayctrl.countdownDisplay = "Go"
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
+
+          }else if((displayctrl.lengthofSong/10) < timecount) {
+            displayctrl.timeState = 'midComplete';
+            document.getElementById('displayDiv').style.backgroundColor = "#212121";
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
+
+          }else if(timecount > 0 ){
+            displayctrl.timeState = 'Displaying';
+            $interval.cancel(displayctrl.hypezoneInterval);
+            displayctrl.startHypezoneInterval = false;
+
+          }else{
+            displayctrl.timeState = 'midShowWillBeginSoon';
+            document.getElementById('displayDiv').style.backgroundColor = "#4CAF50";
+            //console.log(displayctrl.shows[displayctrl.keyValue]['hypezone'])
+
+
+          }
 
 
         }
+
+
       }, 1000);
 
 
