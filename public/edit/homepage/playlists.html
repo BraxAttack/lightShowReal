@@ -240,9 +240,46 @@
 
   </div>
 
+  <div class="HypezoneButtonDiv">
+    <div class="currentSettingsHypexoneButtonDiv">
+      <md-button class="md-raised md-primary" id="primaryColor" style="background-color: white; padding: 2px 6px;">Primary</md-button>
+      <md-button class="md-raised md-primary" id="secondaryColor"style="background-color: #7d7d7d; padding: 2px 6px;">Secondary</md-button>
+      <md-button class="md-raised md-primary" id="tertiaryColor" style="background-color: #7d7d7d; padding: 2px 6px;">Tertiary </md-button>
+
+
+    </div>
+    <div class="currentSettingsHypexoneButtonHighlightDiv">
+      <md-button class="md-raised md-primary" style="background-color: {{playlistsCtrl.colorsPrimary}};" ng-click="playlistsCtrl.setColorsLevelFunction('primaryColor')">Primary</md-button>
+      <md-button class="md-raised md-primary" style="background-color: {{playlistsCtrl.colorsSecondary}};" ng-click="playlistsCtrl.setColorsLevelFunction('secondaryColor')">Secondary</md-button>
+      <md-button class="md-raised md-primary" style="background-color: {{playlistsCtrl.colorsTertiary}};" ng-click="playlistsCtrl.setColorsLevelFunction('tertiaryColor')">Tertiary </md-button>
+      <md-button class="md-fab md-mini" class="HypezoneButtonColorSelectButton" style="background-color: #E91E63" ng-click="playlistsCtrl.setColorFunction('random')">
+          <i class="material-icons" style="line-height: 38px; font-size: 20px; color: white">bubble_chart</i>
+      </md-button>
+      <md-button class="md-fab md-mini" class="HypezoneButtonColorSelectButton" style="background-color: white">
+          <i class="material-icons" style="line-height: 38px; font-size: 28px; color: gray">{{playlistsCtrl.hypezonePresets[playlistsCtrl.selectedHypezonePreset]}}</i>
+      </md-button>
+
+    </div>
+    <div class="HypezoneButtonPatternSelectDiv">
+      <md-button class="md-fab md-mini" class="HypezoneButtonColorSelectButton" ng-repeat="button in playlistsCtrl.hypezonePresets" style="background-color: gray">
+          <i class="material-icons" style="line-height: 38px; font-size: 20px; color: white">{{button}}</i>
+      </md-button>
+    </div>
+    <div class="HypezoneButtonColorSelectDiv">
+      <md-button class="md-fab md-mini" class="HypezoneButtonColorSelectButton" ng-repeat="color in playlistsCtrl.hypezoneColors" ng-click="playlistsCtrl.setColorFunction(color)" style="background-color: {{color}}">
+
+      </md-button>
+
+    </div>
+
+
+  </div>
+
+<!--
   <md-button id="playlistEventControlsHypeZone" ng-click="playlistsCtrl.whichPlaylistPage = 'HypeZone'">
     HypeZone
   </md-button>
+-->
 
   <audio id="songIndex{{$index}}" controls style="display: none;" ng-repeat="projectSong in playlistsCtrl.IndivShowPlaylistData track by $index">
 

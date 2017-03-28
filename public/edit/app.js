@@ -191,6 +191,23 @@ angular
           }
         }
       })
+      .state('homepage.Usage', {
+        url: '/usage',
+        controller: 'UsageCtrl as usageCtrl',
+        templateUrl: 'Usage/usage.html',
+        resolve: {
+          auth: function($state, Users, Auth){
+            return Auth.$requireSignIn().catch(function(){
+              $state.go('login');
+            });
+          },
+          profile: function(Users, Auth){
+            return Auth.$requireSignIn().then(function(auth){
+              return Users.getProfile(auth.uid).$loaded();
+            });
+          }
+        }
+      })
 
     $urlRouterProvider.otherwise('/');
   })

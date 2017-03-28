@@ -509,6 +509,23 @@ it's the next thing down. you were working on getting the song to sync up ever 3
       firebase.database().ref().update(newShowing);
 
 
+      var newShowingBilling = {};
+
+      var showingDataBilling = {
+          playlistID: playlistsCtrl.selectedPlaylistForShowCreation['$id'],
+          uid: playlistsCtrl.profile.$id,
+          showName: playlistsCtrl.newPlaylistShowName,
+          venue: playlistsCtrl.newPlaylistVenue,
+          appxStartDate: playlistsCtrl.myDate
+
+
+      }
+
+      //console.log(showingData)
+
+      newShowingBilling['/BillingShows/' + playlistsCtrl.profile.$id + '/' + showingKey] = showingDataBilling;
+      firebase.database().ref().update(newShowingBilling);
+
     /*
       var playlistsKey = firebase.database().ref('Playlists/'+playlistsCtrl.profile.$id).push().key;
 
@@ -625,5 +642,78 @@ it's the next thing down. you were working on getting the song to sync up ever 3
 
 
      }, 1000);
+
+
+     playlistsCtrl.hypezonePresets = [
+       'format_color_fill',
+       'network_cell',
+       'border_left',
+       'graphic_eq',
+
+     ]
+
+     playlistsCtrl.selectedHypezonePreset = 0
+
+     playlistsCtrl.hypezoneColors = [
+       '#f44336',
+       '#E91E63',
+       '#9C27B0',
+       '#673AB7',
+       '#3F51B5',
+       '#2196F3',
+       '#00BCD4',
+       '#009688',
+       '#4CAF50',
+       '#8BC34A',
+       '#FFEB3B',
+       '#FF9800',
+       '#FF5722',
+       '#795548',
+       '#9E9E9E',
+       '#607D8B'
+
+     ]
+
+     playlistsCtrl.colorsPrimary = "#f44336";
+     playlistsCtrl.colorsSecondary = "#4CAF50";
+     playlistsCtrl.colorsTertiary = "#03A9F4";
+
+     playlistsCtrl.selectedColorToChange = "primaryColor";
+
+     playlistsCtrl.setColorsLevelFunction = function(color) {
+       document.getElementById('primaryColor').style.backgroundColor = "#7d7d7d"
+       document.getElementById('secondaryColor').style.backgroundColor = "#7d7d7d"
+       document.getElementById('tertiaryColor').style.backgroundColor = "#7d7d7d"
+
+       document.getElementById(color).style.backgroundColor = "white"
+       playlistsCtrl.selectedColorToChange = color;
+
+
+     }
+
+     playlistsCtrl.setColorFunction = function(color) {
+
+       if(color == "random") {
+         //console.log(Math.floor(Math.random() * playlistsCtrl.hypezoneColors.length) )
+
+         playlistsCtrl.colorsPrimary = playlistsCtrl.hypezoneColors[Math.floor(Math.random() * playlistsCtrl.hypezoneColors.length)]
+         playlistsCtrl.colorsSecondary = playlistsCtrl.hypezoneColors[Math.floor(Math.random() * playlistsCtrl.hypezoneColors.length)]
+         playlistsCtrl.colorsTertiary = playlistsCtrl.hypezoneColors[Math.floor(Math.random() * playlistsCtrl.hypezoneColors.length)]
+
+       }else {
+           if(playlistsCtrl.selectedColorToChange == "primaryColor"){
+             playlistsCtrl.colorsPrimary = color;
+
+           }else if (playlistsCtrl.selectedColorToChange == "secondaryColor") {
+               playlistsCtrl.colorsSecondary = color;
+
+           }else if (playlistsCtrl.selectedColorToChange == "tertiaryColor") {
+             playlistsCtrl.colorsTertiary = color;
+
+           }
+        }
+
+     }
+
 
   });

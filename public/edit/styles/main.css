@@ -1015,6 +1015,59 @@ height: 5px;
   margin-top: 12px;
 }
 
+.HypezoneButtonDiv {
+  width: 90%;
+  height: 30%;
+  background-color: rgb(66, 66, 66);
+  float: left;
+  z-index: 65;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+
+}
+
+.HypezoneButtonPatternSelectDiv {
+  float: left;
+  width: 100%;
+  height: 35%;
+  overflow: auto;
+
+}
+
+.currentSettingsHypexoneButtonDiv {
+  height: 25%;
+  width: 100%;
+  background-color: #7d7d7d;
+  float: left;
+  overflow: hidden;
+  position: absolute;
+}
+
+.currentSettingsHypexoneButtonHighlightDiv {
+  height: 25%;
+  width: 100%;
+  background-color: red;
+  float: left;
+  overflow: auto;
+
+}
+
+.currentSettingsHypexoneButtonDivHighlightDiv {
+
+}
+
+.HypezoneButtonColorSelectDiv {
+  float: left;
+  height: 40%;
+  width: 100%;
+  overflow: auto;
+}
+
+.HypezoneButtonColorSelectButton {
+
+}
+
 
 #playlistEventControlsHypeZone {
   width: 95%;
@@ -1293,4 +1346,11 @@ color: white;
   font-size: 40px;
   font-family: Arial;
   margin-left: 25vw;
+}
+
+.usageIndivShow {
+  float: left;
+  width: 96px;
+  background-color: lightgray;
+  margin: 10px;
 }

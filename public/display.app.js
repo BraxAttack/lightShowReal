@@ -133,6 +133,7 @@ angular
 
       ];
 
+678 886 2165
 
       firebase.auth().signInAnonymously().catch(function(error) {
         // Handle Errors here.
@@ -232,9 +233,55 @@ displayctrl.getShowData = function(id, uid) {
           //console.log(displayctrl.PlaylistsListVar[displayctrl.keyValue][displayctrl.indexKey]);
 
           var addusertoBilling = {};
-          addusertoBilling['/Billing/' + displayctrl.showingData[6]['$value'] + '/' + displayctrl.showingData[3]['$value'] + '/' + displayctrl.user.uid] = 1;
+          addusertoBilling['/Billing/' + displayctrl.showingData[6]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/' + displayctrl.user.uid] = 1;
           firebase.database().ref().update(addusertoBilling)
           .then(function(ref){
+
+                var Getcount = firebase.database().ref('/Billing/' + displayctrl.showingData[6]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/count');
+                var countdata = $firebaseArray(Getcount).$loaded()
+                .then(function (countdata){
+                  console.log(countdata[0] == null)
+
+                  if(countdata[0] == null){
+
+                    var addusertoBillingcount = {};
+                      addusertoBillingcount['/Billing/' + displayctrl.showingData[6]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/count/0'] = 1;
+                      firebase.database().ref().update(addusertoBillingcount)
+                      .then(function(ref){
+
+
+                          }, function() {
+                             return
+                       });
+
+
+                  }else{
+                    var addusertoBillingcount2 = {};
+                      addusertoBillingcount2['/Billing/' + displayctrl.showingData[6]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/count/0'] = countdata[0]['$value'] + 1;
+                      firebase.database().ref().update(addusertoBillingcount2)
+                      .then(function(ref){
+
+
+                          }, function() {
+                             return
+                       });
+                  }
+
+                })
+
+
+
+/*
+                var addusertoBillingcount = {};
+                  addusertoBillingcount['/Billing/' + displayctrl.showingData[6]['$value'] + '/' + displayctrl.showingData[3]['$value'] + '/count'] = refdata + 1;
+                  firebase.database().ref().update(addusertoBillingcount)
+                  .then(function(ref){
+
+
+                      }, function() {
+                         return
+                   });
+*/
 
              }, function() {
                 return
@@ -303,13 +350,13 @@ displayctrl.getShowData = function(id, uid) {
         displayctrl.lengthofSong = displayctrl.songDataActual[displayctrl.showingData[2]['$value']].length
 
         //console.log(displayctrl.lengthofSong)
-        console.log(displayctrl.songDataActual.length - 1)
-        console.log(displayctrl.showingData[2]['$value'])
+        //console.log(displayctrl.songDataActual.length - 1)
+        //console.log(displayctrl.showingData[2]['$value'])
         var timecount = (displayctrl.countdownvar2 * .001).toFixed(0);
         //console.log(timecount);
 
         if(displayctrl.showingData[2]['$value'] == 0) {
-          console.log("begin")
+          //console.log("begin")
           if(timecount > -11 && timecount < 0){
             displayctrl.timeState = 'Countdown';
             displayctrl.countdownDisplay = timecount;
@@ -343,7 +390,7 @@ displayctrl.getShowData = function(id, uid) {
 
 
         }else if(displayctrl.songDataActual.length + 1 == displayctrl.showingData[2]['$value']){
-          console.log("end")
+          //console.log("end")
           if(timecount > -11 && timecount < 0){
             displayctrl.timeState = 'Countdown';
             displayctrl.countdownDisplay = timecount;
@@ -376,7 +423,7 @@ displayctrl.getShowData = function(id, uid) {
           }
 
         }else if (displayctrl.songDataActual.length > displayctrl.showingData[2]['$value']) {
-          console.log("mid")
+          //console.log("mid")
           if(timecount > -11 && timecount < 0){
             displayctrl.timeState = 'Countdown';
             displayctrl.countdownDisplay = timecount;
