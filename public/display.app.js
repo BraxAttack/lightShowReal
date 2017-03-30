@@ -133,7 +133,7 @@ angular
 
       ];
 
-678 886 2165
+
 
       firebase.auth().signInAnonymously().catch(function(error) {
         // Handle Errors here.
@@ -206,6 +206,7 @@ angular
         displayctrl.indexKey = indexKey;
         displayctrl.billingSetVar = false;
 
+
       }
 
 
@@ -233,11 +234,11 @@ displayctrl.getShowData = function(id, uid) {
           //console.log(displayctrl.PlaylistsListVar[displayctrl.keyValue][displayctrl.indexKey]);
 
           var addusertoBilling = {};
-          addusertoBilling['/Billing/' + displayctrl.showingData[6]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/' + displayctrl.user.uid] = 1;
+          addusertoBilling['/Billing/' + displayctrl.showingData[7]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/' + displayctrl.user.uid] = 1;
           firebase.database().ref().update(addusertoBilling)
           .then(function(ref){
 
-                var Getcount = firebase.database().ref('/Billing/' + displayctrl.showingData[6]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/count');
+                var Getcount = firebase.database().ref('/Billing/' + displayctrl.showingData[7]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/count');
                 var countdata = $firebaseArray(Getcount).$loaded()
                 .then(function (countdata){
                   console.log(countdata[0] == null)
@@ -245,7 +246,7 @@ displayctrl.getShowData = function(id, uid) {
                   if(countdata[0] == null){
 
                     var addusertoBillingcount = {};
-                      addusertoBillingcount['/Billing/' + displayctrl.showingData[6]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/count/0'] = 1;
+                      addusertoBillingcount['/Billing/' + displayctrl.showingData[7]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/count/0'] = 1;
                       firebase.database().ref().update(addusertoBillingcount)
                       .then(function(ref){
 
@@ -257,7 +258,7 @@ displayctrl.getShowData = function(id, uid) {
 
                   }else{
                     var addusertoBillingcount2 = {};
-                      addusertoBillingcount2['/Billing/' + displayctrl.showingData[6]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/count/0'] = countdata[0]['$value'] + 1;
+                      addusertoBillingcount2['/Billing/' + displayctrl.showingData[7]['$value'] + '/' + displayctrl.shows[displayctrl.currentPlaylist]['dollaValue'] + '/count/0'] = countdata[0]['$value'] + 1;
                       firebase.database().ref().update(addusertoBillingcount2)
                       .then(function(ref){
 
@@ -295,7 +296,7 @@ displayctrl.getShowData = function(id, uid) {
 
         angular.forEach(songData[0], function(value, key) {
             //console.log(value)
-            var Getref = firebase.database().ref('/ProjectData/'+ displayctrl.showingData[6]['$value'] + '/' + value + '/' + seatNum );
+            var Getref = firebase.database().ref('/ProjectData/'+ displayctrl.showingData[7]['$value'] + '/' + value + '/' + seatNum );
             var songData = $firebaseArray(Getref).$loaded()
             .then(function (songData){
               displayctrl.songDataActual.push(JSON.parse(songData[0]['$value']));
@@ -304,6 +305,29 @@ displayctrl.getShowData = function(id, uid) {
 
         })
       })
+
+
+      displayctrl.hypezonePresetArray = [
+        'randomColors',
+        'linesTB',
+        'circleOut'
+      ];
+
+      displayctrl.hypeZoneDataActual = [];
+
+      angular.forEach(displayctrl.hypezonePresetArray, function(value, key) {
+          var seatNumhype = displayctrl.userSeat.toString();
+          console.log(value)
+          var Getrefhype = firebase.database().ref('/HypezonePresetData/'+ value + '/' + seatNumhype );
+          var hypeData = $firebaseArray(Getrefhype).$loaded()
+          .then(function (hypeData){
+            displayctrl.hypeZoneDataActual.push(JSON.parse(hypeData[0]['$value']));
+
+            console.log(displayctrl.hypeZoneDataActual)
+      })
+    })
+
+
       //console.log(displayctrl.songDataActual)
       displayctrl.currentPage = "displayShow";
 
@@ -331,14 +355,50 @@ displayctrl.getShowData = function(id, uid) {
 
       displayctrl.updateIntervalFast = $interval(function() {
         displayctrl.serverTime2 += 10;
-        //console.log(displayctrl.showingData[5]['$value']);
-        displayctrl.countdownvar2 = (Number(displayctrl.serverTime2) - Number(displayctrl.showingData[5]['$value'])).toFixed(1);
+        //console.log(displayctrl.showingData[10])
+        //console.log(displayctrl.countdownvar2arrayval)
+        console.log(displayctrl.showingData[10][displayctrl.hypeZoneDataActual[displayctrl.showingData[9]['$value']][displayctrl.countdownvar2arrayval]])
 
-        displayctrl.countdownvar2arrayval = (displayctrl.countdownvar2 * .01).toFixed(0)
+        if(displayctrl.showingData[2]['$value'] == 'nullVal'){
+
+          //console.log(displayctrl.showingData[5]['$value']);
+          displayctrl.countdownvar2 = (Number(displayctrl.serverTime2) - Number(displayctrl.showingData[6]['$value'])).toFixed(1);
+
+          displayctrl.countdownvar2arrayval = (displayctrl.countdownvar2 * .01).toFixed(0)
 
 
-        document.getElementById('displayDiv').style.backgroundColor = displayctrl.ColorPalate[displayctrl.songDataActual[displayctrl.showingData[2]['$value']][displayctrl.countdownvar2arrayval]];
-        //document.getElementById('completediv').style.backgroundColor = "black";
+          document.getElementById('displayDiv').style.backgroundColor = displayctrl.ColorPalate[displayctrl.songDataActual[displayctrl.showingData[3]['$value']][displayctrl.countdownvar2arrayval]];
+          //document.getElementById('completediv').style.backgroundColor = "black";
+
+        }else{
+
+          if((displayctrl.showingData[2]['$value'] + 500) < Number(displayctrl.serverTime2 )) {
+            displayctrl.countdownvar2 = (Number(displayctrl.serverTime2) - Number(displayctrl.showingData[2]['$value'])).toFixed(1);
+
+            displayctrl.countdownvar2arrayval = ((displayctrl.countdownvar2 * .01).toFixed(0))% 600;
+
+            //console.log(displayctrl.countdownvar2arrayval)
+            document.getElementById('displayDiv').style.backgroundColor = displayctrl.showingData[10][displayctrl.hypeZoneDataActual[displayctrl.showingData[9]['$value']][displayctrl.countdownvar2arrayval]];
+            //document.getElementById('completediv').style.backgroundColor = "black";
+
+          }else{
+            //continues the regular process until .5 seconds after the start time
+            displayctrl.countdownvar2 = (Number(displayctrl.serverTime2) - Number(displayctrl.showingData[6]['$value'])).toFixed(1);
+
+            displayctrl.countdownvar2arrayval = (displayctrl.countdownvar2 * .01).toFixed(0)
+
+
+            document.getElementById('displayDiv').style.backgroundColor = displayctrl.ColorPalate[displayctrl.songDataActual[displayctrl.showingData[3]['$value']][displayctrl.countdownvar2arrayval]];
+            //document.getElementById('completediv').style.backgroundColor = "black";
+
+          }
+
+
+
+
+        }
+
+
 
 
       }, 10)
@@ -347,7 +407,7 @@ displayctrl.getShowData = function(id, uid) {
 
 
       displayctrl.setDisplayInterval = $interval(function () {
-        displayctrl.lengthofSong = displayctrl.songDataActual[displayctrl.showingData[2]['$value']].length
+        displayctrl.lengthofSong = displayctrl.songDataActual[displayctrl.showingData[3]['$value']].length
 
         //console.log(displayctrl.lengthofSong)
         //console.log(displayctrl.songDataActual.length - 1)
@@ -355,7 +415,7 @@ displayctrl.getShowData = function(id, uid) {
         var timecount = (displayctrl.countdownvar2 * .001).toFixed(0);
         //console.log(timecount);
 
-        if(displayctrl.showingData[2]['$value'] == 0) {
+        if(displayctrl.showingData[3]['$value'] == 0) {
           //console.log("begin")
           if(timecount > -11 && timecount < 0){
             displayctrl.timeState = 'Countdown';
@@ -389,7 +449,7 @@ displayctrl.getShowData = function(id, uid) {
           }
 
 
-        }else if(displayctrl.songDataActual.length + 1 == displayctrl.showingData[2]['$value']){
+        }else if(displayctrl.songDataActual.length + 1 == displayctrl.showingData[3]['$value']){
           //console.log("end")
           if(timecount > -11 && timecount < 0){
             displayctrl.timeState = 'Countdown';
@@ -422,7 +482,7 @@ displayctrl.getShowData = function(id, uid) {
 
           }
 
-        }else if (displayctrl.songDataActual.length > displayctrl.showingData[2]['$value']) {
+        }else if (displayctrl.songDataActual.length > displayctrl.showingData[3]['$value']) {
           //console.log("mid")
           if(timecount > -11 && timecount < 0){
             displayctrl.timeState = 'Countdown';

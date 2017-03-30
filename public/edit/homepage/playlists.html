@@ -258,10 +258,17 @@
       <md-button class="md-fab md-mini" class="HypezoneButtonColorSelectButton" style="background-color: white">
           <i class="material-icons" style="line-height: 38px; font-size: 28px; color: gray">{{playlistsCtrl.hypezonePresets[playlistsCtrl.selectedHypezonePreset]}}</i>
       </md-button>
+      <md-button class="md-fab md-mini" class="HypezoneButtonColorSelectButton" style="background-color: #4CAF50" ng-click="playlistsCtrl.setHypezoneLive('true')" ng-if="playlistsCtrl.hypezoneIsLive == 'false'">
+          <i class="material-icons" style="line-height: 38px; font-size: 28px; color: white">play_arrow</i>
+      </md-button>
+      <md-button class="md-fab md-mini" class="HypezoneButtonColorSelectButton" style="background-color: #f44336" ng-click="playlistsCtrl.setHypezoneLive('false')" ng-if="playlistsCtrl.hypezoneIsLive == 'true'">
+          <i class="material-icons" style="line-height: 38px; font-size: 28px; color: white">stop</i>
+      </md-button>
+      {{playlistsCtrl.hypezoneIsLive}}
 
     </div>
     <div class="HypezoneButtonPatternSelectDiv">
-      <md-button class="md-fab md-mini" class="HypezoneButtonColorSelectButton" ng-repeat="button in playlistsCtrl.hypezonePresets" style="background-color: gray">
+      <md-button class="md-fab md-mini" class="HypezoneButtonColorSelectButton" ng-repeat="button in playlistsCtrl.hypezonePresets" ng-click="playlistsCtrl.setHypezonePreset($index)" style="background-color: gray">
           <i class="material-icons" style="line-height: 38px; font-size: 20px; color: white">{{button}}</i>
       </md-button>
     </div>

@@ -515,6 +515,8 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
               console.log('preset');
 
               var xid = id % 20;
+              console.log("go")
+              console.log(projectIndivCtrl.projectDataParsed[elID].length)
 
               projectIndivCtrl.presetExamp[projectIndivCtrl.selectedPreset].forEach(function(frame, index) {
                   frame.forEach(function(element) {
@@ -522,7 +524,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
                     if(elID>= 0 && elID < 400) {
                         if(xid >= 10) {
                           if((elID % 20) >= (xid - 10)){
-
+                            console.log(projectIndivCtrl.projectDataParsed[elID].length)
                             projectIndivCtrl.projectDataParsed[elID][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;
 
                           }
@@ -530,6 +532,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
                           console.log(elID )
                           if((elID % 20) < (10 + xid)){
                             console.log(elID % 20);
+
                             projectIndivCtrl.projectDataParsed[elID][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;
 
                           }

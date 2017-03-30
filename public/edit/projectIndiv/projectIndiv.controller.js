@@ -673,15 +673,18 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
                     if(elID>= 0 && elID < 400) {
                         if(xid >= 10) {
                           if((elID % 20) >= (xid - 10)){
-
-                            projectIndivCtrl.projectDataParsed[elID][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;
-
+                            if(projectIndivCtrl.projectDataParsed[elID].length >= (projectIndivCtrl.currentFrame + index)) {
+                                projectIndivCtrl.projectDataParsed[elID][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;
+                              }
                           }
                         }else if (xid < 10) {
                           //console.log(elID )
                           if((elID % 20) < (10 + xid)){
                             //console.log(elID % 20);
-                            projectIndivCtrl.projectDataParsed[elID][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;
+                            if(projectIndivCtrl.projectDataParsed[elID].length >= (projectIndivCtrl.currentFrame + index)) {
+                                projectIndivCtrl.projectDataParsed[elID][projectIndivCtrl.currentFrame + index] = projectIndivCtrl.SelectedColor.index;
+                            }
+
 
                           }
                         }

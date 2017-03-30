@@ -494,12 +494,20 @@ it's the next thing down. you were working on getting the song to sync up ever 3
       var showingData = {
             playlistID: playlistsCtrl.selectedPlaylistForShowCreation['$id'],
             uid: playlistsCtrl.profile.$id,
+            hypezonePreset: 'nullVal',
             startTime: 1.0000000000001491e+25,
             incrumentPart: 0,
             showName: playlistsCtrl.newPlaylistShowName,
             venue: playlistsCtrl.newPlaylistVenue,
             appxStartDate: playlistsCtrl.myDate,
-            appxStartTime: playlistsCtrl.showtime
+            appxStartTime: playlistsCtrl.showtime,
+            zhypezonePresetIncrument: 0,
+            zzhypezonePresetColors:  {
+              '0': "#000000",
+              '1': "#f44336",
+              '2': "#4CAF50",
+              '3': "#03A9F4"
+            }
 
       }
 
@@ -645,12 +653,60 @@ it's the next thing down. you were working on getting the song to sync up ever 3
 
 
      playlistsCtrl.hypezonePresets = [
-       'format_color_fill',
-       'network_cell',
-       'border_left',
-       'graphic_eq',
+       'bubble_chart',
+       'border_top',
+       'graphic_eq'
 
      ]
+
+     playlistsCtrl.hypezoneIsLive = 'false';
+
+     playlistsCtrl.setHypezoneLive = function(value) {
+       playlistsCtrl.hypezoneIsLive = value;
+
+       if(playlistsCtrl.hypezoneIsLive == 'true') {
+
+         playlistsCtrl.serverTimeOffset2 = 'null';
+         var offsetRef = firebase.database().ref(".info/serverTimeOffset");
+         offsetRef.on("value", function(snap) {
+           var offset = snap.val();
+           playlistsCtrl.serverTimeOffset2 = offset;
+         });
+
+         console.log(playlistsCtrl.serverTimeOffset2)
+           if(playlistsCtrl.serverTimeOffset2 == null){
+             alert("An error has occured, please try again.")
+           }else {
+             var currentTime =  new Date().getTime() + playlistsCtrl.serverTimeOffset2;
+             console.log(currentTime)
+             var setPlaylistTime2 = {};
+             var dollaIDvar2 = playlistsCtrl.CurrentPlalistDollaID;
+             setPlaylistTime2['/Showings/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar2 +'/hypezonePreset'] = currentTime;
+             firebase.database().ref().update(setPlaylistTime2)
+             .then(function(ref){
+
+
+                }, function() {
+                   return
+             });
+           }
+
+       }else {
+         var setPlaylistTime3 = {};
+         var dollaIDvar2 = playlistsCtrl.CurrentPlalistDollaID;
+         setPlaylistTime3['/Showings/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar2 +'/hypezonePreset'] = 'nullVal';
+         firebase.database().ref().update(setPlaylistTime3)
+         .then(function(ref){
+
+
+            }, function() {
+               return
+         });
+
+       }
+
+     }
+
 
      playlistsCtrl.selectedHypezonePreset = 0
 
@@ -691,6 +747,27 @@ it's the next thing down. you were working on getting the song to sync up ever 3
 
      }
 
+     playlistsCtrl.syncColorsFunction = function() {
+       var hypezoneColorObj = {
+         '0': "#000000",
+         '1': playlistsCtrl.colorsPrimary,
+         '2': playlistsCtrl.colorsSecondary,
+         '3': playlistsCtrl.colorsTertiary
+       }
+       var setPlaylistTime3 = {};
+       var dollaIDvar2 = playlistsCtrl.CurrentPlalistDollaID;
+       setPlaylistTime3['/Showings/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar2 +'/zzhypezonePresetColors'] = hypezoneColorObj;
+       firebase.database().ref().update(setPlaylistTime3)
+       .then(function(ref){
+
+
+          }, function() {
+             return
+       });
+
+
+     }
+
      playlistsCtrl.setColorFunction = function(color) {
 
        if(color == "random") {
@@ -713,7 +790,26 @@ it's the next thing down. you were working on getting the song to sync up ever 3
            }
         }
 
+        playlistsCtrl.syncColorsFunction()
+
      }
 
+     playlistsCtrl.setHypezonePreset = function(preset) {
+        playlistsCtrl.selectedHypezonePreset = preset;
+
+        var setPlaylistTime3 = {};
+        var dollaIDvar2 = playlistsCtrl.CurrentPlalistDollaID;
+        setPlaylistTime3['/Showings/'+ playlistsCtrl.profile.$id + '/' + dollaIDvar2 +'/zhypezonePresetIncrument'] = preset;
+        firebase.database().ref().update(setPlaylistTime3)
+        .then(function(ref){
+
+
+           }, function() {
+              return
+        });
+
+
+
+     }
 
   });
