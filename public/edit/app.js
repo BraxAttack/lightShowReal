@@ -216,14 +216,22 @@ angular
     // Config for your Firebase can be found using the "Web Setup"
     // button on the top right of the Firebase Dashboard in the
     // "Authentication" section.
-
+/*
     var config = {
       apiKey: "AIzaSyBc6yn3_ydeKJ6ioDSPzkPfBqzkEff1BuA",
       authDomain: "lightsapp-b03f4.firebaseapp.com",
       databaseURL: "https://lightsapp-b03f4.firebaseio.com",
       storageBucket: "lightsapp-b03f4.appspot.com",
       messagingSenderId: "1022638520289"
-    };
+    };*/
+    var config = {
+       apiKey: "AIzaSyBv_kb53JKsjDW8V0yN37jdITCpT5cFhoM",
+       authDomain: "glowsync-9dc46.firebaseapp.com",
+       databaseURL: "https://glowsync-9dc46.firebaseio.com",
+       projectId: "glowsync-9dc46",
+       storageBucket: "glowsync-9dc46.appspot.com",
+       messagingSenderId: "452327635964"
+     };
 
     firebase.initializeApp(config);
   });

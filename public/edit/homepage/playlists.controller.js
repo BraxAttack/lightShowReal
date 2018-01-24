@@ -495,13 +495,14 @@ it's the next thing down. you were working on getting the song to sync up ever 3
             playlistID: playlistsCtrl.selectedPlaylistForShowCreation['$id'],
             uid: playlistsCtrl.profile.$id,
             hypezonePreset: 'nullVal',
-            startTime: 1.0000000000001491e+25,
-            incrumentPart: 0,
+            tMinus: 1.0000000000001491e+25,
+            showInSeq: 0,
             showName: playlistsCtrl.newPlaylistShowName,
             venue: playlistsCtrl.newPlaylistVenue,
             appxStartDate: playlistsCtrl.myDate,
             appxStartTime: playlistsCtrl.showtime,
             zhypezonePresetIncrument: 0,
+            artist: playlistsCtrl.artistName,
             zzhypezonePresetColors:  {
               '0': "#000000",
               '1': "#f44336",
@@ -513,7 +514,7 @@ it's the next thing down. you were working on getting the song to sync up ever 3
 
       //console.log(showingData)
 
-      newShowing['/Showings/' + playlistsCtrl.profile.$id + '/' + showingKey] = showingData;
+      newShowing['/showingsTonight/' + playlistsCtrl.newPlaylistCity + playlistsCtrl.newPlaylistState + '/' +playlistsCtrl.profile.$id + '/' + showingKey] = showingData;
       firebase.database().ref().update(newShowing);
 
 

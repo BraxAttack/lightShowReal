@@ -553,8 +553,24 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
       }
       document.getElementById('High'+id).style.backgroundColor = 'white';
 
+      if(projectIndivCtrl.selectedTool == "replaceColor") {
 
-      if(projectIndivCtrl.isClickedDown == "true"){
+        console.log(id)
+        var selectedColor = projectIndivCtrl.projectDataParsed[id][projectIndivCtrl.currentFrame]
+        console.log(selectedColor)
+        for (i = 0; i < 400; i++) {
+            if(projectIndivCtrl.projectDataParsed[i][projectIndivCtrl.currentFrame] == selectedColor){
+              console.log("---")
+              document.getElementById('High'+i).style.backgroundColor = rgba(white, 0.5);;
+            }
+        }
+
+
+      }else if (projectIndivCtrl.selectedTool == "preset") {
+        console.log("preset")
+
+
+      }else if (projectIndivCtrl.isClickedDown == "true"){
           projectIndivCtrl.drawingArray.push(id);
 
           if (projectIndivCtrl.selectedTool == "square") {
@@ -566,12 +582,7 @@ if ( angular.element('homepageProjectsAddFab').length > 0) {
           }else{
             console.log('preset');
 
-
-
-
           }
-
-
 
 
       }

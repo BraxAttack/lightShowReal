@@ -1,5 +1,6 @@
 angular.module('lightShowApp')
   .factory('Users', function($firebaseArray, $firebaseObject){
+
     var usersRef = firebase.database().ref('users');
     var connectedRef = firebase.database().ref('.info/connected');
     var users = $firebaseArray(usersRef);

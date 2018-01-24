@@ -28,13 +28,19 @@ angular.module('lightShowApp')
       }, 50);
     }
 
+
     projectsCtrl.newProject = {
       projectName: '',
       songTitle: '',
       lastEdit: '',
       color: '',
-      user: projectsCtrl.profile.$id
+      user: projectsCtrl.profile.$id,
+      auth: {}
     };
+
+    projectsCtrl.newProject['auth'][projectsCtrl.profile.$id] = true
+
+    //console.log(projectsCtrl.newProject)
 
     projectsCtrl.newProjectData = {
       songData: []
@@ -192,7 +198,7 @@ angular.module('lightShowApp')
               var projectDataUpload = {};
               console.log(projectsCtrl.newProjectData.songData[i]);
               console.log(JSON.stringify(projectsCtrl.newProjectData.songData[i]));
-              projectDataUpload['/ProjectData/'+ projectsCtrl.profile.$id + '/' + projectKey + '/' + i] = {'data': JSON.stringify(projectsCtrl.newProjectData.songData[i])};
+              projectDataUpload['/ProjectData/' + projectKey + '/' + i] = {'data': JSON.stringify(projectsCtrl.newProjectData.songData[i])};
               firebase.database().ref().update(projectDataUpload)
               .then(function(ref){
                 projectsCtrl.uploadCount += 1;
@@ -205,7 +211,7 @@ angular.module('lightShowApp')
 
                   var projectsetlength = {};
 
-                  projectsetlength['/Projects/' + projectsCtrl.profile.$id + '/' + projectsCtrl.projectKeyVar + '/duration'] = projectsCtrl.videoDuration;
+                  projectsetlength['/Projects/' + projectsCtrl.projectKeyVar + '/duration'] = projectsCtrl.videoDuration;
                   firebase.database().ref().update(projectsetlength)
                   .then(function(ref){
 
@@ -280,7 +286,7 @@ angular.module('lightShowApp')
           var projectDataUpdates = {};
 
 
-          projectUpdates['/Projects/' + projectsCtrl.profile.$id + '/' + projectKey] = projectsCtrl.newProject;
+          projectUpdates['/Projects/' + projectKey] = projectsCtrl.newProject;
           firebase.database().ref().update(projectUpdates)
           .then(function(ref){
 
